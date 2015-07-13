@@ -1,0 +1,7 @@
+\beamer@endinputifotherversion {3.36pt}
+\beamer@sectionintoc {1}{Introduction}{2}{0}{1}
+\beamer@sectionintoc {2}{Repeated behaviors}{3}{0}{2}
+\beamer@sectionintoc {3}{Repeating behaviors in Python}{9}{0}{3}
+\beamer@sectionintoc {4}{Reasoning about \texttt {while}}{18}{0}{4}
+\beamer@sectionintoc {5}{Termination (or lack thereof)}{49}{0}{5}
+\beamer@sectionintoc {6}{Exponential explosion of potential control-paths}{55}{0}{6}

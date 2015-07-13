@@ -1,0 +1,283 @@
+\documentclass{beamer}
+\usetheme[hideothersubsections]{HRTheme}
+\usepackage{beamerthemeHRTheme}
+\usepackage{graphicx}
+\usepackage[space]{grffile}
+\usepackage{listings}
+\lstset{language=C,
+basicstyle=\ttfamily\footnotesize,
+mathescape=true,
+breaklines=true}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\newcommand{\red}[1]{
+\textcolor{red}{#1}
+}
+\newcommand{\ts}{\textbackslash}
+
+\title{Types}
+
+\author{Dr. Giuseppe Maggiore}
+
+\institute{Hogeschool Rotterdam \\ 
+Rotterdam, Netherlands}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+\SlideSection{Introduction}
+\SlideSubSection{Lecture topics}
+\begin{slide}{
+\item We introduce the Python type system
+\item Numbers
+\item Boolean values
+\item Arithmetic and boolean expressions
+}\end{slide}
+
+\SlideSection{Python type system basics}
+\SlideSubSection{Introduction}
+\begin{slide}{
+\item Is everything an integer number?
+\item Yes and no
+}\end{slide}
+
+\SlideSubSection{Everything is an integer number}
+\begin{slide}{
+\item For the CPU everything is a string of bits
+\item So yes, everything is (\textit{almost}\footnote{also floats are recognized by the CPU}) an integer number
+\item Complex data structures like a GUI, a 3D model, a picture, etc. are made up of collections of numbers
+}\end{slide}
+
+\begin{slide}{
+\item Low-level languages expose this view
+\item Everything is encoded with numbers
+\item It can become quite messy
+}\end{slide}
+
+\SlideSubSection{Not everything is an integer number}
+\begin{slide}{
+\item For the programmer, there exist different kinds of values
+\item So common and useful that Python offers them out of the box
+\item Even if the CPU does not manipulate them directly
+}\end{slide}
+
+\SlideSubSection{Kinds of values}
+\begin{slide}{
+\item Python has a \textbf{type system}
+\item Variables have different \textbf{data types}, often shortened to \textbf{types}
+\begin{itemize}
+\item \texttt{Integer} numbers
+\item Rational (\texttt{floating point}) numbers
+\item \texttt{Boolean} truth values
+\item \texttt{Strings} of text
+\end{itemize}
+}\end{slide}
+
+\SlideSubSection{Integers}
+\begin{slide}{
+\item Numbers without dot/comma
+\item \texttt{0}, \texttt{100}, \texttt{-500}, ...
+}\end{slide}
+
+\begin{slide}{
+\item Typical arithmetic operations on numbers (\textbf{not in Python 3})
+\item \texttt{3 + 5 = 8}, \texttt{5 / 2 = 2}, \texttt{40 * 5 = 200}, ...
+}\end{slide}
+
+\SlideSubSection{Floating points}
+\begin{slide}{
+\item Numbers with dot/comma
+\item \texttt{0.0}, \texttt{2.5}, \texttt{10.0e3}, \texttt{3.1e-5}, \texttt{-.1e-5}, ...
+}\end{slide}
+
+\begin{slide}{
+\item Typical arithmetic operations on numbers
+\item \texttt{5.0 / 2.0 = ?}, \texttt{10.0e3 / 0.1 = ?}, \texttt{3.1e-5 + 1.0e5 = ?}, ...
+\item \textbf{Can you guess the results?}
+\pause
+\item \texttt{5.0 / 2.0 = 2.5}, \texttt{10.0e3 / 0.1 = 10.0e4}, \texttt{3.1e-5 + 1.0e5 = 100000.000031}, ...
+}\end{slide}
+
+\SlideSubSection{Conversion to and from floating point}
+\begin{slide}{
+\item Integers can be converted to floating points with \texttt{float(n)}
+\item Floating points can be converted to integers with \texttt{int(n)}
+}\end{slide}
+
+\begin{slide}{
+\item \texttt{int(2.5) = ?}, \texttt{float(3) = ?}
+\item \textbf{Can you guess the results?}
+\pause
+\item \texttt{int(2.5) = 2}, \texttt{float(3) = 3.0}
+}\end{slide}
+
+\begin{slide}{
+\item Floating points can lose their decimal values
+\item They stay float's, but always end in \texttt{.0}
+\item \texttt{math.floor(n)} truncates the tail
+\item \texttt{math.ceil(n)} fills the tail and increases to the next unit
+}\end{slide}
+
+\begin{slide}{
+\item \texttt{floor(2.5) = ?}, \texttt{ceil(2.5) = ?}
+\item \textbf{Can you guess the results?}
+\pause
+\item \texttt{floor(2.5) = 2.0}, \texttt{ceil(2.5) = 3.0}
+}\end{slide}
+
+\begin{slide}{
+\item Some conversions happen automatically
+\item Python operations try to preserve information
+\item \texttt{5 / 2.0 = 2.5}, and \texttt{5} is converted to \texttt{5.0} right before the division
+}\end{slide}
+
+\SlideSubSection{Python 3 integer division}
+\begin{slide}{
+\item The new version of Python has a new integer division: it always converts to float
+\item It is \textbf{very different} from most other programming languages
+\item \texttt{5 / 2 = 2.5}
+}\end{slide}
+
+\SlideSubSection{Python 3 integer division}
+\begin{slide}{
+\item Traditional integer division is now \texttt{//}
+\item \texttt{5 // 2 = 2}
+}\end{slide}
+
+\SlideSubSection{Boolean values}
+\begin{slide}{
+\item Truth values
+\item \texttt{True}, \texttt{False}
+}\end{slide}
+
+\begin{slide}{
+\item Logical operators on truth values
+\begin{itemize}
+\item \texttt{\&} for \texttt{and}
+\item \texttt{|} for \texttt{or}
+\item \texttt{not}
+\end{itemize}
+}\end{slide}
+
+\begin{slide}{
+\item Comparison operators on numeric values
+\begin{itemize}
+\item \texttt{>}
+\item \texttt{<}
+\item \texttt{==}
+\item \texttt{>=}
+\item \texttt{<=}
+\end{itemize}
+}\end{slide}
+
+\begin{slide}{
+\item \texttt{5.0 > 2.0 = ?}, \texttt{(3 > 4) | (5 == (3 + 2)) = ?}, \texttt{True \& False = ?}, ...
+\item \textbf{Can you guess the results?}
+\pause
+\item \texttt{5.0 > 2.0 = true}, \texttt{(3 > 4) | (5 == (3 + 2)) = False}, \texttt{True \& False = False}, ...
+}\end{slide}
+
+\SlideSubSection{String values}
+\begin{slide}{
+\item Text
+\item \texttt{"Hello!"}, \texttt{"Hello world!"}, \texttt{""}, ...
+}\end{slide}
+
+\begin{slide}{
+\item String literals are sequences of characters, on a single line, between double \texttt{"} or single \texttt{'} quotes 
+\item Some characters do not fit this description
+\item We need special markings for such characters
+}\end{slide}
+
+\begin{slide}{
+\small
+\item \texttt{\textbackslash '} for single quote
+\item \texttt{\textbackslash "} for double quote
+\item \texttt{\textbackslash a} for ASCII Bell (BEL)  
+\item \texttt{\textbackslash b} for ASCII Backspace (BS)  
+\item \texttt{\textbackslash f} for ASCII Formfeed (FF)  
+\item \texttt{\textbackslash n} for ASCII Linefeed (LF)  
+\item \texttt{\textbackslash r} for ASCII Carriage Return (CR)  
+\item \texttt{\textbackslash t} for ASCII Horizontal Tab (TAB)  
+\item \texttt{\textbackslash v} for ASCII Vertical Tab (VT) 
+\item \texttt{\textbackslash \textbackslash} for newline
+}\end{slide}
+
+\begin{slide}{
+\item The most common operator is string concatenation
+\item \texttt{"Hello" + "\ts n" + "world" + "\ts n" + "on" + "\ts n" + "different" + "\ts n" + "lines"}
+}\end{slide}
+
+% common string functions
+% samples of strings and escape characters
+
+\SlideSection{Type restrictions}
+\SlideSubSection{Operations, types, and restrictions}
+\begin{slide}{
+\item Not all operations are allowed on all possible variable types
+\begin{itemize}
+\item Some operations are allowed (integer addition)
+\item Some operations are not allowed (string division)
+\item Some operations change meaning (addition of integers versus concatenation of strings)
+\end{itemize}
+}\end{slide}
+
+\begin{slide}{
+\item Examples of allowed operators
+\begin{itemize}
+\item Addition, subtraction, division, multiplication, etc. between numbers
+\item Concatenation between strings
+\item Multiplication of strings and integers
+\item Arithmetic comparison between numbers or strings
+\item Conjunction, disjunction, negation\footnote{\texttt{and}, \texttt{or}, \texttt{not}} between booleans
+\item Treating integers as booleans (\texttt{1=True}, \texttt{0=False})
+\item Treating strings as booleans (anything else\texttt{=True}, \texttt{""=False})
+\end{itemize}
+}\end{slide}
+
+\begin{slide}{
+\item Examples of not-allowed operators
+\begin{itemize}
+\item Most arithmetic operations on strings and non-strings (\texttt{"Hello" + True})
+\item Most boolean operations on strings and non-strings (\texttt{"Hello" \& True})
+\end{itemize}
+}\end{slide}
+
+\begin{frame}[fragile]{Type errors}
+Not-allowed operators generate \textit{type errors}
+
+\begin{lstlisting}[frame=shadowbox]
+Traceback (most recent call last):
+  File "C:\Users\Giuseppe\Desktop\DEV I samples\DEV_I_samples.py", line 8, in <module>
+    print("Oh noes, a bug!" + 4)
+TypeError: cannot concatenate 'str' and 'int' objects
+\end{lstlisting}
+\end{frame}
+
+\begin{slide}{
+\item Variables may change type in Python
+\item An integer variable becomes later on a string variable
+\item This is allowed, but dangerous
+\item A variable should never lose reasonable meaning
+\item Many type errors stem from \textit{changes in meaning}, connected with \textit{changes in type} of a variable
+}\end{slide}
+
+\begin{frame}{This is it!}
+\center
+\fontsize{18pt}{7.2}\selectfont
+The best of luck, and thanks for the attention!
+\end{frame}
+
+\end{document}
+
+\begin{slide}{
+\item ...
+}\end{slide}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+...
+\end{lstlisting}
+\end{frame}

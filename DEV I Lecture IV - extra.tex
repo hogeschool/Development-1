@@ -1,0 +1,310 @@
+\documentclass{beamer}
+\usetheme[hideothersubsections]{HRTheme}
+\usepackage{beamerthemeHRTheme}
+\usepackage{graphicx}
+\usepackage[space]{grffile}
+\usepackage{listings}
+\lstset{language=C,
+basicstyle=\ttfamily\footnotesize,
+mathescape=true,
+breaklines=true}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\newcommand{\red}[1]{
+\textcolor{red}{#1}
+}
+\newcommand{\ts}{\textbackslash}
+
+\title{Reasoning on programs}
+
+\author{Dr. Giuseppe Maggiore}
+
+\institute{Hogeschool Rotterdam \\ 
+Rotterdam, Netherlands}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+\SlideSection{Introduction}
+\SlideSubSection{Lecture topics}
+\begin{slide}{
+\item We introduce conditional expressions
+\item We show how to verify properties on complex expressions
+}\end{slide}
+
+\SlideSection{Conditional expressions}
+\SlideSubSection{Conditional expressions}
+\begin{slide}{
+\item Sometimes we can make decisions within an expression
+\item The general form is \texttt{VALUE if CONDITION else VALUE'} ($if_{VCV'}$)
+\item If the condition is true, then we return \texttt{VALUE}, otherwise \texttt{VALUE'}
+$$
+\tiny
+\left\{
+\begin{matrix}
+(PC,S) \overset{if_{VCV'}}{\rightarrow} V &when& (PC,S) \overset{C}{\rightarrow} TRUE & \\
+(PC,S) \overset{if_{VCV'}}{\rightarrow} V' &when& (PC,S) \overset{C}{\rightarrow} FALSE & \\
+\end{matrix}
+\right.
+$$
+}\end{slide}
+
+\begin{slide}{
+\item \texttt{"adult" if age >= 18 else "minor" = ?}
+\item \textbf{Can you guess the results for} \texttt{age = 18} and \texttt{age = 16}\textbf{?}
+\pause
+\item \texttt{age = 16}: \texttt{"minor"}
+\item \texttt{age = 18}: \texttt{"adult"}
+}\end{slide}
+
+\SlideSection{Reasoning on programs}
+\SlideSubSection{Reasoning on programs}
+\begin{slide}{
+\item Sometimes we do not know exactly the values of all variables at all times
+\item The program may be too complex to allow it
+}\end{slide}
+
+\begin{frame}[fragile]
+Consider a throttle control system. 
+
+\textbf{The throttle may never go under 1000RPM}, or the engine stops and everybody dies. \\
+
+\textbf{The temperature must be kept under control}, or the engine blows up and everybody dies. \\
+
+\ \\
+\begin{lstlisting}[frame=shadowbox,numbers=left]
+throttle = throttle - 1000 if (temp > 350.0) & (throttle > 2500) else throttle
+\end{lstlisting}
+
+\ \\
+
+The question thus is: \textbf{could the code above cause everyone to die?}
+
+\end{frame}
+
+\begin{frame}[fragile]
+\texttt{\center
+\begin{tabular}{| l | l |}
+\hline
+throttle & temp \\
+\hline
+1000..10000 & -20.0..400.0 \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left]
+throttle = throttle - 1000 if (temp > 350.0) & (throttle > 2500) else throttle
+\end{lstlisting}
+
+\pause
+
+\ \\
+
+\begin{tabular}{| l | l |}
+\hline
+throttle & temp \\
+\hline
+\red{?!?!?} & -20.0..400.0 \\
+\hline
+\end{tabular}
+\end{frame}
+
+\begin{slide}{
+\item We cannot list all possible combinations of variable values
+\item We cannot just ``hope it works''
+\pause
+\item We can reason in terms of conditions on variables
+}\end{slide}
+
+\begin{slide}{
+\item We partition the state based on the conditional
+\item \texttt{(temp > 350.0) \& (throttle > 2500)} generates four states
+\begin{itemize}
+\item \texttt{temp > 350} and \texttt{throttle > 2500}
+\item \texttt{temp <= 350} and \texttt{throttle > 2500}
+\item \texttt{temp > 350} and \texttt{throttle <= 2500}
+\item \texttt{temp <= 350} and \texttt{throttle <= 2500}
+\end{itemize}
+\item We study the semantics on each of these four states
+}\end{slide}
+
+\begin{frame}[fragile]
+\textbf{\texttt{temp > 350} and \texttt{throttle > 2500}}
+
+\texttt{\center
+\begin{tabular}{| l | l |}
+\hline
+throttle & temp \\
+\hline
+\red{>2500.0}..10000 & \red{>350.0}..400.0 \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left]
+throttle = throttle - 1000 if (temp > 350.0) & (throttle > 2500) else throttle
+\end{lstlisting}
+
+\pause
+
+\texttt{\center
+\begin{tabular}{| l | l |}
+\hline
+throttle & temp \\
+\hline
+\red{>1500.0..9000.0} & >350.0..400.0 \\
+\hline
+\end{tabular}}
+\end{frame}
+
+\begin{frame}[fragile]
+\textbf{\texttt{temp <= 350} and \texttt{throttle > 2500}}
+
+\texttt{\center
+\begin{tabular}{| l | l |}
+\hline
+throttle & temp \\
+\hline
+\red{>2500.0..10000} & \red{-20.0..350.0} \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left]
+throttle = throttle - 1000 if (temp > 350.0) & (throttle > 2500) else throttle
+\end{lstlisting}
+
+\pause
+
+\texttt{\center
+\begin{tabular}{| l | l |}
+\hline
+throttle & temp \\
+\hline
+>2500.0..10000.0 & -20.0..350.0 \\
+\hline
+\end{tabular}}
+\end{frame}
+
+\begin{frame}[fragile]
+\textbf{\texttt{temp > 350} and \texttt{throttle <= 2500}}
+
+\texttt{\center
+\begin{tabular}{| l | l |}
+\hline
+throttle & temp \\
+\hline
+\red{1000..>2500.0} & \red{>350..400.0} \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left]
+throttle = throttle - 1000 if (temp > 350.0) & (throttle > 2500) else throttle
+\end{lstlisting}
+
+\pause
+
+\texttt{\center
+\begin{tabular}{| l | l |}
+\hline
+throttle & temp \\
+\hline
+1000..>2500.0 & >350..400.0 \\
+\hline
+\end{tabular}}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\textbf{\texttt{temp <= 350} and \texttt{throttle <= 2500}}
+
+\texttt{\center
+\begin{tabular}{| l | l |}
+\hline
+throttle & temp \\
+\hline
+\red{1000..>2500.0} & \red{-20.0..350.0} \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left]
+throttle = throttle - 1000 if (temp > 350.0) & (throttle > 2500) else throttle
+\end{lstlisting}
+
+\pause
+
+\texttt{\center
+\begin{tabular}{| l | l |}
+\hline
+throttle & temp \\
+\hline
+\red{1000..>2500.0} & \red{-20.0..350.0} \\
+\hline
+\end{tabular}}
+\end{frame}
+
+\begin{slide}{
+\item Each of the four states has a result
+\item We now merge the results
+}\end{slide}
+
+\begin{frame}[fragile]
+We now merge these states, knowing that each of them may actually happen:
+
+\texttt{\begin{tabular}{| l | l |}
+\hline
+throttle & temp \\
+\hline
+>1500.0..9000.0 & >350.0..400.0 \\
+\hline
+>2500.0..10000.0 & -20.0..350.0 \\
+\hline
+1000.0..>2500.0 & >350..400.0 \\
+\hline
+1000.0..>2500.0 & -20.0..350.0 \\
+\hline
+\end{tabular}}
+
+\pause
+
+\ \\
+
+\texttt{\begin{tabular}{| l | l |}
+\hline
+throttle & temp \\
+\hline
+\red{1000.0..10000.0} & \red{-20.0..400.0} \\
+\hline
+\end{tabular}}
+
+We know that the throttle will never go below 1500RPM, and we also know that if the temperature is above 350 degrees then maximum throttle is never above 9000RPM.
+\end{frame}
+
+\begin{frame}{Conclusion?}
+\center
+\fontsize{18pt}{7.2}\selectfont
+Nobody dies :)
+\end{frame}
+
+\begin{frame}{This is it!}
+\center
+\fontsize{18pt}{7.2}\selectfont
+The best of luck, and thanks for the attention!
+\end{frame}
+
+\end{document}
+
+\begin{slide}{
+\item ...
+}\end{slide}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+...
+\end{lstlisting}
+\end{frame}

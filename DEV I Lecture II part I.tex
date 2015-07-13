@@ -1,0 +1,485 @@
+\documentclass{beamer}
+\usetheme[hideothersubsections]{HRTheme}
+\usepackage{beamerthemeHRTheme}
+\usepackage{graphicx}
+\usepackage[space]{grffile}
+\usepackage{listings}
+\lstset{language=C,
+basicstyle=\ttfamily\footnotesize,
+mathescape=true,
+breaklines=true}
+\usepackage[utf8]{inputenc}
+
+\title{Concrete model of computation}
+
+\author{Dr. Giuseppe Maggiore}
+
+\institute{Hogeschool Rotterdam \\ 
+Rotterdam, Netherlands}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+\SlideSection{Introduction}
+\SlideSubSection{Lecture topics}
+\begin{slide}{
+\item We discuss a formal way to define computation
+\item We discuss the fundamental elements of a concrete computer
+\item We bridge what we have seen in the previous lecture with concrete descriptions
+}\end{slide}
+
+\SlideSubSection{Semantics}
+\begin{slide}{
+\item Any language has \textbf{semantics}
+\item \textbf{Semantics} describe the \textit{meaning} of sentences in the language
+\item Programming languages have \textbf{formal semantics}
+\item \textbf{Formal semantics} are expressed in a very logical, unambiguous format
+}\end{slide}
+
+\SlideSubSection{Semantics of \texttt{stdNt}}
+\begin{frame}[fragile]
+Consider this program from the previous lecture:
+
+\begin{lstlisting}[frame=shadowbox,numbers=left]
+take 3 steps forward 
+sit on the chair 
+turn left 
+slide 3 steps forward
+\end{lstlisting}
+
+what does each instruction do? \textbf{Try to guess and discuss!}
+\end{frame}
+
+\begin{slide}{
+\item We start with a \textit{current instruction} and a \textit{student state}:
+\begin{itemize}
+\item The current instruction (often called \textit{instruction pointer} (\texttt{IP}) or \textit{program counter} (\texttt{PC})) is just the index of the current instruction;
+\item the student state (usually just called \textit{state}, or \texttt{S}, or $\sigma$) is whatever relevant attributes we track about the student (for example, his position and orientation in the room and whether or not he is sitting).
+\end{itemize}
+\item Each instruction changes the \texttt{PC} and the \texttt{S}.
+}\end{slide}
+
+\begin{frame}[fragile]
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & S.Pose & S.Orientation & S.Position \\
+\hline
+1 & Standing & Forward & (0,0) \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left]
+take 3 steps forward 
+sit on the chair 
+turn left 
+slide 3 steps forward
+\end{lstlisting}
+
+what changes while running the current instruction? \textbf{Try to guess and discuss!}
+\end{frame}
+
+\begin{frame}[fragile]
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & S.Pose & S.Orientation & S.Position \\
+\hline
+2 & Standing & Forward & (0,3) \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left]
+take 3 steps forward 
+sit on the chair 
+turn left 
+slide 3 steps forward
+\end{lstlisting}
+
+what changes while running the current instruction? \textbf{Try to guess and discuss!}
+\end{frame}
+
+\begin{frame}[fragile]
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & S.Pose & S.Orientation & S.Position \\
+\hline
+3 & Sitting & Forward & (0,3) \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left]
+take 3 steps forward 
+sit on the chair 
+turn left 
+slide 3 steps forward
+\end{lstlisting}
+
+what changes while running the current instruction? \textbf{Try to guess and discuss!}
+\end{frame}
+
+\begin{frame}[fragile]
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & S.Pose & S.Orientation & S.Position \\
+\hline
+4 & Sitting & Left & (0,3) \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left]
+take 3 steps forward 
+sit on the chair 
+turn left 
+slide 3 steps forward
+\end{lstlisting}
+
+what changes while running the current instruction? \textbf{Try to guess and discuss!}
+\end{frame}
+
+\begin{frame}[fragile]
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & S.Pose & S.Orientation & S.Position \\
+\hline
+END & Sitting & Left & (-3,3) \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left]
+take 3 steps forward 
+sit on the chair 
+turn left 
+slide 3 steps forward
+\end{lstlisting}
+
+what do we do now? \textbf{Try to guess and discuss!}
+\end{frame}
+
+\SlideSubSection{A slight formalization}
+\begin{slide}{
+\item We say that an instruction \texttt{I} is a \textit{function} that, given a pair of \texttt{PC} and \texttt{S}, returns a new pair of \texttt{PC} and \texttt{S}
+\pause
+\item Do not panic now, math-y symbols incoming!
+\pause
+\item $(PC,S) \overset{Instr}{\rightarrow} (PC',S')$
+}\end{slide}
+
+\begin{slide}{
+\item Consider instruction \texttt{sit on the chair} (we will shorten it to \texttt{sit})
+\item \textit{How do we change the current instruction?}
+\item \textit{How do we change the position of the resulting state depending on the orientation of the input state?}
+}\end{slide}
+
+\begin{slide}{
+\item Consider instruction \texttt{sit on the chair} (we will shorten it to \texttt{sit})
+\begin{itemize}
+\small
+\item $(PC,S) \overset{sit}{\rightarrow} (PC+1,S[Pose \mapsto Sitting])$
+\end{itemize}
+\item We increment the current instruction index by one
+\item We change the pose of the resulting state independent on the input state
+\begin{itemize}
+\item $S[Pose \mapsto Sitting]$ is read as \textit{``S, where pose is sitting''}
+\end{itemize}
+}\end{slide}
+
+\begin{slide}{
+\item Consider instruction \texttt{stand up} (we will shorten it to \texttt{stand})
+\item \textit{How do we change the current instruction?}
+\item \textit{How do we change the position of the resulting state depending on the orientation of the input state?}
+}\end{slide}
+
+\begin{slide}{
+\item Consider instruction \texttt{stand up} (we will shorten it to \texttt{stand})
+\begin{itemize}
+\small
+\item $(PC,S) \overset{stand}{\rightarrow} (PC+1,S[Pose \mapsto Standing])$
+\end{itemize}
+\item We increment the current instruction index by one
+\item We change the pose of the resulting state independent on the input state
+}\end{slide}
+
+\begin{slide}{
+\item Consider instruction \texttt{take 3 steps forward} (we will shorten it to \texttt{fwd 3})
+\item \textit{How do we determine the next instruction index?}
+\item \textit{How do we change the position of the resulting state?}
+\begin{itemize}
+\item Are there dependencies from the input state?
+\end{itemize}
+}\end{slide}
+
+\begin{frame}[fragile]
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & S.Pose & S.Orientation & S.Position \\
+\hline
+104 & Standing & Left & (10,20) \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left,firstnumber=103]
+...
+take 3 steps forward 
+...
+\end{lstlisting}
+
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & S.Pose & S.Orientation & S.Position \\
+\hline
+105 & Standing & Left & (7,20) \\
+\hline
+\end{tabular}
+}
+\end{frame}
+
+\begin{frame}[fragile]
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & S.Pose & S.Orientation & S.Position \\
+\hline
+104 & Standing & Right & (10,20) \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left,firstnumber=103]
+...
+take 3 steps forward 
+...
+\end{lstlisting}
+
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & S.Pose & S.Orientation & S.Position \\
+\hline
+105 & Standing & Right & (13,20) \\
+\hline
+\end{tabular}
+}
+\end{frame}
+
+\begin{slide}{
+\item Consider instruction \texttt{take 3 steps forward} (we will shorten it to \texttt{fwd 3})
+$$
+\tiny
+\left\{
+\begin{matrix}
+(PC,S) \overset{fwd 3}{\rightarrow} (PC+1,S[Position \mapsto S.Position+(0,3)]) &when& S.Orientation=Forward& \\
+(PC,S) \overset{fwd 3}{\rightarrow} (PC+1,S[Position \mapsto S.Position-(0,3)]) &when& S.Orientation=Backward& \\
+(PC,S) \overset{fwd 3}{\rightarrow} (PC+1,S[Position \mapsto S.Position+(3,0)]) &when& S.Orientation=Right& \\
+(PC,S) \overset{fwd 3}{\rightarrow} (PC+1,S[Position \mapsto S.Position-(3,0)]) &when& S.Orientation=Left& \\
+\end{matrix}
+\right.
+$$
+\item We always increment the instruction by one
+\item We change the position of the resulting state depending on the orientation of the input state
+}\end{slide}
+
+\begin{slide}{
+\item Consider instruction \texttt{if A then B else C}
+\item \textit{How do we determine the next instruction index?}
+\item \textit{How do we change the state?}
+}\end{slide}
+
+\begin{frame}[fragile]
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & S.Pose & S.Orientation & S.Position \\
+\hline
+24 & Standing & Right & (10,20) \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left,firstnumber=23]
+...
+if A is ``sunny'' then 
+  turn left by 90 * B degrees 
+otherwise 
+  turn left by 90 * C degrees 
+...
+\end{lstlisting}
+
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & S.Pose & S.Orientation & S.Position \\
+\hline
+25\footnote{Assuming good weather} & Standing & Right & (10,20) \\
+\hline
+\end{tabular}
+}
+\end{frame}
+
+\begin{frame}[fragile]
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & S.Pose & S.Orientation & S.Position \\
+\hline
+24 & Standing & Right & (10,20) \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left,firstnumber=23]
+...
+if A is ``sunny'' then 
+  turn left by 90 * B degrees 
+otherwise 
+  turn left by 90 * C degrees 
+...
+\end{lstlisting}
+
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & S.Pose & S.Orientation & S.Position \\
+\hline
+27\footnote{Assuming bad weather} & Standing & Right & (10,20) \\
+\hline
+\end{tabular}
+}
+\end{frame}
+
+\begin{slide}{
+\item Consider instruction \texttt{if A then B else C} (shortened by as $if_{ABC}$)
+
+$$
+\tiny
+\left\{
+\begin{matrix}
+(PC,S) \overset{if_{ABC}}{\rightarrow} (loc(B),S) &when& (PC,S) \overset{A}{\rightarrow} \mathtt{TRUE} \\
+(PC,S) \overset{if_{ABC}}{\rightarrow} (loc(C),S) &when& (PC,S) \overset{A}{\rightarrow} \mathtt{FALSE} \\
+\end{matrix}
+\right.
+$$
+
+
+\item We jump to the first instruction of the \texttt{B} block if the condition evaluates to \texttt{TRUE}
+\item We jump to the first instruction of the \texttt{C} block if the condition evaluates to \texttt{FALSE}
+\item We leave the state unchanged
+}\end{slide}
+
+\begin{slide}{
+\item Consider instruction \texttt{while A do B}
+\item \textit{How do we determine the next instruction index?}
+\item \textit{How do we change the state?}
+}\end{slide}
+
+\begin{frame}[fragile]
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & S.Pose & S.Orientation & S.Position \\
+\hline
+24 & Standing & Right & (10,20) \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left,firstnumber=23]
+...
+while A is ``sunny'' do
+  enjoy the day for another hour
+go back to work
+...
+\end{lstlisting}
+
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & S.Pose & S.Orientation & S.Position \\
+\hline
+25\footnote{As long as it is sunny} & Standing & Right & (10,20) \\
+\hline
+\end{tabular}
+}
+\end{frame}
+
+\begin{frame}[fragile]
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & S.Pose & S.Orientation & S.Position \\
+\hline
+24 & Standing & Right & (10,20) \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left,firstnumber=23]
+...
+while A is ``sunny'' do
+  enjoy the day for another hour
+go back to work
+...
+\end{lstlisting}
+
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & S.Pose & S.Orientation & S.Position \\
+\hline
+26\footnote{When it stops being sunny} & Standing & Right & (10,20) \\
+\hline
+\end{tabular}
+}
+\end{frame}
+
+\begin{slide}{
+\item Consider instruction \texttt{while A do B} (shortened by as $while_{AB}$)
+
+$$
+\tiny
+\left\{
+\begin{matrix}
+(PC,S) \overset{while_{AB}}{\rightarrow} (loc(B),S) &when& (PC,S) \overset{A}{\rightarrow} \mathtt{TRUE} \\
+(PC,S) \overset{while_{AB}}{\rightarrow} (lastloc(B)+1,S) &when& (PC,S) \overset{A}{\rightarrow} \mathtt{FALSE} \\
+\end{matrix}
+\right.
+$$
+
+
+\item We jump to the first instruction of the \texttt{B} block if the condition evaluates to \texttt{TRUE}
+\item We jump to after the last instruction of the \texttt{B} block if the condition evaluates to \texttt{FALSE}
+\item We leave the state unchanged
+}\end{slide}
+
+\begin{frame}{This is it!}
+\center
+\fontsize{18pt}{7.2}\selectfont
+The best of luck, and thanks for the attention!
+\end{frame}
+
+\end{document}
+
+\begin{slide}{
+\item ...
+}\end{slide}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+...
+\end{lstlisting}
+\end{frame}
+
+

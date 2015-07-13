@@ -1,0 +1,674 @@
+\documentclass{beamer}
+\usetheme[hideothersubsections]{HRTheme}
+\usepackage{beamerthemeHRTheme}
+\usepackage{graphicx}
+\usepackage[space]{grffile}
+\usepackage{listings}
+\lstset{language=C,
+basicstyle=\ttfamily\footnotesize,
+mathescape=true,
+breaklines=true}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\newcommand{\red}[1]{
+\textcolor{red}{#1}
+}
+\newcommand{\ts}{\textbackslash}
+
+\title{Conditionals}
+
+\author{Dr. Giuseppe Maggiore}
+
+\institute{Hogeschool Rotterdam \\ 
+Rotterdam, Netherlands}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+\SlideSection{Introduction}
+\SlideSubSection{Lecture topics}
+\begin{slide}{
+\item Making choices
+\item \texttt{if-then-else} statements
+\item Reasoning about \texttt{if-then-else}
+}\end{slide}
+
+\SlideSection{Making choices}
+\SlideSubSection{Making choices}
+\begin{slide}{
+\item Sometimes we need to \textit{make a choice}
+\item Based on some \textit{condition}, we do \textit{something} rather than \textit{something else}
+}\end{slide}
+
+\begin{slide}{
+\item If \textit{the sun is shining}
+\item Then \textit{take a walk}
+\item Otherwise \textit{go to work}
+}\end{slide}
+
+\begin{slide}{
+\item If \textit{the engine is too warm and the RPM's are high enough}
+\item Then \textit{reduce the RPM}
+\item Otherwise \textit{do nothing}
+}\end{slide}
+
+\begin{slide}{
+\item Of course conditions like this can be combined
+\item This means that we can \textit{cascade} decisions
+\item This is the building block of \textit{intelligent decisions} in our programs
+}\end{slide}
+
+\begin{slide}{
+\item If \textit{the engine is too warm}
+\item Then
+\begin{itemize}
+\item If \textit{the RPM's are high enough}
+\item Then \textit{reduce the RPM}
+\item Otherwise \textit{light up the temperature lamp}
+\end{itemize}
+\item Otherwise \textit{do nothing}
+}\end{slide}
+
+\SlideSection{Making decisions in Python}
+\SlideSubSection{\texttt{if-then-else}}
+\begin{slide}{
+\item Python offers built-in facilities for decision-making
+\item \texttt{if-then-else} statement
+\item We can make decisions about which block of code is executed
+}\end{slide}
+
+\begin{slide}{
+\item The general form is \texttt{if CONDITION: THEN-BLOCK else ELSE-BLOCK} ($if_{CTE}$)
+\item If the condition is true, then we jump to the beginning of \texttt{THEN-BLOCK}, otherwise we jump to the beginning of \texttt{ELSE-BLOCK}
+$$
+\tiny
+\left\{
+\begin{matrix}
+(PC,S) \overset{if_{CTE}}{\rightarrow} (firstLine(T),S) &when& (PC,S) \overset{C}{\rightarrow} TRUE & \\
+(PC,S) \overset{if_{CTE}}{\rightarrow} (firstLine(E),S) &when& (PC,S) \overset{C}{\rightarrow} FALSE & \\
+\end{matrix}
+\right.
+$$
+}\end{slide}
+
+\begin{slide}{
+\item Python is \textit{indentation}-based
+\item White-spaces go at the beginning of some lines
+\item A more indented line is \textit{within} a less indented line above
+}\end{slide}
+
+\begin{slide}{
+\item Indentation specifies where the \texttt{then-block} and the \texttt{else-block} begin and end
+\item The general form of an \texttt{if-then-else} is thus:
+\begin{itemize}
+\item \texttt{if COND:}
+\item \texttt{newline}
+\item \textbf{indentation}
+\item \texttt{code of then}
+\item \textbf{de-indentation}
+\item \texttt{else:}
+\item \texttt{newline}
+\item \textbf{indentation}
+\item \texttt{code of then}
+\item \textbf{de-indentation}
+\end{itemize}
+}\end{slide}
+
+\begin{frame}[fragile]{A correct example}
+\begin{lstlisting}[frame=shadowbox]
+if temp > 350.0:
+  if throttle > 2500:
+    throttle = throttle - 1500
+  else:
+    warning = True
+else:
+  print("everything is OK")
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{An incorrect example}
+\begin{lstlisting}[frame=shadowbox]
+if temp > 350.0:
+if throttle > 2500:
+throttle = throttle - 1500
+else:
+warning = True
+else:
+print("everything is OK")
+\end{lstlisting}
+\end{frame}
+
+\begin{slide}{
+\item \texttt{if-then-else} statements eventually terminate
+\item after the \texttt{then} (or \texttt{else}) block is finished, we jump to the first line right after the whole \texttt{if-then-else}
+}\end{slide}
+
+\begin{frame}[fragile]{After an \texttt{if-then-else}}
+\begin{lstlisting}[frame=shadowbox]
+if temp > 350.0:
+  if throttle > 2500:
+    throttle = throttle - 1500
+  else:
+    warning = True
+else:
+  print("everything is OK")
+print(throttle, temp, warning)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{After an \texttt{if-then-else}?}
+Without indentation, this:
+\begin{lstlisting}[frame=shadowbox,basicstyle=\ttfamily\tiny]
+if temp > 350.0:
+if throttle > 2500:
+throttle = throttle - 1500
+else:
+warning = True
+else:
+print("everything is OK")
+print(throttle, temp, warning)
+\end{lstlisting}
+
+would be indistinguishable from both:
+
+\begin{tabular}{| c | c |}
+\hline
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+if temp > 350.0:
+  if throttle > 2500:
+    throttle = throttle - 1500
+  else:
+    warning = True
+else:
+  print("everything is OK")
+  print(throttle, temp, warning)
+\end{lstlisting}
+&
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+if temp > 350.0:
+  if throttle > 2500:
+    throttle = throttle - 1500
+  else:
+    warning = True
+else:
+  print("everything is OK")
+print(throttle, temp, warning)
+\end{lstlisting} \\
+\hline
+\end{tabular}
+\end{frame}
+
+\SlideSection{Reasoning about \texttt{if-then-else}}
+\begin{slide}{
+\item \texttt{if-then-else} effectively forks the code
+\item Until run-time, we are not really sure what path the code will take
+}\end{slide}
+
+\begin{frame}[fragile]{Example \texttt{if}'s}
+\begin{tabular}{| c | c |}
+\hline
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+x = 0
+y = 0
+z = 0
+op = "none"
+input = sys.stdin.readline()
+if input == "*\n":
+  x = int(sys.stdin.readline())
+  y = int(sys.stdin.readline())
+  op = "*"
+else:
+  if input == "+\n":
+    x = int(sys.stdin.readline())
+    y = int(sys.stdin.readline())
+    op = "+"
+  else:
+    x = int(sys.stdin.readline())
+    y = 2
+    op = "*"
+\end{lstlisting}
+&
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+if op == "+":
+  z = x + y
+else:
+  if op == "*":
+    z = x * y
+  else:
+    raise
+print(str(x) + " " + op + " " + 
+        str(y) + " is " + str(z))
+\end{lstlisting} \\
+\hline
+\end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]{Example \texttt{if}'s}
+Which path will be taken?
+\begin{lstlisting}[frame=shadowbox,basicstyle=\ttfamily\tiny]
+x = 0
+y = 0
+z = 0
+op = "none"
+input = sys.stdin.readline()
+if input == "*\n":
+  x = int(sys.stdin.readline())
+  y = int(sys.stdin.readline())
+  op = "*"
+else:
+  if input == "+\n":
+    x = int(sys.stdin.readline())
+    y = int(sys.stdin.readline())
+    op = "+"
+  else:
+    x = int(sys.stdin.readline())
+    y = 2
+    op = "*"
+\end{lstlisting}
+
+\pause
+
+\ \\
+
+\textbf{We do not know!}
+\end{frame}
+
+\begin{frame}[fragile]{Example \texttt{if}'s}
+What values will \texttt{x, y, op, input} have?
+\begin{lstlisting}[frame=shadowbox,basicstyle=\ttfamily\tiny]
+x = 0
+y = 0
+z = 0
+op = "none"
+input = sys.stdin.readline()
+if input == "*\n":
+  x = int(sys.stdin.readline())
+  y = int(sys.stdin.readline())
+  op = "*"
+else:
+  if input == "+\n":
+    x = int(sys.stdin.readline())
+    y = int(sys.stdin.readline())
+    op = "+"
+  else:
+    x = int(sys.stdin.readline())
+    y = 2
+    op = "*"
+\end{lstlisting}
+
+\pause
+
+\ \\
+
+\textbf{We do not know!}
+\end{frame}
+
+\begin{slide}{
+\item The paths are influenced by the value of the \texttt{input} variable
+\begin{itemize}
+\item One path for \texttt{"*\ts n"}
+\item Another for \texttt{"+\ts n"}
+\item Another for all other possible values
+\end{itemize}
+\item We analyze our code based on all possible outcomes
+}\end{slide}
+
+
+\begin{frame}[fragile]{Example \texttt{if}'s}
+\texttt{\center
+\begin{tabular}{| l | l | l | l | l |}
+\hline
+x & y & z & op & input \\
+\hline
+0 & 0 & 0 & "none" & \red{"*\ts n"} \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,basicstyle=\ttfamily\tiny]
+if input == "*\n":
+  x = int(sys.stdin.readline())
+  y = int(sys.stdin.readline())
+  op = "*"
+else:
+  ...
+\end{lstlisting}
+
+\pause
+
+\begin{tabular}{| l | l | l | l | l |}
+\hline
+x & y & z & op & input \\
+\hline
+\red{in2} & \red{in3} & 0 & \red{"*"} & "*\ts n" \\
+\hline
+\end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]{Example \texttt{if}'s}
+\texttt{\center
+\begin{tabular}{| l | l | l | l | l |}
+\hline
+x & y & z & op & input \\
+\hline
+0 & 0 & 0 & "none" & \red{"+\ts n"} \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,basicstyle=\ttfamily\tiny]
+if input == "*\n":
+  ...
+else:
+  if input == "+\n":
+    x = int(sys.stdin.readline())
+    y = int(sys.stdin.readline())
+    op = "+"
+  else:
+    ...
+\end{lstlisting}
+
+\pause
+
+\begin{tabular}{| l | l | l | l | l |}
+\hline
+x & y & z & op & input \\
+\hline
+\red{in2} & \red{in3} & 0 & \red{"+"} & "+\ts n" \\
+\hline
+\end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]{Example \texttt{if}'s}
+\texttt{\center
+\begin{tabular}{| l | l | l | l | l |}
+\hline
+x & y & z & op & input \\
+\hline
+0 & 0 & 0 & "none" & \red{anything else} \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,basicstyle=\ttfamily\tiny]
+if input == "*\n":
+  ...
+else:
+  if input == "+\n":
+    ...
+  else:
+    x = int(sys.stdin.readline())
+    y = 2
+    op = "*"
+\end{lstlisting}
+
+\pause
+
+\begin{tabular}{| l | l | l | l | l |}
+\hline
+x & y & z & op & input \\
+\hline
+\red{in2} & \red{2} & 0 & \red{"*"} & "anything else" \\
+\hline
+\end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]{Example \texttt{if}'s}
+We can now merge the various possible outcomes (ignoring \texttt{input} as we do not use it anymore):
+
+\begin{tabular}{| l | l | l | l | l |}
+\hline
+x & y & z & op & input \\
+\hline
+in2 & in3 & 0 & "*" & "*\ts n" \\
+\hline
+in2 & in3 & 0 & "+" & "+\ts n" \\
+\hline
+in2 & 2 & 0 & "*" & "anything else" \\
+\hline
+\end{tabular}
+
+\pause
+
+\begin{tabular}{| l | l | l | l |}
+\hline
+x & y & z & op \\
+\hline
+\red{in2} & \red{in3 $\vee$ 2} & 0 & \red{"*" $\vee$ "+"} \\
+\hline
+\end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]{Example \texttt{if}'s}
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+x & y & z & op \\
+\hline
+in2 & in3 $\vee$ 2 & 0 & "*" $\vee$ "+" \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,basicstyle=\ttfamily\tiny]
+if op == "+":
+  z = x + y
+else:
+  if op == "*":
+    z = x * y
+  else:
+    raise
+\end{lstlisting}
+
+\pause
+
+\begin{tabular}{| l | l | l | l |}
+\hline
+x & y & z & op \\
+\hline
+in2 & in3 $\vee$ 2 & \red{in2+in3 $\vee$ in2$\times$in3 $\vee$ in2$\times$2} & "*" $\vee$ "+" \\
+\hline
+\end{tabular}
+\end{frame}
+
+\SlideSubSection{Exponential explosion of potential control-paths}
+\begin{slide}{
+\item \texttt{in2+in3 $\vee$ in2$\times$in3 $\vee$ in2$\times$2} is a long formula
+\item It is simply saying that there are three possible outcomes:
+\begin{itemize}
+\item One outcome is \texttt{in2+in3}
+\item One outcome is \texttt{in2$\times$in3}
+\item One outcome is \texttt{in2$\times$2}
+\end{itemize}
+}\end{slide}
+
+\begin{slide}{
+\item The more nested conditionals, the more possible resulting execution paths
+\item But \textit{how many?}
+}\end{slide}
+
+\begin{frame}[fragile]{Nested \texttt{if}'s}
+How many \texttt{if}'s? \\ 
+How many execution paths? \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,basicstyle=\ttfamily\tiny]
+if C1:
+  A1
+else:
+  B1
+\end{lstlisting}
+
+\pause
+
+\textbf{1} \texttt{if's} \\
+\textbf{2} execution paths \\
+\end{frame}
+
+\begin{frame}[fragile]{Nested \texttt{if}'s}
+\begin{lstlisting}[frame=shadowbox,basicstyle=\ttfamily\tiny]
+if C1:
+  if C11:
+    A11
+  else:
+    B11
+else:
+  if C12:
+    A12
+  else:
+    B12
+\end{lstlisting}
+
+\pause
+
+\textbf{2} \texttt{if's} \\
+\textbf{4} execution paths \\
+\end{frame}
+
+\begin{frame}[fragile]{Nested \texttt{if}'s}
+\begin{lstlisting}[frame=shadowbox,basicstyle=\ttfamily\tiny]
+if C1:
+  if C11:
+    if C111:
+      A111
+    else:
+      B111
+  else:
+    if C112:
+      A112
+    else:
+      B112
+else:
+  if C12:
+    if C121:
+      A121
+    else:
+      B121
+  else:
+    if C122:
+      A122
+    else:
+      B122
+\end{lstlisting}
+
+\pause
+
+\textbf{3} \texttt{if's} \\
+\textbf{8} execution paths \\
+\end{frame}
+
+\begin{slide}{
+\item In general, for \texttt{n} \texttt{if}'s
+\item $2^n$ possible execution paths 
+}\end{slide}
+
+\begin{slide}{
+\item Each path can alter the state in a different way
+\item After an \texttt{if} with 8 possible paths
+\begin{itemize}
+\item We have 8 possible resulting states
+\item Variables can be one of possible 8 different values
+\end{itemize}
+}\end{slide}
+
+\begin{slide}{
+\item The more nested the \texttt{if}
+\item The more complex its conditions
+\item \textit{The harder it is to reason about it!}
+}\end{slide}
+
+\SlideSection{Using \texttt{if}'s}
+\SlideSubSection{Rules of thumb}
+\begin{slide}{
+\item Logical, short condition
+\item Good: \texttt{(temp > 350 \& throttle > 2500)}
+\item Bad: \texttt{(temp > 350 \& throttle > 2500 \& op == "+")}
+}\end{slide}
+
+\begin{slide}{
+\item Few levels of nesting
+\item Good: between one and three
+\item Bad: beyond three
+}\end{slide}
+
+\begin{slide}{
+\item Semantically connected \texttt{then} and \texttt{else}
+\item Good: both \texttt{then} and \texttt{else} perform similar operations on the same variables
+\item Bad: \texttt{then} and \texttt{else} perform unrelated operations or on different variables
+}\end{slide}
+
+\begin{frame}[fragile]{A disastrous example}
+\begin{lstlisting}[frame=shadowbox,basicstyle=\ttfamily\tiny]
+if (temp > 350 & throttle > 2500) | op == "+":
+  if op == "+":
+    z = x + y
+  else:
+    z = x * y
+    throttle = throttle - 1000
+else:
+  if op == "*":
+    z = x * y
+\end{lstlisting}
+
+What went wrong? \\
+
+\pause
+
+\begin{itemize}
+\item The condition is very hard to reason about
+\item The condition involves unrelated quantities
+\item The various \texttt{then}'s and \texttt{else}'s are partially unrelated
+\item There is repetition
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Bringing order}
+\begin{lstlisting}[frame=shadowbox,basicstyle=\ttfamily\tiny]
+if temp > 350 & throttle > 2500:
+  throttle = throttle - 1000
+
+if op == "+":
+  z = x + y
+else:
+  z = x * y
+\end{lstlisting}
+
+What went right? \\
+
+\pause
+
+\begin{itemize}
+\item The conditions are simple to reason about
+\item The conditions are all tight (no unrelated variables)
+\item The various \texttt{then}'s and \texttt{else}'s are all strongly related
+\item Separate \texttt{if}'s for separate tasks
+\item There is no repetition
+\end{itemize}
+\end{frame}
+
+\SlideSubSection{The value of reasoning}
+\begin{slide}{
+\item \textbf{Always keep in mind:}
+\item You have the power to make your own life a living Hell...
+\pause
+\item ...unless you reason first and then structure code logically
+}\end{slide}
+
+\begin{frame}{This is it!}
+\center
+\fontsize{18pt}{7.2}\selectfont
+The best of luck, and thanks for the attention!
+\end{frame}
+
+\end{document}
+
+\begin{slide}{
+\item ...
+}\end{slide}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+...
+\end{lstlisting}
+\end{frame}

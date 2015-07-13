@@ -1,0 +1,20 @@
+\frametitle{Loops with nested \texttt {if}'s}
+\begin{lstlisting}[frame=shadowbox,basicstyle=\ttfamily\tiny]
+while C0:
+  if C1:
+    A1
+  else:
+    B1
+\end{lstlisting}
+
+\textbf{Example:} execution paths per \textbf{3} iterations of the loop. \\
+
+\texttt{A1 A1 A1} \\
+\texttt{A1 A1 B1} \\
+\texttt{A1 B1 A1} \\
+\texttt{A1 B1 B1} \\
+\texttt{B1 A1 A1} \\
+\texttt{B1 A1 B1} \\
+\texttt{B1 B1 A1} \\
+\texttt{B1 B1 B1} \\
+

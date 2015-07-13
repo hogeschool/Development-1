@@ -1,0 +1,203 @@
+\documentclass[12pt,a4paper,final]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[table]{xcolor}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{paralist}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\lstset{frame=lrbt}
+\lstset{basicstyle=\footnotesize}
+
+\lstset
+{
+	basicstyle=\scriptsize\ttfamily,
+	breaklines=true,
+	frame=single,
+	showstringspaces=false,
+	tabsize=2
+}
+
+
+\author{Dr. Giuseppe Maggiore, Tony Busker}
+\title{Dev I and Dev II - kantelenplan}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+In this document we give an overview of the activities of the students during the various lectures. The lectures cover a mixture of theory and practice with an interactive format:
+\begin{itemize}
+\item some theory will be explained in a burst of roughly half an hour; 
+\item one or more exercises (in small groups) will be given; 
+\item the solution to the exercises will then be presented by one of the groups
+\item the lecturer and the rest of the class will assist the student called.
+\end{itemize}
+
+
+\section{Lectures}
+In this section we describe each lecture topics and activities.
+
+
+\subsection{Lecture 1 - logical model of computation}
+The first lecture covers basic concepts of computation from a logical standpoint.
+
+\paragraph*{Topics}
+\begin{itemize}
+\item Following a path (example: \textit{take three steps forward, turn left, ...});
+\item Following a path with state (example: \textit{read N from the whiteboard, take N steps forward, ...});
+\item Following a path with wrongly typed state (example: \textit{take Monday steps forward, ...});
+\item Following a path with state and conditionals (example: \textit{take N steps forward if the lecturer is smiling, ....}).
+\end{itemize}
+
+\paragraph*{Activities}
+\begin{itemize}
+\item Let students follow instructions;
+\item Introduce elements of state and let students follow instructions with state (\textit{take N/4 steps forward; N is your age});
+\item Introduce elements of writable state and let students follow instructions with writable state (\textit{take N/4 steps forward; N is written under the yellow sticker});
+\item Introduce elements of decision-making and let students follow instructions with state and decision making (\textit{if the sun is shining, then take N/4 steps forward; otherwise, go sit down});
+\item Introduce elements of iteration and let students follow instructions with state, decision making, and iteration (\textit{divide the students in teams, and let run some script battling for the toy farm}).
+\end{itemize}
+
+\subsection{Lecture 2 - concrete model of computation}
+The second lecture covers basic concepts of computation from a logical standpoint.
+
+\paragraph*{Topics}
+\begin{itemize}
+\item CPU and memory;
+\item a basic overview of the various things that an imperative language can do, independent of syntax;
+\item introduction to semantics and post-conditions.
+\end{itemize}
+
+\paragraph*{Activities}
+\begin{itemize}
+\item Formalize the concept of instructions seen in the previous lecture by rewriting the scripts;
+\item Formalize the concept of state and mutation seen in the previous lecture by rewriting the scripts;
+\item Formalize the concept of decision-making seen in the previous lecture by rewriting the scripts;
+\item Formalize the concept of iteration seen in the previous lecture by rewriting the scripts.
+\end{itemize}
+
+
+\subsection{Lecture 3 - Hello Python! and variables}
+The third lecture covers variables and an introduction to Python.
+
+\paragraph*{Topics}
+\begin{itemize}
+\item brief history of programming languages;
+\item brief introduction to Python: what it does, what it does not, why we have chosen it;
+\item variables in python for integers;
+\item the effect of variable assignment on memory;
+\end{itemize}
+
+\subsection{Lecture 4 (practicum) - Python basics}
+Set up a Python environment. Write a simple Python script that declares and assigns variables with various int, string, and float expressions.
+
+\subsection{Lecture 5 - datatypes, and expressions}
+The fourth lecture covers primitive datatypes and their associated expressions in the Python programming language.
+
+\paragraph*{Topics}
+\begin{itemize}
+\item what are data-types and \textit{why we do need them}?
+\item different Python data-types;
+\item arithmetic expressions;
+\item integer and floating point operators;
+\item boolean expressions;
+\item conditional expressions;
+\item very long expressions with conditionals vs temporary variables: the art of naming to encode knowledge.
+\end{itemize}
+
+\paragraph*{Activities}
+Call upon students to solve small riddles related to sample Python scripts on:
+
+\begin{itemize}
+\item Integers, strings, floats, bools;
+\item Integer, string, float, and bool varialbes;
+\item Semantics and post-conditions on variable-assignments.
+\item Integers, strings, floats, bool expressions;
+\item Conditional expressions;
+\item Semantics and post-conditions on expressions and conditional expressions.
+\end{itemize}
+
+
+\subsection{Lecture 6 (practicum) - Python basics and grading}
+Grading and feedback on previous practicum.
+
+
+\subsection{Lecture 7 - conditional control-flow statements}
+The fifth week covers conditional control-flow statements in the Python programming language.
+
+\paragraph*{Topics}
+\begin{itemize}
+\item making choices;
+\item \texttt{if-then} statements;
+\item \texttt{if-then-else} statements;
+\item the importance of an \texttt{else} statement;
+\item (slightly informal) semantics;
+\item exponential explosion of potential control-paths;
+\item expressive power of \texttt{if-then-else}.
+\end{itemize}
+
+\paragraph*{Activities}
+Call upon students to solve small riddles related to sample Python scripts on:
+
+\begin{itemize}
+\item \texttt{if-then} and \texttt{if-then-else} statements;
+\item how many possible final states of a program;
+\item semantics and post-conditions on conditional statements.
+\end{itemize}
+
+
+\subsection{Lecture 8 (practicum) - conditionals}
+Write a simple \textit{turtle} script that reads some input values and makes the turtle move according to the input values by using \texttt{if} statements.
+
+
+\subsection{Lecture 9 (practicum) - conditionals grading}
+Grading and feedback on previous practicum.
+
+
+\subsection{Lecture 10 - looping control-flow statements}
+The sixth (and last) week covers looping control-flow statements in the Python programming language.
+
+\paragraph*{Topics}
+\begin{itemize}
+\item repeated behaviors;
+\item \texttt{while} statements;
+\item (slightly informal) semantics;
+\item (more than) exponential explosion of potential control-paths;
+\item expressive power of \texttt{while};
+\item \texttt{for} statements;
+\item (slightly informal) semantics;
+\item \texttt{for} as a \textit{limited} form of \texttt{while}.
+\end{itemize}
+
+\paragraph*{Activities}
+Call upon students to solve small riddles related to sample Python scripts on:
+
+\begin{itemize}
+\item \texttt{while} and \texttt{for} loops;
+\item how many possible final states of a program;
+\item semantics and post-conditions on loops.
+\end{itemize}
+
+
+\subsection{Lecture 11 (practicum) - loops}
+Write a simple \textit{turtle} script that makes the turtle move in a loop, square, or even spiral by using \texttt{for} or \texttt{while} statements.
+
+
+\subsection{Lecture 12 (practicum) - loops grading}
+Grading and feedback on previous practicum.
+
+
+%\textbf{understand} & the concept of abstraction through function definition & \texttt{DEV II} & \texttt{FUNABS} %\\textbf{use and design} & functions & \texttt{DEV II} & \texttt{FUNDEF} \\
+%\textbf{use and design} & recursive functions & \texttt{DEV II} & \texttt{FUNREC} \\
+%\textbf{understand} & the concept of abstraction through class definition & \texttt{DEV II} & \texttt{CLSABS} \\
+%\textbf{use and design} & classes without inheritance or interfaces & \texttt{DEV II} & \texttt{CLSDEF} \\
+%\textbf{use} & recursively defined data structures & \texttt{DEV II} & \texttt{RECDATA} \\
+%\textbf{use} & arrays & \texttt{DEV II} & \texttt{ARR} \\
+
+
+
+\end{document}

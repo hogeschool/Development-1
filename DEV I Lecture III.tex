@@ -1,0 +1,442 @@
+\documentclass{beamer}
+\usetheme[hideothersubsections]{HRTheme}
+\usepackage{beamerthemeHRTheme}
+\usepackage{graphicx}
+\usepackage[space]{grffile}
+\usepackage{listings}
+\lstset{language=C,
+basicstyle=\ttfamily\footnotesize,
+mathescape=true,
+breaklines=true}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\newcommand{\red}[1]{
+\textcolor{red}{#1}
+}
+\newcommand{\ts}{\textbackslash}
+
+\title{Hello Python!}
+
+\author{Dr. Giuseppe Maggiore}
+
+\institute{Hogeschool Rotterdam \\ 
+Rotterdam, Netherlands}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+\SlideSection{Introduction}
+\SlideSubSection{Lecture topics}
+\begin{slide}{
+\item We introduce Python
+\item We bridge what we have seen in the previous lecture with actual Python elements
+}\end{slide}
+
+\SlideSubSection{Why many programming languages?}
+\begin{slide}{
+\item Low-level vs high-level
+\item Statically-typed vs dynamically-typed
+\item Compiled vs interpreted
+\item Imperative vs functional vs logic vs declarative vs object-oriented
+\item Safe vs unsafe
+\item Fast vs slow
+\item ...
+}\end{slide}
+
+\begin{slide}{
+\item The set of all problems is a complex, fractal-looking shape
+\item The programming language we choose shifts our focus on these problems
+\item Some become more visible and obvious to solve...
+\pause
+\item ...others become hidden, obstructed, or harder to solve
+}\end{slide}
+
+\begin{slide}{
+\item Not all languages are equal
+\item There is improvement and an ordering
+\begin{itemize}
+\item For low-level programming C is in most cases better than assembly
+\item For data transformation SQL is in most cases better than Java
+\item For algorithmic work on trees F\# is in most cases better than C\#
+\end{itemize}
+}\end{slide}
+
+\begin{slide}{
+\item Not all languages are comparable
+\item There are perfectly valid differences in balance and features
+\begin{itemize}
+\item Most languages are better than assembly in most scenarios
+\item For data transformation SQL is as good as F\# on algorithmic work on trees
+\end{itemize}
+}\end{slide}
+
+\SlideSubSection{Early programming languages}
+\begin{slide}{
+\item Analytical Engine/Difference Engine: hypothetical mechanical computers (1840's, Charles Babbage and Ada Lovelace)
+\item Assembly language: programming close to the machine (1940's)
+\item Fortran, ALGOL, and COBOL: various forms of imperative programming (1950's)
+\item LISP: functional and meta-programming (1950's, still in use)
+\item Simula: object-oriented programming (1950's)
+\item C: high-level low-level programming (1970's, still in use)
+\item Smalltalk: everything-is-an-object programming (1970's)
+\item Prolog: logic programming (1970's)
+\item ML: statically typed, polymorphic functional programming (1970's, still in use)
+\item SQL: query language (1970's, still in use)
+}\end{slide}
+
+\SlideSubSection{1980's}
+\begin{slide}{
+\item C++: C with classes (still in use)
+\item Matlab and Mathematica: mathematics and simulations (still in use)
+\item Erlang: concurrency and telecommunications (still in use)
+}\end{slide}
+
+\SlideSubSection{1990's: the Internet Age}
+\begin{slide}{
+\item Haskell: functional programming (still in use)
+\item Python, Ruby, Lua: concise, dynamic programming (still in use)
+\item JavaScript: webpage dynamics (still in use)
+\item Java: objects and portability (still in use)
+}\end{slide}
+
+\SlideSubSection{2000's: the Modern Age}
+\begin{slide}{
+\item C\#: objects and portability (still in use)
+\item F\# and Scala: hybrid, functional-first programming and portability (still in use)
+\item Go and Swift: native, safe development (getting traction?)
+}\end{slide}
+
+
+\SlideSection{The Python Programming Language}
+\SlideSubSection{The Python Zen}
+\begin{slide}{
+\item Beautiful is better than ugly
+\item Explicit is better than implicit
+\item Simple is better than complex
+\item Complex is better than complicated
+\item Readability counts
+}\end{slide}
+
+\SlideSubSection{Python introduction}
+\begin{slide}{
+\item General-purpose language
+\item High-level
+\item Concise on purpose
+\item Dynamically typed
+\item Hybrid paradigm, imperative/procedural first
+}\end{slide}
+
+\SlideSubSection{Why Python?}
+\begin{slide}{
+\item Used a lot as a beginning languages in higher education
+\item Adequate for expressing the basics of computational thinking
+\item High signal to noise ratio of syntax
+}\end{slide}
+
+\SlideSection{Python basic syntax and semantics}
+\SlideSubSection{Variables}
+\begin{slide}{
+\item Variables are not declared
+\item Just initialize and subsequently use
+}\end{slide}
+
+\SlideSubSection{Variable names}
+\begin{slide}{
+\item Variables may begin with any letter or the \texttt{\_} sign
+\item Followed by any sequence of letters, numbers, and the \texttt{\_}
+}\end{slide}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+x
+y
+_x
+customer_name
+_x1
+_x1_customer
+\end{lstlisting}
+\end{frame}
+
+\begin{slide}{
+\item Python supports integers and other sorts of numbers
+\item Any sequence of numeric characters (we call it an integer \textit{literal}) is a number
+}\end{slide}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+100
+0
+-1
+79228162514264337593543950336L
+\end{lstlisting}
+\end{frame}
+
+\begin{slide}{
+\item We can assign a value to a variable
+\item \texttt{variableName = expression}
+\item What does this do to the memory of the program? \textbf{Discuss.}
+\pause
+\item \textbf{If the variable did not exist, then we add it to memory}
+\item If the variable existed, then we change its value in memory 
+$$
+\tiny
+\left\{
+\begin{matrix}
+(PC,S) \overset{x = e}{\rightarrow} (PC+1,S'[x \mapsto e]) &when& x \in S \wedge S' = S - \{x\} & \\
+(PC,S) \overset{x = e}{\rightarrow} (PC+1,S[x \mapsto e]) &when& x \in S& \\
+\end{matrix}
+\right.
+$$
+}\end{slide}
+
+\begin{frame}[fragile]
+\texttt{\center
+\begin{tabular}{| l |}
+\hline
+PC \\
+\hline
+1 \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left]
+x = 100
+y = 200
+z = 50
+\end{lstlisting}
+
+what changes while running the current instruction? \textbf{Try to guess and discuss!}
+\end{frame}
+
+\begin{frame}[fragile]
+\texttt{\center
+\begin{tabular}{| l |}
+\hline
+PC \\
+\hline
+1 \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left]
+x = 100
+y = 200
+z = 50
+\end{lstlisting}
+
+\pause
+
+\begin{tabular}{| l | l |}
+\hline
+PC & x \\
+\hline
+\red{2} & \red{100} \\
+\hline
+\end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]
+\texttt{\center
+\begin{tabular}{| l | l |}
+\hline
+PC & x \\
+\hline
+2 & 100 \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left]
+x = 100
+y = 200
+z = 50
+\end{lstlisting}
+
+\pause
+
+\begin{tabular}{| l | l | l |}
+\hline
+PC & x & y \\
+\hline
+\red 3 & 100 & \red{200} \\
+\hline
+\end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]
+\texttt{\center
+\begin{tabular}{| l | l | l |}
+\hline
+PC & x & y \\
+\hline
+3 & 100 & 200 \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left]
+x = 100
+y = 200
+z = 50
+\end{lstlisting}
+
+\pause
+
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & x & y & z \\
+\hline
+\red 4 & 100 & 200 & \red{50} \\
+\hline
+\end{tabular}
+\end{frame}
+
+\begin{slide}{
+\item We can assign a value to a variable
+\item \texttt{variableName = expression}
+\item What does this do to the memory of the program? \textbf{Discuss.}
+\pause
+\item If the variable did not exist, then we add it to memory
+\item \textbf{If the variable existed, then we change its value in memory} 
+$$
+\tiny
+\left\{
+\begin{matrix}
+(PC,S) \overset{x = e}{\rightarrow} (PC+1,S'[x \mapsto e]) &when& x \in S \wedge S' = S - \{x\} & \\
+(PC,S) \overset{x = e}{\rightarrow} (PC+1,S[x \mapsto e]) &when& x \in S& \\
+\end{matrix}
+\right.
+$$
+}\end{slide}
+
+\begin{frame}[fragile]
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & x & y & z \\
+\hline
+1 & 0 & -1 & 5 \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left]
+x = 100
+y = 200
+z = 50
+\end{lstlisting}
+
+what changes while running the current instruction? \textbf{Try to guess and discuss!}
+\end{frame}
+
+\begin{frame}[fragile]
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & x & y & z \\
+\hline
+1 & 0 & -1 & 5 \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left]
+x = 100
+y = 200
+z = 50
+\end{lstlisting}
+
+\pause
+
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & x & y & z \\
+\hline
+\red{2} & \red{100} & -1 & 5 \\
+\hline
+\end{tabular}
+}
+\end{frame}
+
+\begin{frame}[fragile]
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & x & y & z \\
+\hline
+2 & 100 & -1 & 5 \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left]
+x = 100
+y = 200
+z = 50
+\end{lstlisting}
+
+\pause
+
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & x & y & z \\
+\hline
+\red{3} & 100 & \red 200 & 5 \\
+\hline
+\end{tabular}
+}
+\end{frame}
+
+\begin{frame}[fragile]
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & x & y & z \\
+\hline
+3 & 100 & 200 & 5 \\
+\hline
+\end{tabular}
+} \ \\ \ \\ \ \\
+
+\begin{lstlisting}[frame=shadowbox,numbers=left]
+x = 100
+y = 200
+z = 50
+\end{lstlisting}
+
+\pause
+
+\texttt{\center
+\begin{tabular}{| l | l | l | l |}
+\hline
+PC & x & y & z \\
+\hline
+\red{4} & 100 & 200 & \red 50 \\
+\hline
+\end{tabular}
+}
+\end{frame}
+
+\begin{frame}{This is it!}
+\center
+\fontsize{18pt}{7.2}\selectfont
+The best of luck, and thanks for the attention!
+\end{frame}
+
+\end{document}
+
+\begin{slide}{
+\item ...
+}\end{slide}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+...
+\end{lstlisting}
+\end{frame}
