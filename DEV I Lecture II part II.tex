@@ -70,19 +70,36 @@ Rotterdam, Netherlands}
 \SlideSection{Memory and data}
 \SlideSubSection{Memory}
 \begin{slide}{
-\item Data is stored into memory
+\item Data is stored into memory (and also the instructions).
 \item Memory is just a long linear stream of bytes
 \item CPU queries memory by address
 \item CPU updates memory with address and data
 }\end{slide}
 
+\SlideSection{Memory and data}
+\SlideSubSection{Different kinds of memory}
+\begin{slide}{
+\item There are two kinds of memory in a computer: Random Access Memory (RAM), and hard drives (HD).
+\item RAM is volatile: the data is lost when the computer is powered off.
+\item HD memory is permanent. Data remain after switching off the power.
+\item The memory we are referring to in this lesson is the RAM.
+}\end{slide}
+
+\SlideSection{Memory and data}
+\SlideSubSection{Different kinds of memory}
+\begin{slide}{\item[] \begin{figure}
+\includegraphics[scale=3.0]{images/computer_architecture}
+\caption{Architecture of a computer}.
+\end{figure}}
+\end{slide}
+
 \SlideSection{Capabilities of programming languages}
 \SlideSubSection{Typical programming language elements}
 \begin{slide}{
-\item Intuitive instruction names
-\item Higher level flow-control operators
-\item Labeled data through variables
-\item Higher level data manipulation operators
+\item Intuitive instruction structure
+\item Higher level flow-control operators \\ \texttt{if, while, foreach, ...}
+\item Labelled data through variables \\ \texttt{int studentAge = 19}
+\item Higher level data manipulation operators \\ \texttt{hypotenuse = sqrt(x * x, y * y)}
 }\end{slide}
 
 \SlideSubSection{Instruction names}
@@ -165,7 +182,7 @@ else
 \begin{itemize}
 \item How many bytes should I read at address \texttt{0xA0DF9931}?
 \pause
-\item How many bytes should I read for integer \texttt{userAge}\footnote{Knowing that integers are 4 bytes on 32 bit machines and 8 bytes on 64 bit machines}?
+\item How many bytes should I read for integer \texttt{userAge}\footnote{Knowing that integers are 4 bytes on 32 bit machines and 8 bytes on \\ 64 bit machines}?
 \end{itemize}
 }\end{slide}
 
