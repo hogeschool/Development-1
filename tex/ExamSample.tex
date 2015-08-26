@@ -1,0 +1,156 @@
+\section*{Exam sample}
+What follows is a concrete example of the exam.
+
+
+\paragraph{Question I: formal rules} \ \\
+
+\textit{You start at point (0,0). Take a step in the direction (10,0) until you are above point (45,0). Then take five steps in the direction (0,2). Where do you end up?}
+
+\ \\ 
+
+\textbf{Answer:} \textit{The trajectory is:}
+
+\begin{lstlisting}
+
+P1 = (50,0)
+ +----- P2 = (50,10)
+ |
+ |
+ |
+ |
+P0 = (0,0)
+\end{lstlisting}
+
+\ \\ 
+
+\textbf{Points:} \textit{25\%.}
+
+\ \\ 
+\ \\ 
+
+\paragraph{Question II: program state} \ \\ 
+
+\textit{Fill-in the program state with the values that the variables assume while running the sample below.}
+
+\begin{lstlisting}
+y = 1
+for i in range(0, 5):
+    y = y * 2
+\end{lstlisting}
+
+\ \\ 
+
+\textbf{Answer:} \textit{The variable allocations are:}
+
+\begin{tabular}{| c | c | c | c | c | c | c | c |}
+\hline
+\textbf{y} & 1 & 1 & 2 & 4 & 8 & 16 & 32 \\
+\hline
+\textbf{i} & n.a. & 0 & 1 & 2 & 3 & 4 & 4 \\
+\hline
+\end{tabular}
+
+\ \\
+s
+\textbf{Points:} \textit{25\%.}
+
+\ \\ 
+
+\textbf{Grading:} \textit{Full points if all values are correctly listed in the right order. Half points if at least half of values are listed in the right order. Zero points otherwise.}
+
+\ \\ 
+
+\textbf{Associated learning goals:} \texttt{CMC}.
+
+\ \\ 
+
+\paragraph{Question III: variables, expressions, and data types}
+
+\ \\ 
+
+\textit{What is the value and the type of all variables after execution of the following code?}
+\begin{lstlisting}
+v = 0
+i = "Hello + world"
+j = "Hello" + "world"
+k = 10 / 3
+\end{lstlisting}
+
+\ \\ 
+
+\textbf{Answer:} \textit{The value and type of all variables after execution is:}
+
+\begin{tabular}{| l | c | c | }
+\hline
+\textbf{Variable} & \textbf{Value} & \textbf{Type} \\
+\hline
+v & 0 & int \\
+\hline
+i & 'Hello + world' & str \\
+\hline
+j & 'Helloworld' & str \\
+\hline
+k & 3 & int \\
+\hline
+l & 3.3333$\dots$ & float \\
+\hline
+\end{tabular}
+
+\ \\ 
+
+\textbf{Points:} \textit{25\%.}
+
+\ \\ 
+
+\textbf{Grading:} \textit{All values and types are correct: full-points. At least half the values and at least half the types are correct: half points. Zero points otherwise.}
+
+\ \\ 
+
+\textbf{Associated learning goals:} \texttt{VAR}, \texttt{EXPR}.
+
+\ \\ 
+
+\paragraph{Question IV: control flow}
+
+\ \\ 
+
+\textbf{General shape of the question:} \textit{What is the value of all variables after execution of the following code?}
+
+\ \\ 
+
+\textbf{Concrete example of question:} \textit{What is the value of all variables after execution of the following code?}
+
+\begin{lstlisting}
+v = 0
+for i in range(1,15):
+  if (i % 2 == 0) & (i % 3 == 0):
+    v = v + i
+\end{lstlisting}
+
+\ \\ 
+
+\textbf{Concrete example of answer:} \textit{The value of all variables after execution is:}
+
+\begin{tabular}{| l | c |}
+\hline
+\textbf{Variable} & \textbf{Value} \\
+\hline
+\texttt{i} & \texttt{14} \\
+\hline
+\texttt{v} & \texttt{18} \\
+\hline
+\end{tabular}
+
+\ \\ 
+
+\textbf{Points:} \textit{25\%.}
+
+\ \\ 
+
+\textbf{Grading:} \textit{All values are correct: full-points. At least half the values are correct: half points. Zero points otherwise.}
+
+\ \\ 
+
+\textbf{Associated learning goals:} \texttt{COND}, \texttt{LOOP}.
+
+\ \\ 
