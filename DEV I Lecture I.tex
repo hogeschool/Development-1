@@ -9,6 +9,7 @@
 \lstset{language=C,
 basicstyle=\ttfamily\footnotesize,
 mathescape=true,
+showspaces=false,
 breaklines=true}
 \usepackage[utf8]{inputenc}
 
@@ -85,7 +86,7 @@ Rotterdam, Netherlands}
 }\end{slide}
 
 \begin{frame}[fragile]
-\textbf{Following instructions} \textit{(we need a ``volunteer'')}
+\textbf{Following instructions}\footnote{The teacher should ask for a volunteer}
 
 \begin{lstlisting}[frame=shadowbox]
 take 3 steps forward
@@ -176,7 +177,7 @@ B & C \\
 
 \begin{lstlisting}[frame=shadowbox]
 make a comment on C
-write on C the index of today's day of the week
+write on C the index of the current day of the week
 sit on the chair
 turn left by 90 * B degrees
 slide C steps forward
@@ -191,25 +192,25 @@ slide C steps forward
 }\end{slide}
 
 \begin{frame}[fragile]
-\textbf{We can make decisions} \textit{(we need a ``volunteer'')} \\
+\textbf{We can make decisions}\footnote{Teacher should ask the students to perform the action} \\
 \center
 \texttt{
 \begin{tabular}{| c | c | c | c |}
 \hline
 A & B & C & D \\
 \hline
-today's weather & -1 & 2 & 3 \\
+shirt colour & -1 & 2 & 3 \\
 \hline
 \end{tabular}
 }
 
 \begin{lstlisting}[frame=shadowbox]
 sit on the chair
-if A is ``sunny'' then
+if A is ``black'' then
   turn left by 90 * B degrees
 otherwise
   turn left by 90 * C degrees
-slide D steps forward
+clap D times
 \end{lstlisting}
 \end{frame}
 
@@ -222,7 +223,7 @@ slide D steps forward
 }\end{slide}
 
 \begin{frame}[fragile]
-\textbf{We can repeat behavior} \textit{(we need a ``volunteer'')} \ \\
+\textbf{We can repeat behavior}\footnote{The teacher should ask for two teams of volunteers} \ \\
 
 \begin{tabular}{| l | r |}
 \hline
@@ -271,11 +272,21 @@ fight(a,d):
 \item \textbf{Repetition} of code based on elements of the state 
 }\end{slide}
 
-\SlideSubSection{Assignment in groups of four}
+\SlideSubSection{Assignment 1 in groups of four}
 \begin{slide}{
 \item Reprogram the game
 \item Make it so that the positioning of defending soldiers makes a difference (positive or negative)
 \item \textit{One group will be ``randomly selected'' to present}
+}\end{slide}
+
+
+\SlideSubSection{Assignment 2 in groups of four}
+\begin{slide}{
+\item Think about the actions needed for a game concept (at most 10).
+\item Write them down and put them in the box.
+\item Pick a sheet at random (if it is the one you wrote pick again).
+\item Write the implementation of a game using the actions you have.
+\item A group will be chosen to play the game.
 }\end{slide}
 
 \begin{frame}{This is it!}

@@ -49,7 +49,7 @@ turn left
 slide 3 steps forward
 \end{lstlisting}
 
-what does each instruction do? \textbf{Try to guess and discuss!}
+What do you implicitly assume by performing each of the instructions? \textbf{Try to guess and discuss!}
 \end{frame}
 
 \begin{slide}{
@@ -170,7 +170,7 @@ what do we do now? \textbf{Try to guess and discuss!}
 \begin{slide}{
 \item We say that an instruction \texttt{I} is a \textit{function} that, given a pair of \texttt{PC} and \texttt{S}, returns a new pair of \texttt{PC} and \texttt{S}
 \pause
-\item Do not panic now, math-y symbols incoming!
+\item Do not panic now, math..y symbols incoming!
 \pause
 \item $(PC,S) \overset{Instr}{\rightarrow} (PC',S')$
 }\end{slide}
@@ -204,6 +204,7 @@ what do we do now? \textbf{Try to guess and discuss!}
 \item Consider instruction \texttt{stand up} (we will shorten it to \texttt{stand})
 \begin{itemize}
 \small
+\pause
 \item $(PC,S) \overset{stand}{\rightarrow} (PC+1,S[Pose \mapsto Standing])$
 \end{itemize}
 \item We increment the current instruction index by one
@@ -277,17 +278,21 @@ PC & S.Pose & S.Orientation & S.Position \\
 
 \begin{slide}{
 \item Consider instruction \texttt{take 3 steps forward} (we will shorten it to \texttt{fwd 3})
-$$
+\begin{align*}
 \tiny
-\left\{
-\begin{matrix}
-(PC,S) \overset{fwd 3}{\rightarrow} (PC+1,S[Position \mapsto S.Position+(0,3)]) &when& S.Orientation=Forward& \\
-(PC,S) \overset{fwd 3}{\rightarrow} (PC+1,S[Position \mapsto S.Position-(0,3)]) &when& S.Orientation=Backward& \\
-(PC,S) \overset{fwd 3}{\rightarrow} (PC+1,S[Position \mapsto S.Position+(3,0)]) &when& S.Orientation=Right& \\
-(PC,S) \overset{fwd 3}{\rightarrow} (PC+1,S[Position \mapsto S.Position-(3,0)]) &when& S.Orientation=Left& \\
-\end{matrix}
+\left\lbrace
+\begin{array}{l l}
+&(PC,S) \overset{fwd 3}{\rightarrow} (PC+1,S[Position \mapsto S.Position+(0,3)])\\
+&when \; S.Orientation=Forward \\
+&(PC,S) \overset{fwd 3}{\rightarrow} (PC+1,S[Position \mapsto S.Position-(0,3)]) \\
+&when \; S.Orientation=Backward \\
+&(PC,S) \overset{fwd 3}{\rightarrow} (PC+1,S[Position \mapsto S.Position+(3,0)]) \\
+&when S.Orientation=Right \\
+&(PC,S) \overset{fwd 3}{\rightarrow} (PC+1,S[Position \mapsto S.Position-(3,0)]) \\
+&when S.Orientation=Left \\
+\end{array}
 \right.
-$$
+\end{align*}
 \item We always increment the instruction by one
 \item We change the position of the resulting state depending on the orientation of the input state
 }\end{slide}
@@ -311,7 +316,7 @@ PC & S.Pose & S.Orientation & S.Position \\
 
 \begin{lstlisting}[frame=shadowbox,numbers=left,firstnumber=23]
 ...
-if A is ``sunny'' then 
+if A is ``black'' then 
   turn left by 90 * B degrees 
 otherwise 
   turn left by 90 * C degrees 
@@ -323,7 +328,7 @@ otherwise
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-25\footnote{Assuming good weather} & Standing & Right & (10,20) \\
+25\footnote{Assuming student's shirt is black} & Standing & Right & (10,20) \\
 \hline
 \end{tabular}
 }
@@ -342,7 +347,7 @@ PC & S.Pose & S.Orientation & S.Position \\
 
 \begin{lstlisting}[frame=shadowbox,numbers=left,firstnumber=23]
 ...
-if A is ``sunny'' then 
+if A is ``black'' then 
   turn left by 90 * B degrees 
 otherwise 
   turn left by 90 * C degrees 
@@ -354,7 +359,7 @@ otherwise
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-27\footnote{Assuming bad weather} & Standing & Right & (10,20) \\
+27\footnote{Assuming student's shirt is not black} & Standing & Right & (10,20) \\
 \hline
 \end{tabular}
 }
@@ -362,6 +367,13 @@ PC & S.Pose & S.Orientation & S.Position \\
 
 \begin{slide}{
 \item Consider instruction \texttt{if A then B else C} (shortened by as $if_{ABC}$)
+\pause
+\item We jump to the first instruction of the \texttt{B} block if the condition evaluates to \texttt{TRUE}
+\pause
+\item We jump to the first instruction of the \texttt{C} block if the condition evaluates to \texttt{FALSE}
+\pause
+\item We leave the state unchanged
+\pause
 
 $$
 \tiny
@@ -373,10 +385,6 @@ $$
 \right.
 $$
 
-
-\item We jump to the first instruction of the \texttt{B} block if the condition evaluates to \texttt{TRUE}
-\item We jump to the first instruction of the \texttt{C} block if the condition evaluates to \texttt{FALSE}
-\item We leave the state unchanged
 }\end{slide}
 
 \begin{slide}{
@@ -447,21 +455,24 @@ PC & S.Pose & S.Orientation & S.Position \\
 
 \begin{slide}{
 \item Consider instruction \texttt{while A do B} (shortened by as $while_{AB}$)
+\pause
+\item We jump to the first instruction of the \texttt{B} block if the condition evaluates to \texttt{TRUE}
+\pause
+\item We jump to after the last instruction of the \texttt{B} block if the condition evaluates to \texttt{FALSE}
+\pause
+\item We leave the state unchanged
+\pause
 
 $$
 \tiny
-\left\{
-\begin{matrix}
-(PC,S) \overset{while_{AB}}{\rightarrow} (loc(B),S) &when& (PC,S) \overset{A}{\rightarrow} \mathtt{TRUE} \\
-(PC,S) \overset{while_{AB}}{\rightarrow} (lastloc(B)+1,S) &when& (PC,S) \overset{A}{\rightarrow} \mathtt{FALSE} \\
-\end{matrix}
+\left\lbrace
+\begin{array}{l l}
+&(PC,S) \overset{while_{AB}}{\rightarrow} (loc(B),S) \; when \; (PC,S) \overset{A}{\rightarrow} \mathtt{TRUE} \\
+&(PC,S) \overset{while_{AB}}{\rightarrow} (lastloc(B)+1,S) \; when \; (PC,S) \overset{A}{\rightarrow} \mathtt{FALSE} \\
+\end{array}
 \right.
 $$
 
-
-\item We jump to the first instruction of the \texttt{B} block if the condition evaluates to \texttt{TRUE}
-\item We jump to after the last instruction of the \texttt{B} block if the condition evaluates to \texttt{FALSE}
-\item We leave the state unchanged
 }\end{slide}
 
 \begin{frame}{This is it!}
