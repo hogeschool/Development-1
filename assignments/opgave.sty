@@ -1,0 +1,91 @@
+%changelog
+%7:50 AM 4/22/2009 antwoord in italic
+%11:32 PM 6/4/2009 text mapping
+%13:00 10-10-2010 split opgave, style, tjaysmath
+\ProvidesPackage{opgave}
+\usepackage[english,dutch]{babel}
+\selectlanguage{dutch}
+
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\usepackage{ifthen}
+
+%define some bools
+\newcounter{opgave}
+\newcounter{subopgave}[opgave]
+
+\newcommand{\opgave}{\theopgave}
+\newcommand{\subopgave}{\thesubopgave}
+
+\newboolean{showAntwoord}
+\setboolean{showAntwoord}{false}
+
+\newboolean{isTentamen}
+\setboolean{isTentamen}{false}
+
+\newcounter{punten}
+
+\reversemarginpar
+
+
+%% opgave
+%  @param punten
+%  @param Titel
+\renewcommand{\theopgave}[2]%
+{%\vspace{1.4em}%{\noindent}%
+{\bigskip {\noindent\ignorespaces}% //SKIP VOOR OPGAVE
+{%\par\noindent %\ignorespacesafterend% 
+\begin{large} \textbf{Exercise \arabic{opgave}.}\end{large}%
+%\ifthenelse{\boolean{isTentamen}}{\textit{(#2 Punten)}}{}%
+\large{~#1}\\[0.1em] \ignorespacesafterend \stepcounter{opgave} \setcounter{subopgave}{1}}}}%
+
+%% subopgave
+%  @param vraag
+%  @param antwoord
+%  @param punten
+\renewcommand{\thesubopgave}[3]%
+{\vspace{0.3em}{\noindent\ignorespaces}%
+{\par\noindent \ignorespacesafterend}%
+\alph{subopgave}.)~%
+\ifthenelse{\boolean{isTentamen}}{\marginpar{{\small \textit{(#3 %
+punt%
+\ifthenelse{\equal{#3}{1}}{}{en}%
+)}}~}}{}%
+#1%
+\ifthenelse{\boolean{showAntwoord}}{\textit{~$\to$~#2}}{}%
+\stepcounter{subopgave}%
+\addtocounter{punten}{#3}%
+}
+
+
+
+%toon einde tentamen aan het eind van het document
+\newcommand{\einde}{%
+\vfill
+%\marginpar{\small{ \textit{$
+%\left\{
+%\begin {array}{c}
+%totaal \\
+%arabic{punten} punten
+%\end{array}
+%\right\}$}}}%
+
+\begin{flushright}
+\textit{\small{End of the %
+\ifthenelse{\boolean{isTentamen}}{exam}{assignment}
+}}
+\end{flushright}
+}
+
+
+ % New definition of square root:
+ % it renames \sqrt as \oldsqrt
+\let\oldsqrt\sqrt
+ % it defines the new \sqrt in terms of the old one
+\def\sqrt{\mathpalette\DHLhksqrt}
+\def\DHLhksqrt#1#2{\setbox0=\hbox{$#1\oldsqrt{#2\,}$}\dimen0=\ht0
+\advance\dimen0-0.2\ht0
+\setbox2=\hbox{\vrule height\ht0 depth -\dimen0}%
+{\box0\lower0.4pt\box2}}
