@@ -77,7 +77,7 @@ Rotterdam, Netherlands}
 
 \SlideSubSection{Integers}
 \begin{slide}{
-\item Numbers without dot/comma
+\item Numbers without dot\footnote{comma in Dutch}
 \begin{itemize}
 \item \texttt{0}
 \item \texttt{100} 
@@ -96,7 +96,7 @@ Rotterdam, Netherlands}
 
 \SlideSubSection{Floating points}
 \begin{slide}{
-\item Numbers with dot/comma
+\item Numbers with dot\footnote{comma in Dutch}
 \begin{itemize}
 \item \texttt{0.0}
 \item \texttt{2.5}
@@ -106,6 +106,20 @@ Rotterdam, Netherlands}
 \end{itemize}
 }\end{slide}
 
+\SlideSubSection{The scientific notation}
+\begin{slide}{
+\item \texttt{0.000001} is annoying to write
+\item we can write \texttt{1.e-5} instead
+\item the sign \texttt{e-N} means \textit{add N zeros right after the dot}
+}\end{slide}
+
+\begin{slide}{
+\item \texttt{1000000.0} is annoying to write
+\item we can write \texttt{1.e6} instead
+\item the sign \texttt{eN} means \textit{add N zeros right before the dot}
+}\end{slide}
+
+\SlideSubSection{Floating points}
 \begin{slide}{
 \item Typical arithmetic operations on numbers
 \begin{itemize}
@@ -274,6 +288,7 @@ $False$ & \textcolor{red}{$True$} & $False$\\
 \item String literals are sequences of characters, on a single line, between double \texttt{"} or single \texttt{'} quotes 
 \item Some characters do not fit this description
 \item We need special markings for such characters
+\item These special markings are called \textit{escape characters}
 }\end{slide}
 
 \begin{slide}{
@@ -288,6 +303,12 @@ $False$ & \textcolor{red}{$True$} & $False$\\
 \item \texttt{\textbackslash t} for ASCII Horizontal Tab (TAB)  
 \item \texttt{\textbackslash v} for ASCII Vertical Tab (VT) 
 \item \texttt{\textbackslash \textbackslash} for newline
+}\end{slide}
+
+\begin{slide}{
+\item \texttt{"Hello\ts n world"} is a string on two lines
+\item \texttt{"Hello\ts n world\ts n of Python"} is a string on three lines
+\item ...
 }\end{slide}
 
 \begin{slide}{
@@ -349,6 +370,28 @@ TypeError: cannot concatenate 'str' and 'int' objects
 \item Many type errors stem from \textit{changes in meaning}, connected with \textit{changes in type} of a variable
 }\end{slide}
 
+
+\SlideSection{Assignment}
+\SlideSubSection{Instructions}
+\begin{slide}{
+\item Split into four groups.
+\item Use the data types you saw in this lesson to model an RPG character in a Python program.
+\item Example: health, team color, ...
+\item Make sure the program runs without errors.
+\item Draw on a sheet what he soldier should look like.
+\item Hand over the code to another group and make them draw the soldier.
+\item If the pictures are the same then you have succeeded, otherwise adjust your code.
+}\end{slide}
+
+
+\SlideSubSection{Hand-in}
+\begin{slide}{
+\item Write your names and student numbers on your sheets
+\item Hand them in
+\item \textit{They may be used at your oral check} in the form of questions such as ``how would you rewrite this after the course''
+}\end{slide}
+
+
 \begin{frame}{This is it!}
 \center
 \fontsize{18pt}{7.2}\selectfont
@@ -366,3 +409,5 @@ The best of luck, and thanks for the attention!
 ...
 \end{lstlisting}
 \end{frame}
+
+
