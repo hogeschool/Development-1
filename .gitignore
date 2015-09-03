@@ -154,3 +154,5 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+*.lb

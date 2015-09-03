@@ -78,26 +78,48 @@ Rotterdam, Netherlands}
 \SlideSubSection{Integers}
 \begin{slide}{
 \item Numbers without dot/comma
-\item \texttt{0}, \texttt{100}, \texttt{-500}, ...
+\begin{itemize}
+\item \texttt{0}
+\item \texttt{100} 
+\item \texttt{-500}
+\end{itemize}
 }\end{slide}
 
 \begin{slide}{
 \item Typical arithmetic operations on numbers (\textbf{not in Python 3})
-\item \texttt{3 + 5 = 8}, \texttt{5 / 2 = 2}, \texttt{40 * 5 = 200}, ...
+\begin{itemize}
+\item \texttt{3 + 5 = 8}
+\item \texttt{5 / 2 = 2}
+\item \texttt{40 * 5 = 200}
+\end{itemize} 
 }\end{slide}
 
 \SlideSubSection{Floating points}
 \begin{slide}{
 \item Numbers with dot/comma
-\item \texttt{0.0}, \texttt{2.5}, \texttt{10.0e3}, \texttt{3.1e-5}, \texttt{-.1e-5}, ...
+\begin{itemize}
+\item \texttt{0.0}
+\item \texttt{2.5}
+\item \texttt{10.0e3}
+\item \texttt{3.1e-5}
+\item \texttt{-.1e-5}
+\end{itemize}
 }\end{slide}
 
 \begin{slide}{
 \item Typical arithmetic operations on numbers
-\item \texttt{5.0 / 2.0 = ?}, \texttt{10.0e3 / 0.1 = ?}, \texttt{3.1e-5 + 1.0e5 = ?}, ...
+\begin{itemize}
+\item \texttt{5.0 / 2.0 = ?} 
+\item \texttt{10.0e3 / 0.1 = ?}
+\item \texttt{3.1e-5 + 1.0e5 = ?}
+\end{itemize}
 \item \textbf{Can you guess the results?}
 \pause
-\item \texttt{5.0 / 2.0 = 2.5}, \texttt{10.0e3 / 0.1 = 10.0e4}, \texttt{3.1e-5 + 1.0e5 = 100000.000031}, ...
+\begin{itemize}
+\item \texttt{5.0 / 2.0 = 2.5}
+\item \texttt{10.0e3 / 0.1 = 10.0e4}
+\item \texttt{3.1e-5 + 1.0e5 = 100000.000031}
+\end{itemize} 
 }\end{slide}
 
 \SlideSubSection{Conversion to and from floating point}
@@ -107,10 +129,17 @@ Rotterdam, Netherlands}
 }\end{slide}
 
 \begin{slide}{
-\item \texttt{int(2.5) = ?}, \texttt{float(3) = ?}
+\item Given the following expressions:
+\begin{itemize}
+\item \texttt{int(2.5) = ?}
+\item \texttt{float(3) = ?}
+\end{itemize}
 \item \textbf{Can you guess the results?}
 \pause
-\item \texttt{int(2.5) = 2}, \texttt{float(3) = 3.0}
+\begin{itemize}
+\item \texttt{int(2.5) = 2}
+\item \texttt{float(3) = 3.0}
+\end{itemize}
 }\end{slide}
 
 \begin{slide}{
@@ -121,10 +150,17 @@ Rotterdam, Netherlands}
 }\end{slide}
 
 \begin{slide}{
-\item \texttt{floor(2.5) = ?}, \texttt{ceil(2.5) = ?}
+\item Given the following expressions:
+\begin{itemize}
+\item \texttt{floor(2.5) = ?} 
+\item \texttt{ceil(2.5) = ?}
+\end{itemize}
 \item \textbf{Can you guess the results?}
 \pause
-\item \texttt{floor(2.5) = 2.0}, \texttt{ceil(2.5) = 3.0}
+\begin{itemize}
+\item \texttt{floor(2.5) = 2.0}
+\item \texttt{ceil(2.5) = 3.0}
+\end{itemize}
 }\end{slide}
 
 \begin{slide}{
@@ -142,7 +178,7 @@ Rotterdam, Netherlands}
 
 \SlideSubSection{Python 3 integer division}
 \begin{slide}{
-\item Traditional integer division is now \texttt{//}
+\item Traditional integer division is now ``\texttt{\textbf{//}}"
 \item \texttt{5 // 2 = 2}
 }\end{slide}
 
@@ -156,8 +192,48 @@ Rotterdam, Netherlands}
 \item Logical operators on truth values
 \begin{itemize}
 \item \texttt{\&} for \texttt{and}
+\\
+%NOTE: requires \usepackage{color}
+\begin{tabular}{@{ }c@{ }@{ }c | c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{ }}
+A & B & ( & A & $\&$ & B & )\\
+\hline 
+$True$ & $True$ &  & $True$ & \textcolor{red}{$True$} & $True$ & \\
+$True$ & $False$ &  & $True$ & \textcolor{red}{$False$} & $False$ & \\
+$False$ & $True$ &  & $False$ & \textcolor{red}{$False$} & $True$ & \\
+$False$ & $False$ &  & $False$ & \textcolor{red}{$False$} & $Fasle$ & \\
+\end{tabular}
+\end{itemize}
+}\end{slide}
+
+\begin{slide}{
+\item Logical operators on truth values
+\begin{itemize}
 \item \texttt{|} for \texttt{or}
+%NOTE: requires \usepackage{color}
+\\
+\begin{tabular}{@{ }c@{ }@{ }c | c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{ }}
+A & B & ( & A & $|$ & B & )\\
+\hline 
+$True$ & $True$ &  & $True$ & \textcolor{red}{$True$} & $True$ & \\
+$True$ & $False$ &  & $True$ & \textcolor{red}{$True$} & $False$ & \\
+$False$ & $True$ &  & $False$ & \textcolor{red}{$True$} & $True$ & \\
+$False$ & $False$ &  & $False$ & \textcolor{red}{$False$} & $Fasle$ & \\
+\end{tabular}
+\end{itemize}
+}\end{slide}
+
+\begin{slide}{
+\item Logical operators on truth values
+\begin{itemize}
 \item \texttt{not}
+\\
+%NOTE: requires \usepackage{color}
+\begin{tabular}{@{ }c | c@{ }@{ }c}
+A & $not$ & A\\
+\hline 
+$True$ & \textcolor{red}{$False$} & $True$\\
+$False$ & \textcolor{red}{$True$} & $False$\\
+\end{tabular}
 \end{itemize}
 }\end{slide}
 
@@ -173,10 +249,19 @@ Rotterdam, Netherlands}
 }\end{slide}
 
 \begin{slide}{
-\item \texttt{5.0 > 2.0 = ?}, \texttt{(3 > 4) | (5 == (3 + 2)) = ?}, \texttt{True \& False = ?}, ...
+\item Given the following expressions:
+\begin{itemize}
+\item \texttt{5.0 > 2.0 = ?}
+\item \texttt{(3 > 4) | (5 == (3 + 2)) = ?}
+\item \texttt{True \& False = ?}
+\end{itemize}
 \item \textbf{Can you guess the results?}
 \pause
-\item \texttt{5.0 > 2.0 = true}, \texttt{(3 > 4) | (5 == (3 + 2)) = False}, \texttt{True \& False = False}, ...
+\begin{itemize}
+\item \texttt{5.0 > 2.0 = true}
+\item \texttt{(3 > 4) | (5 == (3 + 2)) = False}
+\item \texttt{True \& False = False}
+\end{itemize}
 }\end{slide}
 
 \SlideSubSection{String values}
