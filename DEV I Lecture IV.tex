@@ -351,6 +351,48 @@ $False$ & \textcolor{red}{$True$} & $False$\\
 \end{itemize}
 }\end{slide}
 
+\begin{slide}{
+\item Operators precedence:
+\begin{itemize}
+\item From lowest precedence (least binding) to highest precedence (most binding) 
+\pause
+\item Some operators share the same precedence 
+\begin{itemize}
+\item $+$, $-$
+\item $*$, $/$
+\end{itemize}
+\pause
+\item Unless the syntax is explicitly given (example by mean of parenthesis)
+\pause
+\item A complete table of precedence can be found on \url{https://docs.python.org/2/reference/expressions.html\#operator-precedence}
+\end{itemize}
+}\end{slide}
+
+\begin{slide}{
+\item Example: integer operations in Python like $*$ and $/$ have higher precedence than $+$ and $-$
+\item $1 + 4 * 2 = 9$
+\pause
+\item Use parenthesis to group expressions 
+\item $(1 + 4) * 2 = 10$  
+}\end{slide}
+
+\begin{slide}{
+\item Given the following expressions what are the results:
+\begin{itemize}
+\item (20 + 10) * 15 / 5 = ?
+\item ((20 + 10) * 15) / 5 = ?
+\item 20 + (10 * 15) / 5 = ?
+\end{itemize}
+\pause 
+\item Results: 
+\begin{itemize}
+\item (20 + 10) * 15 / 5 = 90
+\item ((20 + 10) * 15) / 5 = 90
+\item 20 + (10 * 15) / 5 = 50
+\end{itemize}
+}\end{slide}
+
+
 \begin{frame}[fragile]{Type errors}
 Not-allowed operators generate \textit{type errors}
 
