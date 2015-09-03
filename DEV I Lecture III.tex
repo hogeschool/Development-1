@@ -74,10 +74,10 @@ Rotterdam, Netherlands}
 
 \SlideSubSection{Early programming languages}
 \begin{slide}{
-\item Analytical Engine/Difference Engine: hypothetical mechanical computers (1840's, Charles Babbage and Ada Lovelace)
-\item Assembly language: programming close to the machine (1940's)
-\item Fortran, ALGOL, and COBOL: various forms of imperative programming (1950's)
-\item LISP: functional and meta-programming (1950's, still in use)
+\item Analytical Engine: mechanical computers (1840's, Charles Babbage and Ada Lovelace)
+\item Assembly language: close to the machine (1940's)
+\item Fortran, ALGOL, and COBOL: imperative programming (1950's)
+\item LISP: functional (1950's, still in use)
 \item Simula: object-oriented programming (1950's)
 \item C: high-level low-level programming (1970's, still in use)
 \item Smalltalk: everything-is-an-object programming (1970's)
@@ -110,13 +110,17 @@ Rotterdam, Netherlands}
 
 
 \SlideSection{The Python Programming Language}
-\SlideSubSection{The Python Zen}
+\begin{frame}{We have to make a choice}
+\center
+\fontsize{18pt}{7.2}\selectfont
+Python! \footnote{version 2}
+\end{frame}
+
+\SlideSubSection{Why Python?}
 \begin{slide}{
-\item Beautiful is better than ugly
-\item Explicit is better than implicit
-\item Simple is better than complex
-\item Complex is better than complicated
-\item Readability counts
+\item Used a lot as a beginning languages in higher education
+\item Adequate for expressing the basics of computational thinking
+\item High signal to noise ratio of syntax
 }\end{slide}
 
 \SlideSubSection{Python introduction}
@@ -128,11 +132,13 @@ Rotterdam, Netherlands}
 \item Hybrid paradigm, imperative/procedural first
 }\end{slide}
 
-\SlideSubSection{Why Python?}
+\SlideSubSection{The Python Zen}
 \begin{slide}{
-\item Used a lot as a beginning languages in higher education
-\item Adequate for expressing the basics of computational thinking
-\item High signal to noise ratio of syntax
+\item Beautiful is better than ugly
+\item Explicit is better than implicit
+\item Simple is better than complex
+\item Complex is better than complicated
+\item Readability counts
 }\end{slide}
 
 \SlideSection{Python basic syntax and semantics}
@@ -148,7 +154,7 @@ Rotterdam, Netherlands}
 \item Followed by any sequence of letters, numbers, and the \texttt{\_}
 }\end{slide}
 
-\begin{frame}[fragile]
+\begin{frame}[fragile]{Valid variable names}
 \begin{lstlisting}
 x
 y
@@ -164,7 +170,7 @@ _x1_customer
 \item Any sequence of numeric characters (we call it an integer \textit{literal}) is a number
 }\end{slide}
 
-\begin{frame}[fragile]
+\begin{frame}[fragile]{Examples of integer literals}
 \begin{lstlisting}
 100
 0
@@ -178,20 +184,20 @@ _x1_customer
 \item \texttt{variableName = expression}
 \item What does this do to the memory of the program? \textbf{Discuss.}
 \pause
-\item \textbf{If the variable did not exist, then we add it to memory}
+\item If the variable did not exist, then we add it to memory
 \item If the variable existed, then we change its value in memory 
 $$
 \tiny
 \left\{
 \begin{matrix}
-(PC,S) \overset{x = e}{\rightarrow} (PC+1,S'[x \mapsto e]) &when& x \in S \wedge S' = S - \{x\} & \\
+(PC,S) \overset{x = e}{\rightarrow} (PC+1,(S - \{x\})[x \mapsto e]) &when& x \notin S & \\
 (PC,S) \overset{x = e}{\rightarrow} (PC+1,S[x \mapsto e]) &when& x \in S& \\
 \end{matrix}
 \right.
 $$
 }\end{slide}
 
-\begin{frame}[fragile]
+\begin{frame}[fragile]{Variables that did not exist in the state}
 \texttt{\center
 \begin{tabular}{| l |}
 \hline
@@ -211,7 +217,7 @@ z = 50
 what changes while running the current instruction? \textbf{Try to guess and discuss!}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}[fragile]{Variables that did not exist in the state}
 \texttt{\center
 \begin{tabular}{| l |}
 \hline
@@ -239,7 +245,7 @@ PC & x \\
 \end{tabular}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}[fragile]{Variables that did not exist in the state}
 \texttt{\center
 \begin{tabular}{| l | l |}
 \hline
@@ -267,7 +273,7 @@ PC & x & y \\
 \end{tabular}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}[fragile]{Variables that did not exist in the state}
 \texttt{\center
 \begin{tabular}{| l | l | l |}
 \hline
@@ -295,25 +301,7 @@ PC & x & y & z \\
 \end{tabular}
 \end{frame}
 
-\begin{slide}{
-\item We can assign a value to a variable
-\item \texttt{variableName = expression}
-\item What does this do to the memory of the program? \textbf{Discuss.}
-\pause
-\item If the variable did not exist, then we add it to memory
-\item \textbf{If the variable existed, then we change its value in memory} 
-$$
-\tiny
-\left\{
-\begin{matrix}
-(PC,S) \overset{x = e}{\rightarrow} (PC+1,S'[x \mapsto e]) &when& x \in S \wedge S' = S - \{x\} & \\
-(PC,S) \overset{x = e}{\rightarrow} (PC+1,S[x \mapsto e]) &when& x \in S& \\
-\end{matrix}
-\right.
-$$
-}\end{slide}
-
-\begin{frame}[fragile]
+\begin{frame}[fragile]{Variables that did exist in the state}
 \texttt{\center
 \begin{tabular}{| l | l | l | l |}
 \hline
@@ -333,7 +321,7 @@ z = 50
 what changes while running the current instruction? \textbf{Try to guess and discuss!}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}[fragile]{Variables that did exist in the state}
 \texttt{\center
 \begin{tabular}{| l | l | l | l |}
 \hline
@@ -363,7 +351,7 @@ PC & x & y & z \\
 }
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}[fragile]{Variables that did exist in the state}
 \texttt{\center
 \begin{tabular}{| l | l | l | l |}
 \hline
@@ -393,7 +381,7 @@ PC & x & y & z \\
 }
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}[fragile]{Variables that did exist in the state}
 \texttt{\center
 \begin{tabular}{| l | l | l | l |}
 \hline
@@ -422,6 +410,37 @@ PC & x & y & z \\
 \end{tabular}
 }
 \end{frame}
+
+\SlideSection{Assignment}
+\SlideSubSection{Foreword}
+\begin{slide}{
+\item We now focus on using variables to represent \textit{an instant} of a game
+\item We do not work with the dynamics and the fighting, only a still picture
+}\end{slide}
+
+\SlideSubSection{Instructions}
+\begin{slide}{
+\item Get in four groups
+\item Draw the playing field and the properties of a soldiers fight similar to that from the first lecture
+\item Write a tiny Python program (on paper).
+\item Make sure the program runs without errors.
+\item \textbf{The program only contains variable definitions and assignments which describe the playing field}
+\begin{itemize}
+\item How many soldiers per sort
+\item Do these soldiers have cover or other properties?
+\item ...
+\end{itemize}
+\item Give your program, but not your drawing, to another team; have them draw the corresponding game
+\item If they draw what you drew, you made it
+\item Otherwise rewrite your code better
+}\end{slide}
+
+\SlideSubSection{Hand-in}
+\begin{slide}{
+\item Write your names and student numbers on your sheets
+\item Hand them in
+\item \textit{They may be used at your oral check} in the form of questions such as ``how would you rewrite this after the course''
+}\end{slide}
 
 \begin{frame}{This is it!}
 \center
