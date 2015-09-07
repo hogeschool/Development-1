@@ -77,27 +77,63 @@ Rotterdam, Netherlands}
 
 \SlideSubSection{Integers}
 \begin{slide}{
-\item Numbers without dot/comma
-\item \texttt{0}, \texttt{100}, \texttt{-500}, ...
+\item Numbers without dot\footnote{comma in Dutch}
+\begin{itemize}
+\item \texttt{0}
+\item \texttt{100} 
+\item \texttt{-500}
+\end{itemize}
 }\end{slide}
 
 \begin{slide}{
 \item Typical arithmetic operations on numbers (\textbf{not in Python 3})
-\item \texttt{3 + 5 = 8}, \texttt{5 / 2 = 2}, \texttt{40 * 5 = 200}, ...
+\begin{itemize}
+\item \texttt{3 + 5 = 8}
+\item \texttt{5 / 2 = 2}
+\item \texttt{40 * 5 = 200}
+\end{itemize} 
 }\end{slide}
 
 \SlideSubSection{Floating points}
 \begin{slide}{
-\item Numbers with dot/comma
-\item \texttt{0.0}, \texttt{2.5}, \texttt{10.0e3}, \texttt{3.1e-5}, \texttt{-.1e-5}, ...
+\item Numbers with dot\footnote{comma in Dutch}
+\begin{itemize}
+\item \texttt{0.0}
+\item \texttt{2.5}
+\item \texttt{10.0e3}
+\item \texttt{3.1e-5}
+\item \texttt{-.1e-5}
+\end{itemize}
+}\end{slide}
+
+\SlideSubSection{The scientific notation}
+\begin{slide}{
+\item \texttt{0.000001} is annoying to write
+\item we can write \texttt{1.e-5} instead
+\item the sign \texttt{e-N} means \textit{add N zeros right after the dot}
 }\end{slide}
 
 \begin{slide}{
+\item \texttt{1000000.0} is annoying to write
+\item we can write \texttt{1.e6} instead
+\item the sign \texttt{eN} means \textit{add N zeros right before the dot}
+}\end{slide}
+
+\SlideSubSection{Floating points}
+\begin{slide}{
 \item Typical arithmetic operations on numbers
-\item \texttt{5.0 / 2.0 = ?}, \texttt{10.0e3 / 0.1 = ?}, \texttt{3.1e-5 + 1.0e5 = ?}, ...
+\begin{itemize}
+\item \texttt{5.0 / 2.0 = ?} 
+\item \texttt{10.0e3 / 0.1 = ?}
+\item \texttt{3.1e-5 + 1.0e5 = ?}
+\end{itemize}
 \item \textbf{Can you guess the results?}
 \pause
-\item \texttt{5.0 / 2.0 = 2.5}, \texttt{10.0e3 / 0.1 = 10.0e4}, \texttt{3.1e-5 + 1.0e5 = 100000.000031}, ...
+\begin{itemize}
+\item \texttt{5.0 / 2.0 = 2.5}
+\item \texttt{10.0e3 / 0.1 = 10.0e4}
+\item \texttt{3.1e-5 + 1.0e5 = 100000.000031}
+\end{itemize} 
 }\end{slide}
 
 \SlideSubSection{Conversion to and from floating point}
@@ -107,10 +143,17 @@ Rotterdam, Netherlands}
 }\end{slide}
 
 \begin{slide}{
-\item \texttt{int(2.5) = ?}, \texttt{float(3) = ?}
+\item Given the following expressions:
+\begin{itemize}
+\item \texttt{int(2.5) = ?}
+\item \texttt{float(3) = ?}
+\end{itemize}
 \item \textbf{Can you guess the results?}
 \pause
-\item \texttt{int(2.5) = 2}, \texttt{float(3) = 3.0}
+\begin{itemize}
+\item \texttt{int(2.5) = 2}
+\item \texttt{float(3) = 3.0}
+\end{itemize}
 }\end{slide}
 
 \begin{slide}{
@@ -121,10 +164,17 @@ Rotterdam, Netherlands}
 }\end{slide}
 
 \begin{slide}{
-\item \texttt{floor(2.5) = ?}, \texttt{ceil(2.5) = ?}
+\item Given the following expressions:
+\begin{itemize}
+\item \texttt{floor(2.5) = ?} 
+\item \texttt{ceil(2.5) = ?}
+\end{itemize}
 \item \textbf{Can you guess the results?}
 \pause
-\item \texttt{floor(2.5) = 2.0}, \texttt{ceil(2.5) = 3.0}
+\begin{itemize}
+\item \texttt{floor(2.5) = 2.0}
+\item \texttt{ceil(2.5) = 3.0}
+\end{itemize}
 }\end{slide}
 
 \begin{slide}{
@@ -142,7 +192,7 @@ Rotterdam, Netherlands}
 
 \SlideSubSection{Python 3 integer division}
 \begin{slide}{
-\item Traditional integer division is now \texttt{//}
+\item Traditional integer division is now ``\texttt{\textbf{//}}"
 \item \texttt{5 // 2 = 2}
 }\end{slide}
 
@@ -156,8 +206,48 @@ Rotterdam, Netherlands}
 \item Logical operators on truth values
 \begin{itemize}
 \item \texttt{\&} for \texttt{and}
+\\
+%NOTE: requires \usepackage{color}
+\begin{tabular}{@{ }c@{ }@{ }c | c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{ }}
+A & B & ( & A & $\&$ & B & )\\
+\hline 
+$True$ & $True$ &  & $True$ & \textcolor{red}{$True$} & $True$ & \\
+$True$ & $False$ &  & $True$ & \textcolor{red}{$False$} & $False$ & \\
+$False$ & $True$ &  & $False$ & \textcolor{red}{$False$} & $True$ & \\
+$False$ & $False$ &  & $False$ & \textcolor{red}{$False$} & $Fasle$ & \\
+\end{tabular}
+\end{itemize}
+}\end{slide}
+
+\begin{slide}{
+\item Logical operators on truth values
+\begin{itemize}
 \item \texttt{|} for \texttt{or}
+%NOTE: requires \usepackage{color}
+\\
+\begin{tabular}{@{ }c@{ }@{ }c | c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{ }}
+A & B & ( & A & $|$ & B & )\\
+\hline 
+$True$ & $True$ &  & $True$ & \textcolor{red}{$True$} & $True$ & \\
+$True$ & $False$ &  & $True$ & \textcolor{red}{$True$} & $False$ & \\
+$False$ & $True$ &  & $False$ & \textcolor{red}{$True$} & $True$ & \\
+$False$ & $False$ &  & $False$ & \textcolor{red}{$False$} & $Fasle$ & \\
+\end{tabular}
+\end{itemize}
+}\end{slide}
+
+\begin{slide}{
+\item Logical operators on truth values
+\begin{itemize}
 \item \texttt{not}
+\\
+%NOTE: requires \usepackage{color}
+\begin{tabular}{@{ }c | c@{ }@{ }c}
+A & $not$ & A\\
+\hline 
+$True$ & \textcolor{red}{$False$} & $True$\\
+$False$ & \textcolor{red}{$True$} & $False$\\
+\end{tabular}
 \end{itemize}
 }\end{slide}
 
@@ -173,10 +263,19 @@ Rotterdam, Netherlands}
 }\end{slide}
 
 \begin{slide}{
-\item \texttt{5.0 > 2.0 = ?}, \texttt{(3 > 4) | (5 == (3 + 2)) = ?}, \texttt{True \& False = ?}, ...
+\item Given the following expressions:
+\begin{itemize}
+\item \texttt{5.0 > 2.0 = ?}
+\item \texttt{(3 > 4) | (5 == (3 + 2)) = ?}
+\item \texttt{True \& False = ?}
+\end{itemize}
 \item \textbf{Can you guess the results?}
 \pause
-\item \texttt{5.0 > 2.0 = true}, \texttt{(3 > 4) | (5 == (3 + 2)) = False}, \texttt{True \& False = False}, ...
+\begin{itemize}
+\item \texttt{5.0 > 2.0 = true}
+\item \texttt{(3 > 4) | (5 == (3 + 2)) = False}
+\item \texttt{True \& False = False}
+\end{itemize}
 }\end{slide}
 
 \SlideSubSection{String values}
@@ -189,6 +288,7 @@ Rotterdam, Netherlands}
 \item String literals are sequences of characters, on a single line, between double \texttt{"} or single \texttt{'} quotes 
 \item Some characters do not fit this description
 \item We need special markings for such characters
+\item These special markings are called \textit{escape characters}
 }\end{slide}
 
 \begin{slide}{
@@ -203,6 +303,12 @@ Rotterdam, Netherlands}
 \item \texttt{\textbackslash t} for ASCII Horizontal Tab (TAB)  
 \item \texttt{\textbackslash v} for ASCII Vertical Tab (VT) 
 \item \texttt{\textbackslash \textbackslash} for newline
+}\end{slide}
+
+\begin{slide}{
+\item \texttt{"Hello\ts n world"} is a string on two lines
+\item \texttt{"Hello\ts n world\ts n of Python"} is a string on three lines
+\item ...
 }\end{slide}
 
 \begin{slide}{
@@ -245,6 +351,48 @@ Rotterdam, Netherlands}
 \end{itemize}
 }\end{slide}
 
+\begin{slide}{
+\item Operators precedence:
+\begin{itemize}
+\item From lowest precedence (least binding) to highest precedence (most binding) 
+\pause
+\item Some operators share the same precedence 
+\begin{itemize}
+\item $+$, $-$
+\item $*$, $/$
+\end{itemize}
+\pause
+\item Unless the syntax is explicitly given (example by mean of parenthesis)
+\pause
+\item A complete table of precedence can be found on \url{https://docs.python.org/2/reference/expressions.html\#operator-precedence}
+\end{itemize}
+}\end{slide}
+
+\begin{slide}{
+\item Example: integer operations in Python like $*$ and $/$ have higher precedence than $+$ and $-$
+\item $1 + 4 * 2 = 9$
+\pause
+\item Use parenthesis to group expressions 
+\item $(1 + 4) * 2 = 10$  
+}\end{slide}
+
+\begin{slide}{
+\item Given the following expressions what are the results:
+\begin{itemize}
+\item (20 + 10) * 15 / 5 = ?
+\item ((20 + 10) * 15) / 5 = ?
+\item 20 + (10 * 15) / 5 = ?
+\end{itemize}
+\pause 
+\item Results: 
+\begin{itemize}
+\item (20 + 10) * 15 / 5 = 90
+\item ((20 + 10) * 15) / 5 = 90
+\item 20 + (10 * 15) / 5 = 50
+\end{itemize}
+}\end{slide}
+
+
 \begin{frame}[fragile]{Type errors}
 Not-allowed operators generate \textit{type errors}
 
@@ -264,6 +412,28 @@ TypeError: cannot concatenate 'str' and 'int' objects
 \item Many type errors stem from \textit{changes in meaning}, connected with \textit{changes in type} of a variable
 }\end{slide}
 
+
+\SlideSection{Assignment}
+\SlideSubSection{Instructions}
+\begin{slide}{
+\item Split into four groups.
+\item Use the data types you saw in this lesson to model an RPG character in a Python program.
+\item Example: health, team color, ...
+\item Make sure the program runs without errors.
+\item Draw on a sheet what he soldier should look like.
+\item Hand over the code to another group and make them draw the soldier.
+\item If the pictures are the same then you have succeeded, otherwise adjust your code.
+}\end{slide}
+
+
+\SlideSubSection{Hand-in}
+\begin{slide}{
+\item Write your names and student numbers on your sheets
+\item Hand them in
+\item \textit{They may be used at your oral check} in the form of questions such as ``how would you rewrite this after the course''
+}\end{slide}
+
+
 \begin{frame}{This is it!}
 \center
 \fontsize{18pt}{7.2}\selectfont
@@ -281,3 +451,5 @@ The best of luck, and thanks for the attention!
 ...
 \end{lstlisting}
 \end{frame}
+
+
