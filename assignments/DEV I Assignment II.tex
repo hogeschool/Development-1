@@ -14,29 +14,36 @@
 
 \begin{document}
 \setcounter{opgave}{1}
-
 \opgave{}{1}
-Write a program using stdNt that satisfies the following requirement:
-A student needs to reach the door of the classroom.
-
+Write a program using stdNt that satisfies the following requirements:
 
 For all exercises a student will be chosen by chance will run their program in front of the class.
+
+
 \subopgave{Write a program that allows any student to reach the goal.}{}{1}
-\subopgave{Also use the memory model (program counter, variables, etc) shown in the slides. And write a complete run of your program.}{}{1}
-
 \begin{itemize}
-    \item No whiles and if’s
-    \item You can use distances, ages, furniture, etc. Everything within the room.
+    \item You need to reach the door of the classroom.
+    \item No whiles and if's
     \item Between the student and the door there are no objects
-    \item Make the assignment on your own
-    \item Only use pen and paper
+    \item the language consists only of the following instructions
+    \begin{itemize}
+    	\item take $x$ steps
+	\item turn \textit{left/right} $\alpha$ degrees
+	\item sit, stand, smile
+    \end{itemize}
 \end{itemize}
+\subopgave{Also use the memory model (program counter, variables, etc) shown in the slides. And write a complete run of your program.}{}{1}
+\subopgave{Extend your program so that you avoid objects in the room.}{}{1}
 
 \opgave{}{1}
-The same as exercise 1, but now include objects between the student and the door. You are allowed to use if’s but not whiles.
-
-\opgave{}{1}
-\subopgave{As exercise 2, but now include at least 1 while.}{}{1}
+In exercise 1 you have written a program that lets \textbf{you} find the door. In this exercise you will make that program more generic.
+\subopgave{Adjust the program so that any arbitrary student in the current room (including objects) can find the door. In order to achieve this the language from exercise 1 is extended with the following instructions:
+\begin{itemize}
+   \item \textit{if's} and \textit{whiles}
+   \item distance to \textit{board/door/window}  $\rightarrow$  \textit{returns a \textbf{number}, which is the distance from the student to the object}
+   \item collisionWithObstacle $\rightarrow$  \textit{returns \textbf{true} if there is an obstacle less than 1 step in front of the student, otherwise returns \textit{\textbf{false}}}
+ \end{itemize}
+    }{}{1}
 \subopgave{Discuss the differences between: is it shorter, is it more readable, are the amount of variables the same, etc?}{}{1}
 
 \einde
