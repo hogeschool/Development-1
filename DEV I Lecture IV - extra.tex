@@ -38,14 +38,15 @@ Rotterdam, Netherlands}
 \SlideSubSection{Conditional expressions}
 \begin{slide}{
 \item Sometimes we can make decisions within an expression
-\item The general form is \texttt{VALUE if CONDITION else VALUE'} ($if_{VCV'}$)
-\item If the condition is true, then we return \texttt{VALUE}, otherwise \texttt{VALUE'}
+\item The general form is \texttt{if CONDITION then S1 else\\ S1'; S} ($if_{S1CS1';S}$)
+\item If the condition is true, then we execute \texttt{S1}, otherwise \texttt{S1'}.
+\item After one of the possible executions we execute $S$.
 $$
 \tiny
 \left\{
 \begin{matrix}
-(PC,S) \overset{if_{VCV'}}{\rightarrow} V &when& (PC,S) \overset{C}{\rightarrow} TRUE & \\
-(PC,S) \overset{if_{VCV'}}{\rightarrow} V' &when& (PC,S) \overset{C}{\rightarrow} FALSE & \\
+(PC,S) \overset{if_{S1CS1';S}}{\rightarrow} S1;S &when& (PC,S) \overset{C}{\rightarrow} TRUE & \\
+(PC,S) \overset{if_{S1CS1';S}}{\rightarrow} S1';S &when& (PC,S) \overset{C}{\rightarrow} FALSE & \\
 \end{matrix}
 \right.
 $$
@@ -59,6 +60,23 @@ $$
 \item \texttt{age = 18}: \texttt{"adult"}
 }\end{slide}
 
+\SlideSection{Conditional expressions}
+\SlideSubSection{Conditional expressions}
+\begin{slide}{
+\item The ELSE block is not mandatory.
+\item Used when the execution of that part of code is optional depending on a condition.
+\item If the condition is TRUE we execute $S1$ and then $S$, otherwise only $S$.
+$$
+\tiny
+\left\{
+\begin{matrix}
+(PC,S) \overset{if_{S1C;S}}{\rightarrow} S1;S &when& (PC,S) \overset{C}{\rightarrow} TRUE & \\
+(PC,S) \overset{if_{S1C;S}}{\rightarrow} S &when& (PC,S) \overset{C}{\rightarrow} FALSE & \\
+\end{matrix}
+\right.
+$$
+}\end{slide}
+
 \SlideSection{Reasoning on programs}
 \SlideSubSection{Reasoning on programs}
 \begin{slide}{
@@ -69,7 +87,7 @@ $$
 \begin{frame}[fragile]
 Consider a throttle control system. 
 
-\textbf{The throttle may never go under 1000RPM}, or the engine stops and everybody dies. \\
+\textbf{The throttle must never go under 1000RPM}, or the engine stops and everybody dies. \\
 
 \textbf{The temperature must be kept under control}, or the engine blows up and everybody dies. \\
 
