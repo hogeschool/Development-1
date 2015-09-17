@@ -80,7 +80,9 @@ Rotterdam, Netherlands}
 \begin{itemize}
 \item Do \textit{pick an alien army}
 \item While \textit{there are aliens in the army}
+\begin{itemize}
 \item Do \textit{attack an alien}
+\end{itemize}
 \end{itemize}
 }\end{slide}
 
@@ -99,7 +101,7 @@ $$
 \tiny
 \left\{
 \begin{matrix}
-(PC,S) \overset{w_{CB}}{\rightarrow} (firstLine(B; w_{CB}),S) &when& (PC,S) \overset{C}{\rightarrow} TRUE & \\
+(PC,S) \overset{w_{CB}}{\rightarrow} (firstLine(B),S) &when& (PC,S) \overset{C}{\rightarrow} TRUE & \\
 (PC,S) \overset{w_{CB}}{\rightarrow} (skipAfter(B),S) &when& (PC,S) \overset{C}{\rightarrow} FALSE & \\
 \end{matrix}
 \right.
@@ -712,7 +714,7 @@ while C0:
 \item Consider a loop that performs \texttt{m} iterations
 \item With \texttt{n} \texttt{if}'s inside
 \item Each iteration can have $2^n$ possible execution paths
-\item The whole loop can have $2^{n\times m}$ possible execution paths\footnote{$2^{2\times 10} = 1,79e308$}
+\item The whole loop can have $2^{n\times m}$ possible execution paths\footnote{$2^{2\times 10} = 1048576$}
 }\end{slide}
 
 \begin{slide}{

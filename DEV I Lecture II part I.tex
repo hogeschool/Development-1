@@ -4,6 +4,10 @@
 \usepackage{graphicx}
 \usepackage[space]{grffile}
 \usepackage{listings}
+\usepackage{color}
+\newcommand{\red}[1]{
+\textcolor{red}{#1}
+}
 \lstset{language=C,
 basicstyle=\ttfamily\footnotesize,
 mathescape=true,
@@ -88,7 +92,7 @@ what changes while running the current instruction? \textbf{Try to guess and dis
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-2 & Standing & Forward & (0,3) \\
+\red{2} & Standing & Forward & (0,\red{3}) \\
 \hline
 \end{tabular}
 } \ \\ \ \\ \ \\
@@ -109,7 +113,7 @@ what changes while running the current instruction? \textbf{Try to guess and dis
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-3 & Sitting & Forward & (0,3) \\
+\red{3} & \red{Sitting} & Forward & (0,3) \\
 \hline
 \end{tabular}
 } \ \\ \ \\ \ \\
@@ -130,7 +134,7 @@ what changes while running the current instruction? \textbf{Try to guess and dis
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-4 & Sitting & Left & (0,3) \\
+\red{4} & Sitting & \red{Left} & (0,3) \\
 \hline
 \end{tabular}
 } \ \\ \ \\ \ \\
@@ -151,7 +155,7 @@ what changes while running the current instruction? \textbf{Try to guess and dis
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-END & Sitting & Left & (-3,3) \\
+\red{END} & Sitting & Left & (\red{-3},3) \\
 \hline
 \end{tabular}
 } \ \\ \ \\ \ \\
@@ -242,7 +246,7 @@ take 3 steps forward
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-\textcolor{UNL@Scarlet}{105} & Standing & Left & (\textcolor{UNL@Scarlet}{7},20) \\
+\red{105} & Standing & Left & (\red{7},20) \\
 \hline
 \end{tabular}
 }
@@ -270,7 +274,7 @@ take 3 steps forward
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-\textcolor{UNL@Scarlet}{105} & Standing & Right & (\textcolor{UNL@Scarlet}{13},20) \\
+\red{105} & Standing & Right & (\red{13},20) \\
 \hline
 \end{tabular}
 }
@@ -328,7 +332,7 @@ otherwise
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-\textcolor{UNL@Scarlet}{25\footnote{Assuming student's shirt is black}} & Standing & Right & (10,20) \\
+\red{25\footnote{Assuming student's shirt is black}} & Standing & Right & (10,20) \\
 \hline
 \end{tabular}
 }
@@ -359,7 +363,7 @@ otherwise
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-\textcolor{UNL@Scarlet}{27\footnote{Assuming student's shirt is not black}} & Standing & Right & (10,20) \\
+\red{27\footnote{Assuming student's shirt is not black}} & Standing & Right & (10,20) \\
 \hline
 \end{tabular}
 }
@@ -418,7 +422,7 @@ go back to work
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-\textcolor{UNL@Scarlet}{25\footnote{As long as it is sunny}} & Standing & Right & (10,20) \\
+\red{25\footnote{As long as it is sunny}} & Standing & Right & (10,20) \\
 \hline
 \end{tabular}
 }
@@ -449,7 +453,7 @@ go back to work
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-\textcolor{UNL@Scarlet}{27\footnote{When it stops being sunny}} & Standing & Right & (10,20) \\
+\red{27\footnote{When it stops being sunny}} & Standing & Right & (10,20) \\
 \hline
 \end{tabular}
 }
