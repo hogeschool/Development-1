@@ -108,8 +108,8 @@ Rotterdam, Netherlands}
 
 \SlideSubSection{The scientific notation}
 \begin{slide}{
-\item \texttt{0.000001} is annoying to write
-\item we can write \texttt{1.e-5} instead
+\item \texttt{0.00001} is annoying to write
+\item we can write \texttt{1.e-4} instead
 \item the sign \texttt{e-N} means \textit{add N zeros right after the dot}
 }\end{slide}
 
@@ -200,6 +200,48 @@ Rotterdam, Netherlands}
 \begin{slide}{
 \item Truth values
 \item \texttt{True}, \texttt{False}
+\item ``Answers to yes/no questions''
+}\end{slide}
+
+\begin{slide}{
+\item Logical operators on truth values
+\item Compose the asnwers to multiple questions
+\item Both questions in parallel:
+\begin{itemize}
+\item Do you like chocolate? Yes.
+\item Do you like vanilla? Yes.
+\item \textbf{Do you like chocolate and vanilla? Yes.}
+\end{itemize}
+\item Both questions concurrently:
+\begin{itemize}
+\item Do you like chocolate? Yes.
+\item Do you like vanilla? No.
+\item \textbf{Do you like chocolate or vanilla? Yes.}
+\end{itemize}
+\item Turn questions around:
+\begin{itemize}
+\item Do you like chocolate? Yes.
+\item \textbf{Do you dislike chocolate? No.}
+\end{itemize}
+}\end{slide}
+
+\begin{slide}{
+\item Logical operators take one or two input
+\item This means that we have no more than four possible combinations of input values
+\item Since the inputs are so few, we can enumerate all combinations
+\item This is done with a \textbf{truth table}
+}\end{slide}
+
+\begin{slide}{
+\item Truth tables enumerate all input values and the result of their operator
+\begin{tabular}{c c c}
+A & B & ( A $\odot$ B ) \\
+\hline 
+$True$ & $True$ &  $\dots$ \\
+$True$ & $False$ &  $\dots$ \\
+$False$ & $True$ &  $\dots$ \\
+$False$ & $False$ &  $\dots$ \\
+\end{tabular}
 }\end{slide}
 
 \begin{slide}{
@@ -209,12 +251,12 @@ Rotterdam, Netherlands}
 \\
 %NOTE: requires \usepackage{color}
 \begin{tabular}{@{ }c@{ }@{ }c | c@{}@{ }c@{ }@{ }c@{ }@{ }c@{ }@{}c@{ }}
-A & B & ( & A & $\&$ & B & )\\
+A & B & ( A $\&$ B ) & \\
 \hline 
-$True$ & $True$ &  & $True$ & \textcolor{red}{$True$} & $True$ & \\
-$True$ & $False$ &  & $True$ & \textcolor{red}{$False$} & $False$ & \\
-$False$ & $True$ &  & $False$ & \textcolor{red}{$False$} & $True$ & \\
-$False$ & $False$ &  & $False$ & \textcolor{red}{$False$} & $Fasle$ & \\
+$True$ & $True$ &  \textcolor{red}{$True$} \\
+$True$ & $False$ &  \textcolor{red}{$False$} \\
+$False$ & $True$ &  \textcolor{red}{$False$} \\
+$False$ & $False$ &  \textcolor{red}{$False$} \\
 \end{tabular}
 \end{itemize}
 }\end{slide}
@@ -272,8 +314,8 @@ $False$ & \textcolor{red}{$True$} & $False$\\
 \item \textbf{Can you guess the results?}
 \pause
 \begin{itemize}
-\item \texttt{5.0 > 2.0 = true}
-\item \texttt{(3 > 4) | (5 == (3 + 2)) = False}
+\item \texttt{5.0 > 2.0 = True}
+\item \texttt{(3 > 4) | (5 == (3 + 2)) = True}
 \item \texttt{True \& False = False}
 \end{itemize}
 }\end{slide}
@@ -302,7 +344,6 @@ $False$ & \textcolor{red}{$True$} & $False$\\
 \item \texttt{\textbackslash r} for ASCII Carriage Return (CR)  
 \item \texttt{\textbackslash t} for ASCII Horizontal Tab (TAB)  
 \item \texttt{\textbackslash v} for ASCII Vertical Tab (VT) 
-\item \texttt{\textbackslash \textbackslash} for newline
 }\end{slide}
 
 \begin{slide}{
@@ -351,9 +392,47 @@ $False$ & \textcolor{red}{$True$} & $False$\\
 \end{itemize}
 }\end{slide}
 
+\begin{frame}[fragile]{Type errors}
+Not-allowed operators generate \textit{type errors}
+
+\begin{lstlisting}[frame=shadowbox]
+Traceback (most recent call last):
+  File "C:\Users\Giuseppe\Desktop\DEV I samples\DEV_I_samples.py", line 8, in <module>
+    print("Oh noes, a bug!" + 4)
+TypeError: cannot concatenate 'str' and 'int' objects
+\end{lstlisting}
+\end{frame}
+
 \begin{slide}{
-\item Operators precedence:
+\item Variables may change type in Python
+\item An integer variable becomes later on a string variable
+\item This is allowed, but dangerous
+\item A variable should never lose reasonable meaning
+\item Many type errors stem from \textit{changes in meaning}, connected with \textit{changes in type} of a variable
+}\end{slide}
+
+
+\SlideSection{Operator precedence}
+\SlideSubSection{Introduction}
+\begin{slide}{
+\item Multiple operators in a single expression are ambiguous
+\item For example: \texttt{not True | True}
 \begin{itemize}
+\item \texttt{(not True) | True = False | True = True}
+\item \texttt{not (True | True) = not True = False}
+\end{itemize}
+}\end{slide}
+
+\begin{slide}{
+\item Python defines which operators are evaluated first, and which later
+\item Removes ambiguity
+\item Makes parentheses not required
+\begin{itemize}
+\item Still, might remain better for readability
+\end{itemize}
+}\end{slide}
+
+\begin{slide}{
 \item From lowest precedence (least binding) to highest precedence (most binding) 
 \pause
 \item Some operators share the same precedence 
@@ -365,7 +444,6 @@ $False$ & \textcolor{red}{$True$} & $False$\\
 \item Unless the syntax is explicitly given (example by mean of parenthesis)
 \pause
 \item A complete table of precedence can be found on \url{https://docs.python.org/2/reference/expressions.html\#operator-precedence}
-\end{itemize}
 }\end{slide}
 
 \begin{slide}{
@@ -393,26 +471,6 @@ $False$ & \textcolor{red}{$True$} & $False$\\
 }\end{slide}
 
 
-\begin{frame}[fragile]{Type errors}
-Not-allowed operators generate \textit{type errors}
-
-\begin{lstlisting}[frame=shadowbox]
-Traceback (most recent call last):
-  File "C:\Users\Giuseppe\Desktop\DEV I samples\DEV_I_samples.py", line 8, in <module>
-    print("Oh noes, a bug!" + 4)
-TypeError: cannot concatenate 'str' and 'int' objects
-\end{lstlisting}
-\end{frame}
-
-\begin{slide}{
-\item Variables may change type in Python
-\item An integer variable becomes later on a string variable
-\item This is allowed, but dangerous
-\item A variable should never lose reasonable meaning
-\item Many type errors stem from \textit{changes in meaning}, connected with \textit{changes in type} of a variable
-}\end{slide}
-
-
 \SlideSection{Assignment}
 \SlideSubSection{Instructions}
 \begin{slide}{
@@ -420,7 +478,7 @@ TypeError: cannot concatenate 'str' and 'int' objects
 \item Use the data types you saw in this lesson to model an RPG character in a Python program.
 \item Example: health, team color, ...
 \item Make sure the program runs without errors.
-\item Draw on a sheet what he soldier should look like.
+\item Draw on a sheet what the soldier should look like.
 \item Hand over the code to another group and make them draw the soldier.
 \item If the pictures are the same then you have succeeded, otherwise adjust your code.
 }\end{slide}
