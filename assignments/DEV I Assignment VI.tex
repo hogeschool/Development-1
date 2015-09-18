@@ -1,0 +1,92 @@
+\documentclass[10pt,a4paper,final]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{listings}
+\lstset{language=C,
+basicstyle=\ttfamily\footnotesize,
+mathescape=true,
+showspaces=false,
+breaklines=true}
+
+\author{The INFDEV Team @ HR}
+\title{Assignment 4}
+
+\begin{document}
+
+\section{Description}
+Write a series of Python programs to draw figures on the console by using only asterisks \texttt{*} and spaces. 
+
+{\large Requirements}
+\begin{itemize}
+\item The figure you draw should be first accumulated into a string, and only after the string has been formed it should be printed. This means that you only have a \textbf{single print statement} at your disposal.
+\item The parameters of each figure should be read in the form of user input. This means that any parameters you deem useful, such as height, length, etc. must not be a constant.
+\item You are not allowed to use the \texttt{*}-operator on strings and ints. So for example "Hello" * 3 is not allowed
+\end{itemize}
+
+\paragraph*{A full square}
+\begin{lstlisting}
+****
+****
+****
+****
+\end{lstlisting}
+
+\paragraph*{An empty square}
+\begin{lstlisting}
+****
+*  *
+*  *
+****
+\end{lstlisting}
+
+\paragraph*{A full rectangle triangle}
+\begin{lstlisting}
+*
+**
+***
+****
+\end{lstlisting}
+
+\paragraph*{A full isosceles triangle}
+\begin{lstlisting}
+  *
+ ***
+*****
+\end{lstlisting}
+
+\paragraph*{A full circle}\footnote{Remember that the points inside a circle are all within a given distance from the center. The distance is computed with the well-known formula of Pythagoras: $\sqrt{(x_1-x_2) \times (x_1-x_2) + (y_1-y_2) \times (y_1-y_2)}$}
+
+\begin{minipage}[c]{0.95\textwidth}
+\begin{lstlisting}
+
+    ***
+   *****
+  *******
+ *********
+ *********
+ *********
+  *******
+   *****
+    ***
+\end{lstlisting}
+\end{minipage}
+
+\paragraph*{A rather ugly smiley face}
+\begin{minipage}[c]{0.95\textwidth}
+\begin{lstlisting}
+    ***
+   *   *
+  *_   _*
+ * O   O *
+ *       *
+ * \ # / *
+  * --- *
+   *   *
+    ***
+\end{lstlisting}
+\end{minipage}
+
+\end{document}
