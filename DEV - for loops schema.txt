@@ -1,30 +1,3 @@
-Introduction
-1. While loops specify unbounded iteration.
-2. Unbounded iteration means that the while loop keeps repeating for an unspecified number of times.
-  Example.
-3. Sometimes the number of times the loop needs to be run is known beforehand.
-Problem statement
-4. When we know the number of repetitions, then the while loop is too powerful.
-5. Too powerful means that our intention about repeating code N times is not correctly translated into our code. This can lead to bugs.
-  Example.
-  <<Expand with informal notions about computability and the power of while>>
-6. We wish to correctly encode our intention of repeating code N times.
-7. Python, and many other modern languages, offer explicit constructs for bounded repetition.
-8. These constructs are called for-loops.
-
-
-For-loops
-1. Whenever we know how many steps we need to repeat code, we use a for-loop.
-2. The for-loop is made up of three syntactic elements:
-  a. the number of repetitions
-  b. the index of the current repetition (to know how far we have come to)
-  c. the body of the loop that is repeated at every iteration
-Abstract syntax
-Concrete example
-
-  Number of repetitions
-  3. The number of repetitions is any positive integer.
-  4. The repetitions will range from zero to the positive integer minus one.
   Examples
 
   Index of the current repetition

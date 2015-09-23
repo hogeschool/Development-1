@@ -5,9 +5,10 @@
 \usepackage{graphicx}
 \usepackage[space]{grffile}
 \usepackage{listings}
-\lstset{language=C,
+\lstset{language=Python,
 basicstyle=\ttfamily\footnotesize,
 mathescape=true,
+frame=single,
 breaklines=true}
 \lstset{
   literate={ï}{{\"i}}1
@@ -34,17 +35,272 @@ Rotterdam, Netherlands}
 \SlideSection{Introduction}
 \SlideSubSection{Lecture topics}
 \begin{slide}{
+\item the (lack of) limitations of \texttt{while} loops
 \item \texttt{for} statements and their semantics
 \item \texttt{for} as a \textit{limited} form of \texttt{while}
 }\end{slide}
 
+\SlideSection{\texttt{while} loops}
+\SlideSubSection{Potential issues}
+\begin{slide}{
+\item While loops specify unbounded iteration
+\item This means that the number of iterations is not necessarily easy to specify
+\item For example
+\begin{itemize}
+\item Virtual machines
+\item User-driven loops
+\item Servers
+\item Operating systems
+\item ...
+\end{itemize}
+}\end{slide}
 
-% \texttt{for} statements and their semantics
-%\begin{slide}{
-%\item For each \textit{hostile alien}
-%\item Do \textit{attack it}
-%}\end{slide}
-% \texttt{for} as a \textit{limited} form of \texttt{while}
+\begin{frame}[fragile]{Unbounded loop example}
+\begin{lstlisting}
+n,m = input("Let's have two numbers")
+cnt = 1
+while n > m:
+  cnt = cnt + 1
+  n = n / m
+print("Result is %d" % cnt)
+\end{lstlisting}
+
+\textbf{What does this code do?}
+
+\textbf{How many steps does it take?}
+\end{frame}
+
+\begin{frame}[fragile]{Unbounded loop example}
+\begin{lstlisting}
+quit = False
+while not quit:
+  action = raw_input("Should I quit?")
+  if (action == "Yes") | (action == "yes"):
+    quit = True
+  else:
+    print("You are not a quitter.")
+\end{lstlisting}
+
+\textbf{What does this code do?}
+
+\textbf{How many steps does it take?}
+\end{frame}
+
+\begin{frame}[fragile]{Unbounded loop example}
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+y = 10.0
+vy = 0.0
+dt = 0.05
+while (abs(vy) > 0.9) | (y > 0.2):
+  new_y = y + vy * dt
+  if new_y <= 0.1:
+    vy = -vy * 0.7
+  else:
+    vy -= 9.8 * dt
+    y = new_y
+  cls()
+  screen = ""
+  for j in range(0,20):
+    for i in range(0,20):
+      if (i == 10) & (j == 19 - int(y)):
+        screen += "O"
+      elif j == 19:
+        screen += "-"
+      else:
+        screen += " "
+    screen += "\n"
+  print(screen)
+  sleep(0.01)
+\end{lstlisting}
+
+\textbf{What does this code do?}
+
+\textbf{How many steps does it take?}
+\end{frame}
+
+\begin{slide}{
+\item \texttt{while} loops are very powerful
+\item with great power comes...
+\pause
+\item ...greater chance of bugs
+}\end{slide}
+
+\begin{frame}[fragile]{Unbounded loop example}
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+y = 10.0
+vy = 0.0
+dt = 0.05
+while (abs(vy) > 0.9) | (y > 0.1):
+  new_y = y + vy * dt
+  if new_y <= 0.1:
+    vy = -vy * 0.7
+  else:
+    vy -= 9.8 * dt
+    y = new_y
+  cls()
+  screen = ""
+  for j in range(0,20):
+    for i in range(0,20):
+      if (i == 10) & (j == 19 - int(y)):
+        screen += "O"
+      elif j == 19:
+        screen += "-"
+      else:
+        screen += " "
+    screen += "\n"
+  print(screen)
+  sleep(0.01)
+\end{lstlisting}
+
+\textbf{Does this loop terminate? (This is not the same code as before!)}
+
+\pause
+
+\textbf{No.} The condition has changed to \texttt{y > 0.1}.
+\end{frame}
+
+
+\begin{frame}[fragile]{Unbounded loop example}
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+y = 10.0
+vy = 0.0
+dt = 0.1
+while (abs(vy) > 0.9) | (y > 0.1):
+  new_y = y + vy * dt
+  if new_y <= 0.1:
+    vy = -vy * 0.8
+  else:
+    vy -= 9.8 * dt
+    y = new_y
+  cls()
+  screen = ""
+  for j in range(0,20):
+    for i in range(0,20):
+      if (i == 10) & (j == 19 - int(y)):
+        screen += "O"
+      elif j == 19:
+        screen += "-"
+      else:
+        screen += " "
+    screen += "\n"
+  print(screen)
+  sleep(0.01)
+\end{lstlisting}
+
+\textbf{Does this loop terminate? (This is not the same code as before!)}
+
+\pause
+
+\textbf{No.} \texttt{dt = 0.1} and \texttt{vy = -vy * 0.8}.
+\end{frame}
+
+\SlideSection{Correctly encoding intentions}
+\SlideSubSection{Why is \texttt{while} not enough}
+
+\begin{slide}{
+\item The expressive power of \texttt{while} is not always needed
+\item Sometimes we want something simpler, and less dangerous
+\item For example, consider:
+\begin{itemize}
+\item For each \textit{hostile alien}
+\item Do \textit{attack it}
+\end{itemize}
+}\end{slide}
+
+\begin{slide}{
+\item A loop such as:
+\begin{itemize}
+\item For each \textit{hostile alien}
+\item Do \textit{attack it}
+\end{itemize}
+\item Is predictable
+\item Performs a fixed number of steps (one per hostile alien)
+\item Will certainly terminate
+}\end{slide}
+
+\begin{slide}{
+\item In general, we wish to always correctly encode our intention of repeating code $N$ times
+\item The code must precisely fit our intentions, like a tailored italian suit
+\begin{itemize}
+\item Code should not be too complicated
+\item Code should not be too simple
+\end{itemize}
+}\end{slide}
+
+\SlideSubSection{Code that is too complicated?}
+\begin{slide}{
+\item A \texttt{while} loop where we need to perform \texttt{N} steps
+\item There are many subtle ways to break the code
+}\end{slide}
+
+\begin{slide}{
+\item Classes, objects, and inheritance everywhere
+\item To know which code is actually run to say \texttt{Hello world!} you need to read twelve files
+}\end{slide}
+
+\begin{slide}{
+\item Events, lambda's, higher-order combinators everywhere
+\item To know what the program does you need two doctorates (CompSci and Maths)
+\begin{itemize}
+\item Plus internal access to the sliced brain of the original programmer
+\end{itemize}
+}\end{slide}
+
+\SlideSubSection{Code that is too simple?}
+\begin{slide}{
+\item No handling of error cases
+\item Ignoring hard circumstances
+\pause
+\item Not implementing all features correctly
+\begin{itemize}
+\item Showing progress off
+\item Building impressive but pointless demo's
+\end{itemize}
+}\end{slide}
+
+\SlideSection{Iterating with \texttt{for}}
+\begin{slide}{
+\item Python, and many other modern languages, offer explicit constructs for bounded repetition
+\begin{itemize}
+\item We specify precisely the number of steps that need to be performed
+\item The language takes care of performing the right number of steps
+\item The construct is much harder to break\footnote{Running forever} than a \texttt{while}-loop
+\end{itemize}
+\item These constructs are called for-loops
+}\end{slide}
+
+\SlideSubSection{Syntax of \texttt{for}}
+\begin{slide}{
+\item Number of repetitions (a \texttt{range} iterator)
+\item That stores the index of the current repetition (a variable)
+\item Body of the loop that is repeated at every iteration (a block of code)
+}\end{slide}
+
+\begin{frame}[fragile]{Syntax of \texttt{for}}
+\begin{lstlisting}
+for VARIABLE in range(END):
+  BODY
+\end{lstlisting}
+
+\begin{itemize}
+\item \texttt{VARIABLE} is any valid variable name that becomes useable within the \texttt{BODY}; will range from \texttt{0} to \texttt{END-1}
+\item \texttt{END} is any positive number; the body will be repeated \texttt{END-1} times
+\item \texttt{BODY} is a series of statements
+\end{itemize}
+\end{frame}
+
+\SlideSubSection{Semantics of \texttt{for}}
+%%%SEMANTICS
+
+\SlideSubSection{Examples of \texttt{for}}
+
+
+\begin{slide}{
+\item Number of repetitions (a \texttt{range} iterator)
+\item That stores the index of the current repetition (a variable)
+\item Body of the loop that is repeated at every iteration (a block of code)
+}\end{slide}
+
 
 \begin{frame}{This is it!}
 \center
