@@ -485,11 +485,11 @@ in2 & in3 $\vee$ 2 & \red{in2+in3 $\vee$ in2$\times$in3 $\vee$ in2$\times$2} & "
 }\end{slide}
 
 \begin{slide}{
-\item The more nested conditionals, the more possible resulting execution paths
+\item The more sequential conditionals, the more possible resulting execution paths
 \item But \textit{how many?}
 }\end{slide}
 
-\begin{frame}[fragile]{Nested \texttt{if}'s}
+\begin{frame}[fragile]{Sequential \texttt{if}'s}
 How many \texttt{if}'s? \\ 
 How many execution paths? \\ \ \\
 
@@ -506,18 +506,17 @@ else:
 \textbf{2} execution paths \\
 \end{frame}
 
-\begin{frame}[fragile]{Nested \texttt{if}'s}
+\begin{frame}[fragile]{Sequential \texttt{if}'s}
 \begin{lstlisting}[frame=shadowbox,basicstyle=\ttfamily\tiny]
 if C1:
-  if C11:
-    A11
-  else:
-    B11
+  A1
 else:
-  if C12:
-    A12
-  else:
-    B12
+  B1
+
+if C2:
+  A2
+else:
+  B2
 \end{lstlisting}
 
 \pause
@@ -526,30 +525,22 @@ else:
 \textbf{4} execution paths \\
 \end{frame}
 
-\begin{frame}[fragile]{Nested \texttt{if}'s}
+\begin{frame}[fragile]{Sequential \texttt{if}'s}
 \begin{lstlisting}[frame=shadowbox,basicstyle=\ttfamily\tiny]
 if C1:
-  if C11:
-    if C111:
-      A111
-    else:
-      B111
-  else:
-    if C112:
-      A112
-    else:
-      B112
+  A1
 else:
-  if C12:
-    if C121:
-      A121
-    else:
-      B121
-  else:
-    if C122:
-      A122
-    else:
-      B122
+  B1
+
+if C2:
+  A2
+else:
+  B2
+
+if C3:
+  A3
+else:
+  B3
 \end{lstlisting}
 
 \pause
@@ -573,9 +564,9 @@ else:
 }\end{slide}
 
 \begin{slide}{
-\item The more nested the \texttt{if}
+\item The more \texttt{if}'s
 \item The more complex its conditions
-\item \textit{The harder it is to reason about it!}
+\item \textit{The harder it is to reason about your program!}
 }\end{slide}
 
 \SlideSection{Using \texttt{if}'s}
