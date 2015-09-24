@@ -1,46 +1,5 @@
-  Examples
+SEMI-FORMAL SEMANTICS of FOR-LOOPS
 
-  Index of the current repetition
-  5. We need to know how far we have come in the loop.
-  6. Depending on the current step, we may perform different processing.
-  7. Different processing per different steps makes the loop perform a more complex operation.
-  8. Complex is not the same as complicated.
-  9. To avoid needless complication, the different steps still do related things.
-  Examples
-
-  Body of the loop
-  10. The body of the loop is any code that is repeated at every iteration.
-  11. Each iteration runs the same code, but with the following value of the index variable.
-  12. The code of the body can be any valid Python code.
-  13. Valid Python code includes all constructs from variable assignment, conditional statements, and even other loops!
-  Examples
-
-Semantics of the loop
-...
-
-Advanced loops
-1. Sometimes basic for-loops are not sufficient in their simplest form.
-2. The simplest form of iteration between zero and a value may not be enough, even though we still know how many steps will be performed.
-3. Sometimes we may need to:
-  4. Decrement instead of increment, that is ``go backwards''
-  5. Iterate between a range of values that does not start with zero
-  6. Take steps of more than one between iterations
-
-  Decrementing for-loops
-  6. It might suit a specific domain to start from the last value and go down to zero
-  7. Consider a countdown
-  Examples
-  
-  Iterate between a range of values
-  8. In some cases we might wish to start counting from a specific value
-  9. For example we might want to print odd-numbers that are multiples of three within a certain range
-  Examples
-
-  Take steps of more than one between iterations
-  10. It is not always given that each iteration of the loop represents the natural ``step forward''
-  11. Sometimes the step forward is two or more values ahead
-  12. For example, iterating all multiples of seven (same days of the week), etc.
-  Examples (see also without the shortcut)
 
   Nesting for-loops
   1. Each step of a for-loop can contain arbitrary code that will be repeated.
@@ -49,12 +8,8 @@ Advanced loops
   4. Each loop adds its own iteration variable.
   5. The iteration variables, together, are an N-dimensional point.
   6. A single loop performs a ``linear'' computation, two loops perform a ``square''     computation, three perform a ``cubic'' computation, etc.
+  7. Still, multiple loops inside each other can be translated into a single for-loop
   Examples (see also without the shortcut)
 
 
 
-Conclusion
-1. While-loops can encode any form of iteration.
-2. When the number of iterations are known beforehand, while is too powerful.
-3. To use the right level of abstraction (which is less sensitive to bugs), we use for-loops instead of while's.
-4. This allows us to instruct the language to perform exactly the required number of steps, usually with less code.

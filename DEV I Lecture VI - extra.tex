@@ -292,15 +292,162 @@ for VARIABLE in range(END):
 \SlideSubSection{Semantics of \texttt{for}}
 %%%SEMANTICS
 
-\SlideSubSection{Examples of \texttt{for}}
-
-
+\SlideSubSection{Index of the current repetition}
 \begin{slide}{
-\item Number of repetitions (a \texttt{range} iterator)
-\item That stores the index of the current repetition (a variable)
-\item Body of the loop that is repeated at every iteration (a block of code)
+\item The \texttt{BODY} of the \texttt{for} loop is always the same
+\item Depending on the current step, we may perform different processing
+\item For this, we need to know how far we have come in the loop
+\begin{itemize}
+\item The iteration \texttt{VARIABLE} tells us this
+\end{itemize}
 }\end{slide}
 
+\begin{frame}[fragile]{Index of the current repetition}
+\begin{lstlisting}
+graph = ""
+for i in range(11):
+  for j in range((i-5) * (i-5)):
+    graph += '='
+  graph += "\n"
+print(graph)
+\end{lstlisting}
+
+\textbf{What does this do?}
+
+\textbf{How do the different steps perform different actions based on the value of the iteration variable(s)?}
+\end{frame}
+
+\begin{slide}{
+\item Different processing per different steps makes the loop perform a more complex operation.
+\item Complex is not the same as complicated.
+\item To avoid needless complication, the different steps must still do related things
+}\end{slide}
+
+\begin{frame}[fragile]{Unrelated actions in a loop}
+\begin{lstlisting}
+for i in range(6):
+  if i == 0:
+    #...run a game of tic-tac-toe...
+  elif i == 1:
+    #...draw a smiley...
+  elif i == 2:
+    #...run a turtle program...
+  elif i == 3:
+    #...convert degrees to fahrenheit...
+  elif i == 4:
+    #...draw a square...
+  elif i == 5:
+    #...draw a triangle...
+\end{lstlisting}
+
+\textbf{What is the relationship between the iterations?}
+
+\textbf{Is a \texttt{for} loop really needed?}
+\end{frame}
+
+\SlideSubSection{Body of the loop}
+\begin{slide}{
+\item The code of the body is a block of code
+\item A block of code is any statement or series of statements
+\item Among these statements, we can use as many \texttt{if}'s, \texttt{for}'s, and \texttt{while}'s
+}\end{slide}
+
+\begin{slide}{
+\item There is no \textit{obfuscated code} prize available
+\item Nesting too many complex constructs might make code \textbf{needlessly complicated}
+\item Remember that a \texttt{for}-loop adds a large number of possible execution paths, just like a \texttt{while}-loop
+}\end{slide}
+
+\SlideSection{Advanced loops}
+\SlideSubSection{Ranges of iteration}
+\begin{slide}{
+\item We do not always want to iterate through values between \texttt{0} and a given number
+\item Even though we still need to perform a fixed number of steps
+\item So a \texttt{for}-loop still has advantages over a \texttt{while}-loop
+}\end{slide}
+
+\SlideSubSection{We might want to...}
+\begin{slide}{
+\item ...decrement instead of increment, that is ``go backwards''
+\item ...iterate between a range of values that does not start with zero
+\item ...take steps of more than one between iterations
+}\end{slide}
+
+\SlideSubSection{The \texttt{range} function}
+\begin{slide}{
+\item Actually takes three parameters: \texttt{range(start, end, step)}
+\item With one parameter we only specify \texttt{end}, while \texttt{start = 0} and \texttt{step = 1}
+\item With two parameters we specify \texttt{start} and \texttt{end}, while \texttt{step = 1}
+\item With all parameters we specify \texttt{start}, \texttt{end}, and \texttt{step}
+}\end{slide}
+
+\begin{frame}[fragile]{Specific starting point}
+\begin{lstlisting}
+for i in range(2, 10, 1):
+  print(i)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Multiple steps}
+\begin{lstlisting}
+for i in range(0, 20, 5):
+  print(i)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Backwards range}
+\begin{lstlisting}
+for i in range(10, 0, -1):
+  print("           \r" + str(i)),
+  sleep(0.3)
+print("\rBOOOM!!!!!")
+\end{lstlisting}
+\end{frame}
+
+\SlideSubSection{Nesting \texttt{for}-loops}
+\begin{slide}{
+\item The \texttt{BODY} of a \texttt{for}-loop contains arbitrary code
+\item This arbitrary code may also contain loops
+\item Loops within loops have a ``multiplicative'' behaviour
+\begin{itemize}
+\item A loop of \texttt{M} step within a loop of \texttt{N} steps performs \texttt{N*M} steps
+\end{itemize}
+}\end{slide}
+
+\begin{frame}[fragile]{Multiplicative behaviour}
+\begin{lstlisting}
+cnt = 0
+for i in range(10):
+  for j in range(5):
+    cnt += 1
+print(cnt)
+\end{lstlisting}
+\end{frame}
+
+\begin{slide}{
+\item Each loop adds its own iteration variable
+\item The iteration variables, together, are an N-dimensional point
+\item A single loop performs a ``linear'' computation, two loops perform a ``square''     computation, three perform a ``cubic'' computation, etc.
+\item Still, multiple loops inside each other can be translated into a single for-loop
+\item Examples (see also without the shortcut)
+}\end{slide}
+
+\begin{slide}{
+\item Examples...
+}\end{slide}
+
+
+
+
+
+\SlideSection{Conclusion}
+\SlideSubSection{Conclusion}
+\begin{slide}{
+\item \texttt{while}-loops can encode any form of iteration.
+\item When the number of iterations is known beforehand, while is too powerful
+\item To use the right level of abstraction (which is less sensitive to bugs), we use \texttt{for}-loops instead
+\item This allows us to instruct the language to perform exactly the required number of steps, usually with less code
+}\end{slide}
 
 \begin{frame}{This is it!}
 \center
