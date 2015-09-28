@@ -1,13 +1,3 @@
-\newcommand{\SlideSection}[1]{
-\def \CurrentSection {#1}
-\section{#1}
-}
-
-\newcommand{\SlideSubSection}[1]{
-\def \CurrentSubSection {#1}
-%\subsection{#1}
-}
-
 \newenvironment{slide}[1]
 {
 \begin{frame}{\CurrentSection}
@@ -40,6 +30,21 @@
 \end{block}
 }{
 \end{frame}
+}
+
+\newcommand{\SlideSection}[1]{
+\def \CurrentSection {#1}
+\section{#1}
+\begin{frame}{}
+\center
+\fontsize{18pt}{7.2}\selectfont
+\textbf{#1}
+\end{frame}
+}
+
+\newcommand{\SlideSubSection}[1]{
+\def \CurrentSubSection {#1}
+%\subsection{#1}
 }
 
 
