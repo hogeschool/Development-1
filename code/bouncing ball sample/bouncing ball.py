@@ -1,4 +1,4 @@
-import os
+﻿import os
 import time
 from time import sleep
 
@@ -28,6 +28,3 @@ while (abs(vy) > 0.9) | (y > 0.2):
     screen += "\n"
   print(screen)
   sleep(0.001)
-
-print("Done bouncing!")
-raw_input("Press enter to quit.")
