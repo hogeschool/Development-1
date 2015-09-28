@@ -87,8 +87,6 @@ while not quit:
 \end{frame}
 
 \begin{frame}[fragile]{Unbounded loop example}
-\label{slide:bouncing}
-
 \begin{lstlisting}[basicstyle=\ttfamily\tiny]
 y = 10.0
 vy = 0.0
@@ -100,12 +98,22 @@ while (abs(vy) > 0.9) | (y > 0.2):
   else:
     vy -= 9.8 * dt
     y = new_y
-  ... draw a ball at position (10,y) ...
+  cls()
+  screen = ""
+  for j in range(0,20):
+    for i in range(0,20):
+      if (i == 10) & (j == 19 - int(y)):
+        screen += "O"
+      elif j == 19:
+        screen += "-"
+      else:
+        screen += " "
+    screen += "\n"
+  print(screen)
+  sleep(0.01)
 \end{lstlisting}
 
 \textbf{What does this code do?}
-
-\url{google.com}
 
 \textbf{How many steps does it take?}
 \end{frame}
@@ -115,17 +123,6 @@ while (abs(vy) > 0.9) | (y > 0.2):
 \item with great power comes...
 \pause
 \item ...greater chance of bugs
-}\end{slide}
-
-\begin{slide}{
-\item Subtle changes might affect behaviour deeply
-\item For example, a change in value of \texttt{0.1} makes the loop non-terminating
-\item The culprit may be hidden in a lot of places
-\begin{itemize}
-\item Floating point errors
-\item Logical repetition: state always changes, within a circular trajectory
-\item ...
-\end{itemize}
 }\end{slide}
 
 \begin{frame}[fragile]{Unbounded loop example}
@@ -140,10 +137,22 @@ while (abs(vy) > 0.9) | (y > 0.1):
   else:
     vy -= 9.8 * dt
     y = new_y
-  ... draw a ball at position (10,y) ...
+  cls()
+  screen = ""
+  for j in range(0,20):
+    for i in range(0,20):
+      if (i == 10) & (j == 19 - int(y)):
+        screen += "O"
+      elif j == 19:
+        screen += "-"
+      else:
+        screen += " "
+    screen += "\n"
+  print(screen)
+  sleep(0.01)
 \end{lstlisting}
 
-\textbf{Does this loop terminate? (This is not the same code as in Slide \ref{slide:bouncing}!)}
+\textbf{Does this loop terminate? (This is not the same code as before!)}
 
 \pause
 
@@ -156,17 +165,29 @@ while (abs(vy) > 0.9) | (y > 0.1):
 y = 10.0
 vy = 0.0
 dt = 0.1
-while (abs(vy) > 0.9) | (y > 0.2):
+while (abs(vy) > 0.9) | (y > 0.1):
   new_y = y + vy * dt
   if new_y <= 0.1:
     vy = -vy * 0.8
   else:
     vy -= 9.8 * dt
     y = new_y
-  ... draw a ball at position (10,y) ...
+  cls()
+  screen = ""
+  for j in range(0,20):
+    for i in range(0,20):
+      if (i == 10) & (j == 19 - int(y)):
+        screen += "O"
+      elif j == 19:
+        screen += "-"
+      else:
+        screen += " "
+    screen += "\n"
+  print(screen)
+  sleep(0.01)
 \end{lstlisting}
 
-\textbf{Does this loop terminate? (This is not the same code as in Slide \ref{slide:bouncing}!)}
+\textbf{Does this loop terminate? (This is not the same code as before!)}
 
 \pause
 
@@ -269,24 +290,7 @@ for VARIABLE in range(END):
 \end{frame}
 
 \SlideSubSection{Semantics of \texttt{for}}
-\begin{slide}{
-\item The general form is \texttt{for VAR in RANGE: BODY} ($f_{VRB}$)
-\item If \texttt{VAR} is still within \texttt{RANGE}, then we jump to the beginning of \texttt{BODY} and then increment the variable, otherwise we jump to the end of the whole \texttt{for}
-$$
-\tiny
-\left\{
-\begin{matrix}
-(PC,S) \overset{f_{VRB}}{\rightarrow} (firstLine(B),S) &when& S[V] \in R & \\
-(PC,S) \overset{f_{VRB}}{\rightarrow} (skipAfter(B),S) &when& S[V] \notin R & \\
-\end{matrix}
-\right.
-$$
-\item At the end of the loop assume that we have two invisible instructions
-\begin{itemize}
-\item \texttt{V = V + 1}
-\item \texttt{jump back to begin loop}
-\end{itemize}
-}\end{slide}
+%%%SEMANTICS
 
 \SlideSubSection{Index of the current repetition}
 \begin{slide}{
@@ -424,29 +428,16 @@ print(cnt)
 \item Each loop adds its own iteration variable
 \item The iteration variables, together, are an N-dimensional point
 \item A single loop performs a ``linear'' computation, two loops perform a ``square''     computation, three perform a ``cubic'' computation, etc.
+\item Still, multiple loops inside each other can be translated into a single for-loop
+\item Examples (see also without the shortcut)
 }\end{slide}
 
 \begin{slide}{
-\item Multiple \texttt{for}-loops perform a predetermined number of computations
-\item This means that we can always translate multiple \texttt{for}-loops into a single one\footnote{This will usually break readability, so it is not advised: it is just a reasoning exercise.}
+\item Examples...
 }\end{slide}
 
-\begin{frame}[fragile]
-\begin{lstlisting}
-for i in range(0,10):
-  for j in range(0,5):
-    print(i,j)
-\end{lstlisting}
 
-\textbf{can be simulated with}
 
-\begin{lstlisting}
-for x in range(0,50):
-  i = x / 5
-  j = x % 5
-  print(i, j)
-\end{lstlisting}
-\end{frame}
 
 
 \SlideSection{Conclusion}
