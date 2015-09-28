@@ -1,0 +1,15 @@
+SEMI-FORMAL SEMANTICS of FOR-LOOPS
+
+
+  Nesting for-loops
+  1. Each step of a for-loop can contain arbitrary code that will be repeated.
+  2. This arbitrary code can also contain loops
+  3. Loops within loops have a ``multiplicative'' behaviour.
+  4. Each loop adds its own iteration variable.
+  5. The iteration variables, together, are an N-dimensional point.
+  6. A single loop performs a ``linear'' computation, two loops perform a ``square''     computation, three perform a ``cubic'' computation, etc.
+  7. Still, multiple loops inside each other can be translated into a single for-loop
+  Examples (see also without the shortcut)
+
+
+
