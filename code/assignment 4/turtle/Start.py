@@ -52,24 +52,12 @@ def turn(n):
 
 def get():
     from msvcrt import getch
-    c = ord(getch())
-    ## On a Mac or Unix, you can uncomment the lines below
-    ## and comment the two lines above.
-    #import termios, sys, os
-    #TERMIOS = termios
-    #fd = sys.stdin.fileno()
-    #old = termios.tcgetattr(fd)
-    #new = termios.tcgetattr(fd)
-    #new[3] = new[3] & ~TERMIOS.ICANON & ~TERMIOS.ECHO
-    #new[6][TERMIOS.VMIN] = 1
-    #new[6][TERMIOS.VTIME] = 0
-    #termios.tcsetattr(fd, TERMIOS.TCSANOW, new)
-    #c = None
-    #try:
-    #    c = ord(os.read(fd, 1))
-    #finally:
-    #    termios.tcsetattr(fd, TERMIOS.TCSAFLUSH, old)
-    return c
+    return ord(getch())
+    ## On a Mac, you can uncomment the lines below
+    ## and comment the lines above. However you
+    ## need to press enter after a key is pressed
+    # import sys
+    # return ord(sys.stdin.read(1)[0:1])
 
 
 def run(a):
