@@ -46,6 +46,7 @@ breaklines=true}
 \newcommand{\organisatie}{\uppercase{Hogeschool Rotterdam / CMI}}
 \newcommand{\modulenaam}{Development 1}
 \newcommand{\modulecode}{\uppercase{INFDEV02-1}}
+\newcommand{\studiejaar}{2015-2016}
 \newcommand{\stdPunten}{4}
 \renewcommand{\author}{Dr. Giuseppe Maggiore, Tony Busker}
 
@@ -58,7 +59,7 @@ breaklines=true}
 \setlength{\cftbeforesecskip}{10pt}
 \setlength\parindent{0pt}
 \makeindex
-\graphicspath{{img/}}
+\graphicspath{{../img/}}
 \counterwithin{figure}{subsection}
 \pagestyle{fancy}
 \setcounter{secnumdepth}{5}
@@ -86,7 +87,7 @@ breaklines=true}
 %Titlepage
 \begin{titlepage}
 \thispagestyle{fancy}
-\input{tex/Voorblad}
+\input{Voorblad}
 \end{titlepage}
 
 %####### Contentpagina ########
@@ -101,24 +102,24 @@ breaklines=true}
 %########### Inhoud ###########
 
 \shadowsectionbox
-\include{tex/Modulebeschrijving}
+\include{Modulebeschrijving}
 \newpage
-\include{tex/AlgemeneOmschrijving}
+\include{AlgemeneOmschrijving}
 \newpage
-\include{tex/Programma}
+\include{Programma}
 \newpage
-\include{tex/Toetsing}
+\include{Toetsing}
 \newpage
-\include{tex/ExamStructure}
+\include{ExamStructure}
 \newpage
-\include{tex/ExamSample}
+\include{ExamSample}
 %##############################
 
 \newpage
 %\bibliographystyle{plain}
 %\bibliography{references}
 %\newpage
-\input{tex/Bijlage1}
+\input{Bijlage1}
 %\newpage
 %\input{tex/Bijlage2}
 %\newpage
