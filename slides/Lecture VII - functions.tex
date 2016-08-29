@@ -1,0 +1,909 @@
+\documentclass{beamer}
+\usetheme[hideothersubsections]{HRTheme}
+\usepackage{beamerthemeHRTheme}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[space]{grffile}
+
+\title{Functions}
+
+
+\author{TEAM INFDEV}
+
+\institute{Hogeschool Rotterdam \\ 
+Rotterdam, Netherlands}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+\SlideSection{Introduction}
+\SlideSubSection{Lecture topics}
+\begin{slide}{
+\item So far we have shown how data representation can be abstracted away
+\item Building useful containers only once makes it possible to reuse their definition
+\item Many data structures (tuples, lists, maps, sets, etc.) become thus a new layer of abstraction
+}\end{slide}
+
+\begin{slide}{
+\item Manipulating these data structures happens in user code
+\item Often, user code needs to perform operations that are similar to each other
+\item Similar operations should not require rewriting everything every time
+}\end{slide}
+
+\SlideSection{Problem discussion}
+\SlideSubSection{Introduction}
+\begin{slide}{
+\item Consider many operations on lists
+\begin{itemize}
+\item finding or removing a specific element in a container
+\item computing the length of a list
+\item removing all elements that satisfy a condition
+\item ...
+\end{itemize}
+}\end{slide}
+
+\begin{frame}[fragile]{Lenght of a list}
+\begin{codewithblock}{\pause \item What does \texttt{l} contain? \item What do we do with the values of the list? \item Do they even matter?}
+cnt = 0
+x = l
+while not(x.IsEmpty):
+  cnt = cnt + 1
+  x = x.Tail
+print("List l contains " + str(cnt) + " elements.")
+\end{codewithblock}
+\end{frame}
+
+\begin{slide}{
+\item Suppose that we now have another list, \texttt{k}
+\item We wish to know its length
+\item How do we do it?
+}\end{slide}
+
+\begin{frame}[fragile]{Lenght of a list}
+\begin{codewithblock}{\pause \item Looks suspiciously like the previous code block \item Why?}
+cnt = 0
+x = k
+while not(x.IsEmpty):
+  cnt = cnt + 1
+  x = x.Tail
+print("List k contains " + str(cnt) + " elements.")
+\end{codewithblock}
+\end{frame}
+
+\SlideSection{General idea}
+\SlideSubSection{Adding our own layers}
+\begin{slide}{
+\item The goal of this lecture is to add a new layer of abstraction to our programs
+\item We wish to reuse \textbf{implementations}, not only data structures
+\item This layer of abstraction is called \textbf{functions}
+}\end{slide}
+
+\begin{frame}[fragile]{Adding our own layers}
+\begin{lstlisting}
++-------------+
+| ...         |
++------------------+
+| Functions        |
++-----------------------+
+| data structures       |
++----------------------------+
+| if, for, while, variables  |
++--------------------------------+
+| (Python) runtime               |
++--------------------------------+
+...
+\end{lstlisting}
+\end{frame}
+
+\SlideSubSection{Description}
+\begin{slide}{
+\item A function is a collection of instructions and variables
+\item Some instructions and variables are fixed inside its \textbf{body}
+\item Other instructions and variables come from outside the function, and thus are not fixed; these are called \textbf{parameters} of the function
+\item We try to strike the right balance between flexibility and work done
+\item The function returns a final result that can be recovered by the code that uses the function
+}\end{slide}
+
+\begin{frame}[fragile]{Blueprint of a function (NOT ACTUAL PYTHON CODE!)}
+\begin{codewithblock}{\pause \item \texttt{length} is the \textbf{function name} \item \texttt{l} is the only \textbf{parameter} \item Lines 2 through 6 are \textbf{fixed} \item \texttt{cnt} is the \textbf{final result}}
+length of a list l:
+  cnt = 0
+  x = l
+  while not(x.IsEmpty):
+    cnt = cnt + 1
+    x = x.Tail
+  return cnt as the final result 
+\end{codewithblock}
+\end{frame}
+
+\SlideSubSection{Using the function}
+\begin{slide}{
+\item Code that needs the length of a function can now simply invoke function \texttt{length}
+\item The resulting code will simply be \texttt{l\_len = length(l)}
+\item \texttt{l\_len} will be assigned with the value returned by the function
+}\end{slide}
+
+\SlideSection{Technical details}
+\SlideSubSection{Introduction}
+\begin{slide}{
+\item A function can be defined in Python quite easily
+\item The syntax is:
+\begin{itemize}
+\item \texttt{def <<name>>(<<parameters>>):}\footnote{Parameters might be none, thus we can write simply \texttt{()}}\footnote{Multiple parameters are separated by a comma, thus \texttt{(<<p1>>,<<p2>>,...,<<pn>>)}}
+\begin{itemize}
+\item \texttt{body}
+\item \texttt{return <<result>>}
+\end{itemize}
+\end{itemize}
+\item Inside a function we can put whatever instructions we need
+\begin{itemize}
+\item \texttt{if}
+\item \texttt{for}
+\item ...
+\end{itemize}
+}\end{slide}
+
+\SlideSubSection{Using the function}
+\begin{slide}{
+\item After we declare a function, we can use it
+\item The syntax is quite simple
+\begin{itemize}
+\item \texttt{<<name>>(<<parameters>>)} to just call the function and ignore the result
+\item \texttt{<<v>> = <<name>>(<<parameters>>)} to call the function and assign the result to the \texttt{<<v>>} variable
+\end{itemize}
+\item After calling the function, we enter the local environment of the function
+\item Variables, the \texttt{PC}, etc. are separate from those of the calling site
+}\end{slide}
+
+\begin{frame}[fragile]{Runtime example}
+\begin{memorytable}
+{|c|}
+{PC}
+{9}
+{|c|}
+{}
+{}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+def length(l):
+  cnt = 0
+  x = l
+  while not(x.IsEmpty):
+    cnt = cnt + 1
+    x = x.Tail
+  return cnt  
+
+print(length(Node(10, Empty)))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|c|c|c|}
+{PC & length & PC & l}
+{9 & nil & 2 & ref(1) }
+{|c|c|}
+{0 & 1}
+{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 10; T $\mapsto$ ref(0)]}
+\end{memorytable}
+\end{frame}
+
+\begin{frame}[fragile]{Runtime example}
+\begin{memorytable}
+{|c|c|c|c|}
+{PC & length & PC & l}
+{9 & nil & 2 & ref(1) }
+{|c|c|}
+{0 & 1}
+{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 10; T $\mapsto$ ref(0)]}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+def length(l):
+  cnt = 0
+  x = l
+  while not(x.IsEmpty):
+    cnt = cnt + 1
+    x = x.Tail
+  return cnt  
+
+print(length(Node(10, Empty)))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|c|c|c|c|}
+{PC & length & PC & l & cnt }
+{9 & nil & \red{3} & ref(1) & \red{0}}
+{|c|c|}
+{0 & 1}
+{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 10; T $\mapsto$ ref(0)]}
+\end{memorytable}
+\end{frame}
+
+\begin{frame}[fragile]{Runtime example}
+\begin{memorytable}
+{|c|c|c|c|c|}
+{PC & push & PC & l & cnt }
+{9 & length & 3 & ref(1) & 0 }
+{|c|c|}
+{0 & 1}
+{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 10; T $\mapsto$ ref(0)]}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+def length(l):
+  cnt = 0
+  x = l
+  while not(x.IsEmpty):
+    cnt = cnt + 1
+    x = x.Tail
+  return cnt  
+
+print(length(Node(10, Empty)))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|c|c|c|c|c|}
+{PC & length & PC & l & cnt & x }
+{9 & nil & \red{4} & ref(1) & 0 & \red{ref(1)} }
+{|c|c|}
+{0 & 1}
+{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 10; T $\mapsto$ ref(0)]}
+\end{memorytable} \ \\
+\end{frame}
+
+\begin{frame}[fragile]{Runtime example}
+\textit{After a few steps...} \\
+
+\begin{memorytable}
+{|c|c|c|c|c|c|}
+{PC & length & PC & l & cnt & x }
+{9 & nil & \red{7} & ref(1) & \red{1} & \red{ref(0)} }
+{|c|c|}
+{0 & 1}
+{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 10; T $\mapsto$ ref(0)]}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+def length(l):
+  cnt = 0
+  x = l
+  while not(x.IsEmpty):
+    cnt = cnt + 1
+    x = x.Tail
+  return cnt  
+
+print(length(Node(10, Empty)))
+\end{lstlisting}
+
+\pause
+\textbf{Do we still need all the local variables of the function?}
+\pause
+\textbf{Where do we put the result?}
+\pause
+
+\begin{memorytable}
+{|c|c|}
+{PC & length }
+{9 & \red{1} }
+{|c|c|}
+{0 & 1}
+{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 10; T $\mapsto$ ref(0)]}
+\end{memorytable} \ \\
+\end{frame}
+
+\SlideSubSection{Syntax and semantics}
+\begin{slide}{
+\item We will now describe how Python functions work precisely
+\item This is a \textbf{fundamental} bit of knowledge that determines if you really do learn how to program or not
+\item This \textbf{absolutely requires} a lot of focus to get
+\item Please panic a bit on the inside
+}\end{slide}
+
+\SlideSubSection{Subtleties that make functions ``fun'' to use}
+\begin{slide}{
+\item About variables
+\begin{itemize}
+\item Variables and parameters inside a function have precise \textbf{scope} (visibility)
+\item Primitive values given as parameters can be \textbf{changed only locally} to the function
+\item References given as parameters can be \textbf{permanently changed} from within the function
+\item Global variables defined outside the function may be \textbf{read but not changed} from within the function\footnote{\textbf{Unless you use some tricks we strongly discourage}}
+\end{itemize}
+\item About behaviour
+\begin{itemize}
+\item A function may \textbf{call itself}, in a process known as \textbf{recursion}
+\item A function may \textbf{get as parameters and return other functions}, in a process known as \textbf{higher order functions}
+\end{itemize}
+}\end{slide}
+
+\SlideSubSection{Local and global variables (basics of scope)}
+\begin{slide}{
+\item The parameters of a function are added to the list of accessible variables
+\item They are only visible from inside the function
+\item Global variables are also visible from inside the function
+}\end{slide}
+
+\begin{slide}{
+\item Every call to a function generates a new value of the stack memory \texttt{S}
+\item This contains (private copy of) all local variables
+\item The heap memory \texttt{H} remains the same
+\item The original stack memory (the \textbf{global variables}) remains accessible, just read-only 
+}\end{slide}
+
+\begin{slide}{
+\item Every call to a function also reserves some special locations in the stack
+\item The local \texttt{PC} of the function
+\item The local variables of the function
+\item The returned value when the function is done
+}\end{slide}
+
+\begin{frame}[fragile]{Locals and globals}
+\begin{codewithblock}{\item \texttt{x} is a global variable, visible outside and inside the function \item \texttt{z} is a local variable, visible only inside the function \pause \item \textbf{What does this program print?} \pause \item \texttt{10}, \texttt{30}, \texttt{20}}
+x = 1
+
+def f(z):
+  return x * z
+
+print(f(10))
+print(f(30))
+x = 2
+print(f(10))
+\end{codewithblock}
+\end{frame}
+
+\begin{frame}[fragile]{Locals and globals}
+\begin{memorytable}
+{|c|}{PC}{1}
+{|c|}{}{}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+x = 1
+
+def f(z):
+  return x * z
+
+print(f(10))
+x = 2
+print(f(10))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|c|}{PC & x}{\red{6} & \red{1}}
+{|c|}{}{}
+\end{memorytable} \ \\
+\end{frame}
+
+\begin{frame}[fragile]{Locals and globals}
+\begin{memorytable}
+{|c|c|}{PC & x}{\red{6} & \red{1}}
+{|c|}{}{}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+x = 1
+
+def f(z):
+  return x * z
+
+print(f(10))
+x = 2
+print(f(10))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|c|c|c|c|}{PC & x & f & PC & z}{6 & 1 & \red{nil} & \red{4} & \red{10}}
+{|c|}{}{}
+\end{memorytable} \ \\
+\end{frame}
+
+\begin{frame}[fragile]{Locals and globals}
+\begin{memorytable}
+{|c|c|c|c|c|}{PC & x & f & PC & z}{6 & 1 & nil & 4 & 10}
+{|c|}{}{}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+x = 1
+
+def f(z):
+  return x * z
+
+print(f(10))
+x = 2
+print(f(10))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|c|c|}{PC & x & f}{\red{7} & 1 & 10}
+{|c|}{}{}
+\end{memorytable} \ \\
+\end{frame}
+
+\begin{frame}[fragile]{Locals and globals}
+\begin{memorytable}
+{|c|c|c|}{PC & x & f}{7 & 1 & 10}
+{|c|}{}{}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+x = 1
+
+def f(z):
+  return x * z
+
+print(f(10))
+x = 2
+print(f(10))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|c|}{PC & x}{\red{8} & \red{2}}
+{|c|}{}{}
+\end{memorytable} \ \\
+\end{frame}
+
+\begin{frame}[fragile]{Locals and globals}
+\begin{memorytable}
+{|c|c|c|c|c|}{PC & x & f & PC & z}{8 & 2 & \red{nil} & \red{4} & 10}
+{|c|}{}{}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+x = 1
+
+def f(z):
+  return x * z
+
+print(f(10))
+x = 2
+print(f(10))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|c|c|}{PC & x & f}{\red{8} & 2 & \red{20}}
+{|c|}{}{}
+\end{memorytable} \ \\
+\end{frame}
+
+\begin{frame}[fragile]{Locals and globals}
+\begin{codewithblock}{\item \texttt{x} is a global variable, visible outside and inside the function \item \texttt{z} is a local variable, visible only inside the function \pause \item \textbf{What does this program do?} \pause \item Crash with \texttt{NameError: name 'z' is not defined}}
+x = 1
+
+def f(z):
+  return x * z
+
+print(f(10))
+x = 2
+print(f(10))
+print(z)
+\end{codewithblock}
+\end{frame}
+
+\begin{frame}[fragile]{Locals and globals}
+\begin{codewithblock}{\item \texttt{z} is a local variable, visible only inside the function \pause \item \textbf{What does this program print?} \pause \item \texttt{22}, \texttt{62}}
+def f(z):
+  z = z + 1
+  return z * 2
+
+print(f(10))
+print(f(30))
+\end{codewithblock}
+\end{frame}
+
+\SlideSubSection{Shadowing}
+\begin{slide}{
+\item The parameters of a function have priority over globals
+\item They supersede global variables of the same name
+}\end{slide}
+
+\begin{frame}[fragile]{Shadowing}
+\begin{codewithblock}{\item \texttt{x} is a global variable, potentially visible inside the function \item \texttt{x} is also a local variable of the function, which has priority over the global \texttt{x} \pause \item \textbf{What does this program print?} \pause \item \texttt{20}, \texttt{40}}
+x = 1
+
+def f(x):
+  return x * 2
+
+print(f(10))
+print(f(20))
+\end{codewithblock}
+\end{frame}
+
+\begin{frame}[fragile]{Shadowing}
+\begin{memorytable}
+{|c|c|}{PC & x}{6 & 1}
+{|c|}{}{}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+x = 1
+
+def f(x):
+  return x * 2
+
+print(f(10))
+print(f(20))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|c|c|c|c|}{PC & x & f & PC & x}{6 & 1 & \red{nil} & \red{4} & \red{10}}
+{|c|}{}{}
+\end{memorytable} \ \\
+\end{frame}
+
+\begin{frame}[fragile]{Shadowing}
+\begin{memorytable}
+{|c|c|c|c|c|}{PC & x & f & PC & x}{6 & 1 & nil & 4 & 10}
+{|c|}{}{}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+x = 1
+
+def f(x):
+  return x * 2
+
+print(f(10))
+print(f(20))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|c|c|}{PC & x & f}{7 & 1 & \red{20}}
+{|c|}{}{}
+\end{memorytable} \ \\
+\end{frame}
+
+\begin{frame}[fragile]{Shadowing}
+\begin{memorytable}
+{|c|c|c|}{PC & x & f}{7 & 1 & 20}
+{|c|}{}{}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+x = 1
+
+def f(x):
+  return x * 2
+
+print(f(10))
+print(f(20))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|c|c|c|c|}{PC & x & f & PC & x}{7 & 1 & \red{nil} & \red{4} & \red{20}}
+{|c|}{}{}
+\end{memorytable} \ \\
+\end{frame}
+
+\begin{frame}[fragile]{Shadowing}
+\begin{memorytable}
+{|c|c|c|c|c|}{PC & x & f & PC & x}{7 & 1 & nil & 4 & 20}
+{|c|}{}{}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+x = 1
+
+def f(x):
+  return x * 2
+
+print(f(10))
+print(f(20))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|c|c|}{PC & x & f}{\red{8} & 1 & \red{40}}
+{|c|}{}{}
+\end{memorytable} \ \\
+\end{frame}
+
+\SlideSubSection{Recursion}
+\begin{slide}{
+\item (Recursive) functions are all functions that call themselves in their bodies
+\item This is based on the principle of induction and in general a very powerful technique
+\item This leads to a compacter and often more easily correct representation
+\begin{itemize}
+\item Code is not easier to read, especially to the untrained eye
+\end{itemize}
+}\end{slide}
+
+\begin{slide}{
+\item Remember that calling a function creates a new instance of stack memory
+\item Recursive functions do this a lot
+\item Each recursive call has its own environment
+}\end{slide}
+
+\begin{frame}[fragile]{Recursion}
+\begin{codewithblock}{\item How many \texttt{l}'s shall we have? \pause \item As many as the nodes of the initial value}
+def length(l):
+  if l.IsEmpty:
+    return 0
+  else:
+    return length(l.Tail) + 1
+\end{codewithblock}
+\end{frame}
+
+\begin{frame}[fragile]{Recursion}
+\begin{memorytable}
+{|c|}{PC}{7}
+{|c|}{}{}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+def length(l):
+  if l.IsEmpty:
+    return 0
+  else:
+    return length(l.Tail) + 1
+    
+print(length(Node(1,Node(2,Empty))))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|c|c|c|}{PC & length & PC & l}{7 & \red{nil} & 2 & \red{ref(2)}}
+{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
+\end{memorytable} \ \\
+\end{frame}
+
+\begin{frame}[fragile]{Recursion}
+\begin{memorytable}
+{|c|c|c|c|}{PC & length & PC & l}{7 & nil & 2 & ref(2)}
+{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+def length(l):
+  if l.IsEmpty:
+    return 0
+  else:
+    return length(l.Tail) + 1
+    
+print(length(Node(1,Node(2,Empty))))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|c|c|c|}{PC & length & PC & l}{7 & nil & \red{5} & ref(2)}
+{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
+\end{memorytable} \ \\
+\end{frame}
+
+\begin{frame}[fragile]{Recursion}
+\begin{memorytable}
+{|c|c|c|c|}{PC & length & PC & l}{7 & nil & 5 & ref(2)}
+{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+def length(l):
+  if l.IsEmpty:
+    return 0
+  else:
+    return length(l.Tail) + 1
+    
+print(length(Node(1,Node(2,Empty))))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|c|c|c|c|c|c|}{PC & length & PC & l & length & PC & l}{7 & nil & 5 & ref(2) & \red{nil} & \red{2} & \red{ref(1)}}
+{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
+\end{memorytable} \ \\
+\end{frame}
+
+\begin{frame}[fragile]{Recursion}
+\begin{memorytable}
+{|c|c|c|c|c|c|c|}{PC & length & PC & l & length & PC & l}{7 & nil & 5 & ref(2) & nil & 2 & ref(1)}
+{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+def length(l):
+  if l.IsEmpty:
+    return 0
+  else:
+    return length(l.Tail) + 1
+    
+print(length(Node(1,Node(2,Empty))))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|c|c|c|c|c|c|}{PC & length & PC & l & length & PC & l}{7 & nil & 5 & ref(2) & nil & \red{5} & ref(1)}
+{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
+\end{memorytable} \ \\
+\end{frame}
+
+\begin{frame}[fragile]{Recursion}
+\begin{memorytable}
+{|c|c|c|c|c|c|c|c|c|c|}{PC & length & PC & l & length & PC & l & length & PC & l}{7 & nil & 5 & ref(2) & nil & 5 & ref(1) & \red{nil} & \red{2} & \red{ref(0)}}
+{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+def length(l):
+  if l.IsEmpty:
+    return 0
+  else:
+    return length(l.Tail) + 1
+    
+print(length(Node(1,Node(2,Empty))))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|c|c|c|c|c|c|c|c|c|}{PC & length & PC & l & length & PC & l & length & PC & l}{7 & nil & 5 & ref(2) & nil & 5 & ref(1) & nil & \red{3} & ref(0)}
+{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
+\end{memorytable} \ \\
+\end{frame}
+
+\begin{frame}[fragile]{Recursion}
+\begin{memorytable}
+{|c|c|c|c|c|c|c|c|c|c|}{PC & length & PC & l & length & PC & l & length & PC & l}{7 & nil & 5 & ref(2) & nil & 5 & ref(1) & nil & 3 & ref(0)}
+{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+def length(l):
+  if l.IsEmpty:
+    return 0
+  else:
+    return length(l.Tail) + 1
+    
+print(length(Node(1,Node(2,Empty))))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|c|c|c|c|c|c|c|}{PC & length & PC & l & length & PC & l & length}{7 & nil & 5 & ref(2) & nil & 5 & ref(1) & \red{0}}
+{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
+\end{memorytable} \ \\
+\end{frame}
+
+\begin{frame}[fragile]{Recursion}
+\begin{memorytable}
+{|c|c|c|c|c|c|c|c|}{PC & length & PC & l & length & PC & l & length}{7 & nil & 5 & ref(2) & nil & 5 & ref(1) & 0}
+{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+def length(l):
+  if l.IsEmpty:
+    return 0
+  else:
+    return length(l.Tail) + 1
+    
+print(length(Node(1,Node(2,Empty))))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|c|c|c|c|}{PC & length & PC & l & length}{7 & nil & 5 & ref(2) & \red{0+1}}
+{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
+\end{memorytable} \ \\
+\end{frame}
+
+\begin{frame}[fragile]{Recursion}
+\begin{memorytable}
+{|c|c|c|c|c|}{PC & length & PC & l & length}{7 & nil & 5 & ref(2) & 1}
+{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+def length(l):
+  if l.IsEmpty:
+    return 0
+  else:
+    return length(l.Tail) + 1
+    
+print(length(Node(1,Node(2,Empty))))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|c|}{PC & length}{7 & \red{2}}
+{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
+\end{memorytable} \ \\
+\end{frame}
+
+\begin{frame}[fragile]{Recursion}
+\begin{memorytable}
+{|c|c|c|c|c|}{PC & length}{7 & 2}
+{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
+\end{memorytable} \ \\
+
+\begin{lstlisting}
+def length(l):
+  if l.IsEmpty:
+    return 0
+  else:
+    return length(l.Tail) + 1
+    
+print(length(Node(1,Node(2,Empty))))
+\end{lstlisting}
+
+\pause
+
+\begin{memorytable}
+{|c|}{PC}{\red{8}}
+{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
+\end{memorytable} \ \\
+\end{frame}
+
+\SlideSection{Assignments}
+\SlideSubSection{Build and test, on paper...}
+\begin{slide}{
+\item A function \texttt{add} that increments all elements of a list by a fixed value:
+\begin{itemize}
+\item \texttt{add(10, Node(1,Node(2,Node(3,Empty)))) -> Node(11,Node(12,Node(13,Empty)))}
+\end{itemize}
+\item A function \texttt{filterEven} that removes all odd elements from a list:
+\begin{itemize}
+\item \texttt{filterEven(Node(1,Node(2,Node(3,Empty)))) -> Node(2,Empty)}
+\end{itemize}
+\item A function \texttt{sum} that adds all elements of a list:
+\begin{itemize}
+\item \texttt{sum(Node(1,Node(2,Node(3,Empty)))) -> 6}
+\end{itemize}
+}\end{slide}
+
+\SlideSection{Conclusion}
+\SlideSubSection{Lecture topics}
+\begin{slide}{
+\item Often, user code needs to perform operations that are similar to each other
+\item Through the mechanism of function definition, we can recycle code
+\item Functions can encode algorithms in many way
+\begin{itemize}
+\item Simple code abstractions to avoid repetition
+\item Recursive problems
+\end{itemize}
+}\end{slide}
+
+\begin{thankyou}
+\end{thankyou}
+
+\end{document}
+
+\begin{slide}{
+\item ...
+}\end{slide}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+...
+\end{lstlisting}
+\end{frame}

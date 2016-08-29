@@ -1,11 +1,81 @@
-\newcommand{\SlideSection}[1]{
-\def \CurrentSection {#1}
-\section{#1}
+\usepackage{color}
+\newcommand{\red}[1]{
+\textcolor{red}{#1}
+}
+\newcommand{\ts}{\textbackslash}
+\usepackage{listings}
+\lstnewenvironment{codewithblock}[1]{
+	\lstset{escapeinside={\%*}{*)},language=ML,
+    mathescape=true,
+    frame=single,
+    numbers=left,
+    basicstyle=\ttfamily\tiny,
+    breaklines=true,
+    literate={ï}{{\"i}}1
+             {ì}{{\`i}}1}}{
+		\begin{block}{\CurrentSubSection}
+			\begin{itemize}
+			#1
+			\end{itemize}
+		\end{block}}
+\lstset{escapeinside={\%*}{*)},language=ML,
+  mathescape=true,
+  frame=single,
+  numbers=left,
+  basicstyle=\ttfamily\tiny,
+  breaklines=true,
+  literate={ï}{{\"i}}1
+           {ì}{{\`i}}1
 }
 
-\newcommand{\SlideSubSection}[1]{
-\def \CurrentSubSection {#1}
-%\subsection{#1}
+\newenvironment{statetable}[3]{
+\begin{tabular}{ #1 }
+   \hline
+   #2 \\
+   \hline
+   #3 \\
+   \hline
+\end{tabular}
+}
+
+\newenvironment{memorytable}[6]{
+{\tiny
+\begin{tabular}{ c l }
+  S & 
+\begin{statetable}
+{#1}
+{#2}
+{#3}
+\end{statetable}  \\
+\\
+H &
+\begin{statetable}
+{#4}
+{#5}
+{#6}
+\end{statetable} \\
+\end{tabular}
+}
+}
+
+\lstnewenvironment{codewithmemory}[6]{
+	\lstset{language=ML,
+    mathescape=true,
+    frame=single,
+    numbers=left,
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    literate={ï}{{\"i}}1
+             {ì}{{\`i}}1}}{
+             \begin{memorytable}{#1}{#2}{#3}{#4}{#5}{#6}\end{memorytable}}
+
+\newenvironment{thankyou}
+{
+\begin{frame}{This is it!}
+\center
+\fontsize{18pt}{7.2}\selectfont
+The best of luck, and thanks for the attention!
+\end{frame}
 }
 
 \newenvironment{slide}[1]
@@ -30,16 +100,19 @@
 \end{frame}
 }
 
-\newenvironment{codeslide}[1]
-{
-\begin{frame}[fragile]{\CurrentSection}
-\begin{block}{\CurrentSubSection}
-\begin{lstlisting}[language=CAML]
-#1
-\end{lstlisting}
-\end{block}
-}{
+\newcommand{\SlideSection}[1]{
+\def \CurrentSection {#1}
+\section{#1}
+\begin{frame}{}
+\center
+\fontsize{18pt}{7.2}\selectfont
+\textbf{#1}
 \end{frame}
+}
+
+\newcommand{\SlideSubSection}[1]{
+\def \CurrentSubSection {#1}
+%\subsection{#1}
 }
 
 
@@ -340,7 +413,7 @@
 
 % Set the UNL logo, UNL.pdf must be in the latex path or working directory
 \setbeamercolor{logo}{fg=black,bg=white}
-\logo{\includegraphics[height=1.2cm]{../img/logoHRBig.png}}
+\logo{\includegraphics[height=1.2cm]{logoHRBig.png}}
 
 % Handout Mode - Using the default layouts, no menus, etc.
 \mode
