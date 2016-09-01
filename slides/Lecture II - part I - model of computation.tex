@@ -5,6 +5,8 @@
 \usepackage[space]{grffile}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{hyperref}
+
 
 \lstset{language=C,
 basicstyle=\ttfamily\footnotesize,
@@ -16,7 +18,7 @@ breaklines=true}
 
 \author{The INFDEV Team @ HR}
 
-\institute{Hogeschool Rotterdam \\ 
+\institute{Hogeschool Rotterdam \\
 Rotterdam, Netherlands}
 
 \date{}
@@ -45,9 +47,9 @@ Rotterdam, Netherlands}
 Consider this program from the previous lecture:
 
 \begin{lstlisting}[frame=shadowbox,numbers=left]
-take 3 steps forward 
-sit on the chair 
-turn left 
+take 3 steps forward
+sit on the chair
+turn left
 slide 3 steps forward
 \end{lstlisting}
 
@@ -75,9 +77,9 @@ PC & S.Pose & S.Orientation & S.Position \\
 } \ \\ \ \\ \ \\
 
 \begin{lstlisting}[frame=shadowbox,numbers=left]
-take 3 steps forward 
-sit on the chair 
-turn left 
+take 3 steps forward
+sit on the chair
+turn left
 slide 3 steps forward
 \end{lstlisting}
 
@@ -96,9 +98,9 @@ PC & S.Pose & S.Orientation & S.Position \\
 } \ \\ \ \\ \ \\
 
 \begin{lstlisting}[frame=shadowbox,numbers=left]
-take 3 steps forward 
-sit on the chair 
-turn left 
+take 3 steps forward
+sit on the chair
+turn left
 slide 3 steps forward
 \end{lstlisting}
 
@@ -117,9 +119,9 @@ PC & S.Pose & S.Orientation & S.Position \\
 } \ \\ \ \\ \ \\
 
 \begin{lstlisting}[frame=shadowbox,numbers=left]
-take 3 steps forward 
-sit on the chair 
-turn left 
+take 3 steps forward
+sit on the chair
+turn left
 slide 3 steps forward
 \end{lstlisting}
 
@@ -138,9 +140,9 @@ PC & S.Pose & S.Orientation & S.Position \\
 } \ \\ \ \\ \ \\
 
 \begin{lstlisting}[frame=shadowbox,numbers=left]
-take 3 steps forward 
-sit on the chair 
-turn left 
+take 3 steps forward
+sit on the chair
+turn left
 slide 3 steps forward
 \end{lstlisting}
 
@@ -159,9 +161,9 @@ PC & S.Pose & S.Orientation & S.Position \\
 } \ \\ \ \\ \ \\
 
 \begin{lstlisting}[frame=shadowbox,numbers=left]
-take 3 steps forward 
-sit on the chair 
-turn left 
+take 3 steps forward
+sit on the chair
+turn left
 slide 3 steps forward
 \end{lstlisting}
 
@@ -235,7 +237,7 @@ PC & S.Pose & S.Orientation & S.Position \\
 
 \begin{lstlisting}[frame=shadowbox,numbers=left,firstnumber=103]
 ...
-take 3 steps forward 
+take 3 steps forward
 ...
 \end{lstlisting}
 
@@ -263,7 +265,7 @@ PC & S.Pose & S.Orientation & S.Position \\
 
 \begin{lstlisting}[frame=shadowbox,numbers=left,firstnumber=103]
 ...
-take 3 steps forward 
+take 3 steps forward
 ...
 \end{lstlisting}
 
@@ -318,10 +320,10 @@ PC & S.Pose & S.Orientation & S.Position \\
 
 \begin{lstlisting}[frame=shadowbox,numbers=left,firstnumber=23]
 ...
-if A is ``black'' then 
-  turn left by 90 * B degrees 
-otherwise 
-  turn left by 90 * C degrees 
+if A is ``black'' then
+  turn left by 90 * B degrees
+otherwise
+  turn left by 90 * C degrees
 ...
 \end{lstlisting}
 
@@ -349,10 +351,10 @@ PC & S.Pose & S.Orientation & S.Position \\
 
 \begin{lstlisting}[frame=shadowbox,numbers=left,firstnumber=23]
 ...
-if A is ``black'' then 
-  turn left by 90 * B degrees 
-otherwise 
-  turn left by 90 * C degrees 
+if A is ``black'' then
+  turn left by 90 * B degrees
+otherwise
+  turn left by 90 * C degrees
 ...
 \end{lstlisting}
 
@@ -478,6 +480,30 @@ $$
 $$
 
 }\end{slide}
+
+\begin{frame}{Assignment:}
+\begin{itemize}
+    \item Write down a simple (no \texttt{if}s or \texttt{while}s) 5-line stdNt program
+    \begin{itemize}
+            \item starting from the first line till the end simulate the program by selecting the proper "arrows"
+            \item if an arrow does not exist, provide the formalization
+            \item the simulation must be done on paper
+    \end{itemize}
+    \item Adapt the previous program so it includes at least one branch
+    \begin{itemize}
+            \item again provide the formalization
+    \end{itemize}
+    \item Adapt the previous program so it includes repetitive behaviour
+    \begin{itemize}
+            \item again provide the formalization
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Homework:}
+Make the assignments on: \url{https://github.com/hogeschool/INFDEV02-1/blob/master/assignments/DEV I Assignment II.pdf}
+\end{frame}
+
 
 \begin{frame}{This is it!}
 \center
