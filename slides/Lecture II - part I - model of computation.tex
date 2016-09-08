@@ -70,7 +70,7 @@ What do you implicitly assume by performing each of the instructions? \textbf{Tr
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-1 & Standing & Forward & (0,0) \\
+1 & Standing & North & (0,0) \\
 \hline
 \end{tabular}
 } \ \\ \ \\ \ \\
@@ -91,7 +91,7 @@ what changes while running the current instruction? \textbf{Try to guess and dis
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-\red{2} & Standing & Forward & (0,\red{3}) \\
+\red{2} & Standing & North & (0,\red{3}) \\
 \hline
 \end{tabular}
 } \ \\ \ \\ \ \\
@@ -112,7 +112,7 @@ what changes while running the current instruction? \textbf{Try to guess and dis
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-\red{3} & \red{Sitting} & Forward & (0,3) \\
+\red{3} & \red{Sitting} & North & (0,3) \\
 \hline
 \end{tabular}
 } \ \\ \ \\ \ \\
@@ -133,7 +133,7 @@ what changes while running the current instruction? \textbf{Try to guess and dis
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-\red{4} & Sitting & \red{Left} & (0,3) \\
+\red{4} & Sitting & \red{West} & (0,3) \\
 \hline
 \end{tabular}
 } \ \\ \ \\ \ \\
@@ -154,7 +154,7 @@ what changes while running the current instruction? \textbf{Try to guess and dis
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-\red{END} & Sitting & Left & (\red{-3},3) \\
+\red{END} & Sitting & West & (\red{-3},3) \\
 \hline
 \end{tabular}
 } \ \\ \ \\ \ \\
@@ -229,7 +229,7 @@ what do we do now? \textbf{Try to guess and discuss!}
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-104 & Standing & Left & (10,20) \\
+104 & Standing & West & (10,20) \\
 \hline
 \end{tabular}
 } \ \\ \ \\ \ \\
@@ -245,7 +245,7 @@ take 3 steps forward
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-\red{105} & Standing & Left & (\red{7},20) \\
+\red{105} & Standing & West & (\red{7},20) \\
 \hline
 \end{tabular}
 }
@@ -257,7 +257,7 @@ PC & S.Pose & S.Orientation & S.Position \\
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-104 & Standing & Right & (10,20) \\
+104 & Standing & East & (10,20) \\
 \hline
 \end{tabular}
 } \ \\ \ \\ \ \\
@@ -273,7 +273,7 @@ take 3 steps forward
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-\red{105} & Standing & Right & (\red{13},20) \\
+\red{105} & Standing & East & (\red{13},20) \\
 \hline
 \end{tabular}
 }
@@ -286,13 +286,13 @@ PC & S.Pose & S.Orientation & S.Position \\
 \left\lbrace
 \begin{array}{l l}
 &(PC,S) \overset{fwd 3}{\rightarrow} (PC+1,S[Position \mapsto S.Position+(0,3)])\\
-&when \; S.Orientation=Forward \\
+&\mathrm{when} \; S.Orientation=North \\
 &(PC,S) \overset{fwd 3}{\rightarrow} (PC+1,S[Position \mapsto S.Position-(0,3)]) \\
-&when \; S.Orientation=Backward \\
+&\mathrm{when} \; S.Orientation=South \\
 &(PC,S) \overset{fwd 3}{\rightarrow} (PC+1,S[Position \mapsto S.Position+(3,0)]) \\
-&when S.Orientation=Right \\
+&\mathrm{when} \; S.Orientation=East \\
 &(PC,S) \overset{fwd 3}{\rightarrow} (PC+1,S[Position \mapsto S.Position-(3,0)]) \\
-&when S.Orientation=Left \\
+&\mathrm{when} \; S.Orientation=West \\
 \end{array}
 \right.
 \end{align*}
@@ -312,7 +312,7 @@ PC & S.Pose & S.Orientation & S.Position \\
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-24 & Standing & Right & (10,20) \\
+24 & Standing & East & (10,20) \\
 \hline
 \end{tabular}
 } \ \\ \ \\ \ \\
@@ -331,7 +331,7 @@ otherwise
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-\red{25\footnote{Assuming student's shirt is black}} & Standing & Right & (10,20) \\
+\red{25\footnote{Assuming student's shirt is black}} & Standing & East & (10,20) \\
 \hline
 \end{tabular}
 }
@@ -343,7 +343,7 @@ PC & S.Pose & S.Orientation & S.Position \\
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-24 & Standing & Right & (10,20) \\
+24 & Standing & East & (10,20) \\
 \hline
 \end{tabular}
 } \ \\ \ \\ \ \\
@@ -362,7 +362,7 @@ otherwise
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-\red{27\footnote{Assuming student's shirt is not black}} & Standing & Right & (10,20) \\
+\red{27\footnote{Assuming student's shirt is not black}} & Standing & East & (10,20) \\
 \hline
 \end{tabular}
 }
@@ -402,7 +402,7 @@ $$
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-24 & Standing & Right & (10,20) \\
+24 & Standing & East & (10,20) \\
 \hline
 \end{tabular}
 } \ \\ \ \\ \ \\
@@ -421,7 +421,7 @@ go back to work
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-\red{25\footnote{As long as it is sunny}} & Standing & Right & (10,20) \\
+\red{25\footnote{As long as it is sunny}} & Standing & East & (10,20) \\
 \hline
 \end{tabular}
 }
@@ -433,7 +433,7 @@ PC & S.Pose & S.Orientation & S.Position \\
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-24 & Standing & Right & (10,20) \\
+24 & Standing & East & (10,20) \\
 \hline
 \end{tabular}
 } \ \\ \ \\ \ \\
@@ -452,7 +452,7 @@ go back to work
 \hline
 PC & S.Pose & S.Orientation & S.Position \\
 \hline
-\red{27\footnote{When it stops being sunny}} & Standing & Right & (10,20) \\
+\red{27\footnote{When it stops being sunny}} & Standing & East & (10,20) \\
 \hline
 \end{tabular}
 }
