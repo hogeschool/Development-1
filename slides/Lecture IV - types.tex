@@ -106,14 +106,14 @@ Rotterdam, Netherlands}
 \SlideSubSection{The scientific notation}
 \begin{slide}{
 \item \texttt{0.00001} is annoying to write
-\item we can write \texttt{1.e-4} instead
-\item the sign \texttt{e-N} means \textit{add N zeros right after the dot}
+\item we can write \texttt{1.e-5} instead
+\item the sign \texttt{e-N} means \textit{move the dot N places to the left} (adding zeroes if necessary)
 }\end{slide}
 
 \begin{slide}{
 \item \texttt{1000000.0} is annoying to write
 \item we can write \texttt{1.e6} instead
-\item the sign \texttt{eN} means \textit{add N zeros right before the dot}
+\item the sign \texttt{eN} means \textit{move the dot N places to the right} (adding zeroes if necessary)
 }\end{slide}
 
 \SlideSubSection{Floating points}
@@ -143,19 +143,22 @@ Rotterdam, Netherlands}
 \item Given the following expressions:
 \begin{itemize}
 \item \texttt{int(2.5) = ?}
+\item \texttt{int(-3.9) = ?}
 \item \texttt{float(3) = ?}
 \end{itemize}
 \item \textbf{Can you guess the results?}
 \pause
 \begin{itemize}
 \item \texttt{int(2.5) = 2}
+\item \texttt{int(-3.9) = -3}
 \item \texttt{float(3) = 3.0}
 \end{itemize}
+\item \texttt{int(n)} always rounds off towards zero
 }\end{slide}
 
 \begin{slide}{
 \item Floating points can lose their decimal values
-\item They stay float's, but always end in \texttt{.0}
+\item They stay floats, but always end in \texttt{.0}
 \item \texttt{math.floor(n)} truncates the tail
 \item \texttt{math.ceil(n)} fills the tail and increases to the next unit
 }\end{slide}
@@ -202,7 +205,7 @@ Rotterdam, Netherlands}
 
 \begin{slide}{
 \item Logical operators on truth values
-\item Compose the asnwers to multiple questions
+\item Compose the answers to multiple questions
 \item Both questions in parallel:
 \begin{itemize}
 \item Do you like chocolate? Yes.
