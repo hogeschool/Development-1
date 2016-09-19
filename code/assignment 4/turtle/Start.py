@@ -50,26 +50,46 @@ def turn(n):
             t._orient = Vec2D(1.0, 0)
 
 
+keys = []
+
+def keypress(e):
+    keys.append(e.char)
+
+s = turtle.Screen()
+s._root.bind("<KeyPress>", keypress)
+
+from time import sleep
+
 def get():
-    from msvcrt import getch
-    c = ord(getch())
-    ## On a Mac or Unix, you can uncomment the lines below
-    ## and comment the two lines above.
-    #import termios, sys, os
-    #TERMIOS = termios
-    #fd = sys.stdin.fileno()
-    #old = termios.tcgetattr(fd)
-    #new = termios.tcgetattr(fd)
-    #new[3] = new[3] & ~TERMIOS.ICANON & ~TERMIOS.ECHO
-    #new[6][TERMIOS.VMIN] = 1
-    #new[6][TERMIOS.VTIME] = 0
-    #termios.tcsetattr(fd, TERMIOS.TCSANOW, new)
-    #c = None
-    #try:
-    #    c = ord(os.read(fd, 1))
-    #finally:
-    #    termios.tcsetattr(fd, TERMIOS.TCSAFLUSH, old)
+    while len(keys) == 0:
+        try:
+            s._root.update()
+        except:
+            raise SystemExit
+        sleep(0.1)
+    c = ord(keys.pop(0))
     return c
+
+# def get():
+#     from msvcrt import getch
+#     c = ord(getch())
+#     ## On a Mac or Unix, you can uncomment the lines below
+#     ## and comment the two lines above.
+#     #import termios, sys, os
+#     #TERMIOS = termios
+#     #fd = sys.stdin.fileno()
+#     #old = termios.tcgetattr(fd)
+#     #new = termios.tcgetattr(fd)
+#     #new[3] = new[3] & ~TERMIOS.ICANON & ~TERMIOS.ECHO
+#     #new[6][TERMIOS.VMIN] = 1
+#     #new[6][TERMIOS.VTIME] = 0
+#     #termios.tcsetattr(fd, TERMIOS.TCSANOW, new)
+#     #c = None
+#     #try:
+#     #    c = ord(os.read(fd, 1))
+#     #finally:
+#     #    termios.tcsetattr(fd, TERMIOS.TCSAFLUSH, old)
+#     return c
 
 
 def run(a):
