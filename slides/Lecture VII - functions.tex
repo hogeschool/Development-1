@@ -21,15 +21,75 @@ Rotterdam, Netherlands}
 \SlideSection{Introduction}
 \SlideSubSection{Lecture topics}
 \begin{slide}{
-\item So far we have shown how data representation can be abstracted away
-\item Building useful containers only once makes it possible to reuse their definition
-\item Many data structures (tuples, lists, maps, sets, etc.) become thus a new layer of abstraction
+\item Mechanism of abstraction
+\item The need for functions
+\item Functions in Python
+}\end{slide}
+
+\SlideSection{What is abstraction?}
+\SlideSubSection{Introduction}
+\begin{slide}{
+\item The big issue of the whole course is \textbf{abstraction} in programming
+\item Abstraction is a fundamental concept in programming to reduce repetition
+\item We sit atop a mountain of abstraction, which we make taller at every iteration
+}\end{slide}
+
+\SlideSubSection{Grab the student next to you}
+\begin{slide}{
+\item Describe what you just did so that someone else can perform the same action
+\pause
+\item Now add specific details about the movements of your arm and phalanges (pieces of fingers)
+\pause
+\item Now realize that there are even more subcomponents: individual muscles, tendons, etc.
+\pause
+\item But then we have also cells that make these up
+\item ...
+}\end{slide}
+
+\SlideSubSection{Human love for abstraction}
+\begin{slide}{
+\item Our brain cannot handle so many details
+\item To cope with this, we are structured in layers
+\item Our consciousness manipulates only the upper layers with simple instructions
+\item \textit{Raise arm above head}
 }\end{slide}
 
 \begin{slide}{
-\item Manipulating these data structures happens in user code
-\item Often, user code needs to perform operations that are similar to each other
-\item Similar operations should not require rewriting everything every time
+\item The same happens with regular language
+\item ``\textit{Go buy a liter of milk}'' is quite a short description
+\item The underlying operation is very complex
+}\end{slide}
+
+\begin{frame}[fragile]{Complexity of simple instructions}
+\begin{lstlisting}
+Go buy a liter of milk =
+  Turn game off
+  Get up from the couch
+  Curse the instruction giver
+  Get dressed
+  Put money in pocket
+  Leave house
+  Reach nearest shop
+  Enter shop
+  Find milk
+  Take one liter bottle
+  Pay milk
+  Go home
+  Give milk to instruction giver
+\end{lstlisting}
+\end{frame}
+
+\begin{slide}{
+\item And clearly something like ``\textit{reach nearest shop}'' is not a trivial instruction by itself
+\item Think about all the things you give for granted
+\begin{itemize}
+\item Crossing roads
+\item Traffic lights
+\item Pathfinding
+\item Road work and obstructions
+\item Use of transportation methods
+\item ...
+\end{itemize}
 }\end{slide}
 
 \SlideSection{Problem discussion}
@@ -44,31 +104,27 @@ Rotterdam, Netherlands}
 \end{itemize}
 }\end{slide}
 
-\begin{frame}[fragile]{Lenght of a list}
-\begin{codewithblock}{\pause \item What does \texttt{l} contain? \item What do we do with the values of the list? \item Do they even matter?}
-cnt = 0
-x = l
-while not(x.IsEmpty):
-  cnt = cnt + 1
-  x = x.Tail
-print("List l contains " + str(cnt) + " elements.")
+\begin{frame}[fragile]{count down..}
+\begin{codewithblock}{\pause \item What does \texttt{cnt} contain if \texttt{startAt} equals 10? \item What do we do with the value of startAt? \item Does it even matter?}
+cnt = startAt
+while not(cnt == 0):
+  cnt = cnt - 1
+print("Lift off!!!")
 \end{codewithblock}
 \end{frame}
 
 \begin{slide}{
-\item Suppose that we now have another list, \texttt{k}
-\item We wish to know its length
+\item Suppose that we want another start, \texttt{newStartAt}
 \item How do we do it?
 }\end{slide}
 
 \begin{frame}[fragile]{Lenght of a list}
 \begin{codewithblock}{\pause \item Looks suspiciously like the previous code block \item Why?}
-cnt = 0
-x = k
-while not(x.IsEmpty):
-  cnt = cnt + 1
-  x = x.Tail
-print("List k contains " + str(cnt) + " elements.")
+
+cnt = newStartAt
+while not(cnt == 0):
+  cnt = cnt - 1
+print("Lift off!!!")
 \end{codewithblock}
 \end{frame}
 
