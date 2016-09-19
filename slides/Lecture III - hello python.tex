@@ -159,6 +159,7 @@ _x1_customer
 \end{lstlisting}
 \end{frame}
 
+\SlideSubSection{Numbers}
 \begin{slide}{
 \item Python supports integers and other sorts of numbers
 \item Any sequence of numeric characters (we call it an integer \textit{literal}) is a number
@@ -173,6 +174,7 @@ _x1_customer
 \end{lstlisting}
 \end{frame}
 
+\SlideSubSection{Variable assignment}
 \begin{slide}{
 \item We can assign a value to a variable
 \item \texttt{variableName = expression}
@@ -181,12 +183,12 @@ _x1_customer
 \item \textbf{If the variable did not exist, then we add it to memory}
 \item If the variable existed, then we change its value in memory 
 $$
-\tiny
+\small
 \left\{
-\begin{matrix}
-(PC,S) \overset{x = e}{\rightarrow} (PC+1,S'[x \mapsto e]) &when& x \notin S \wedge S' = S - \{x\} & \\
-(PC,S) \overset{x = e}{\rightarrow} (PC+1,S[x \mapsto e]) &when& x \in S& \\
-\end{matrix}
+\begin{array}{ll}
+(PC,S) \overset{x = e}{\rightarrow} (PC+1,S[x \mapsto e]) &\mathrm{when}~x \in S \\
+(PC,S) \overset{x = e}{\rightarrow} (PC+1,S\cup\{x \mapsto e\}) &\mathrm{otherwise}\\
+\end{array}
 \right.
 $$
 }\end{slide}
@@ -303,12 +305,12 @@ PC & x & y & \red{z} \\
 \item If the variable did not exist, then we add it to memory
 \item \textbf{If the variable existed, then we change its value in memory} 
 $$
-\tiny
+\small
 \left\{
-\begin{matrix}
-(PC,S) \overset{x = e}{\rightarrow} (PC+1,S'[x \mapsto e]) &when& x \notin S \wedge S' = S - \{x\} & \\
-(PC,S) \overset{x = e}{\rightarrow} (PC+1,S[x \mapsto e]) &when& x \in S& \\
-\end{matrix}
+\begin{array}{ll}
+(PC,S) \overset{x = e}{\rightarrow} (PC+1,S[x \mapsto e]) &\mathrm{when}~x \in S \\
+(PC,S) \overset{x = e}{\rightarrow} (PC+1,S\cup\{x \mapsto e\}) &\mathrm{otherwise}\\
+\end{array}
 \right.
 $$
 }\end{slide}
