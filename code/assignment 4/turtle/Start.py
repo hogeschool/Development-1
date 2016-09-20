@@ -34,9 +34,15 @@ def get():
     while len(keys) == 0:
         try:
             s._root.update()
+            if len(keys) > 0:
+                # Remove keys if their code is empty
+                for key in keys:
+                    if not key:
+                        keys.remove(key)
         except:
             raise SystemExit
         sleep(0.1)
+    
     c = ord(keys.pop(0))
     return c
     
