@@ -95,16 +95,16 @@ Go buy a liter of milk =
 \SlideSection{Problem discussion}
 \SlideSubSection{Introduction}
 \begin{slide}{
-\item Consider many operations on lists
+\item Consider many operations on number
 \begin{itemize}
-\item finding or removing a specific element in a container
-\item computing the length of a list
-\item removing all elements that satisfy a condition
+\item finding whether a number is prime
+\item finding whether a number is odd or even
+\item finding the Fibonacci value of a given number
 \item ...
 \end{itemize}
 }\end{slide}
 
-\begin{frame}[fragile]{count down..}
+\begin{frame}[fragile]{counting down..}
 \begin{codewithblock}{\pause \item What does \texttt{cnt} contain if \texttt{startAt} equals 10? \item What do we do with the value of startAt? \item Does it even matter?}
 cnt = startAt
 while not(cnt == 0):
@@ -132,7 +132,7 @@ print("Lift off!!!")
 \SlideSubSection{Adding our own layers}
 \begin{slide}{
 \item The goal of this lecture is to add a new layer of abstraction to our programs
-\item We wish to reuse \textbf{implementations}, not only data structures
+\item We wish to reuse \textbf{implementations}
 \item This layer of abstraction is called \textbf{functions}
 }\end{slide}
 
@@ -163,22 +163,20 @@ print("Lift off!!!")
 }\end{slide}
 
 \begin{frame}[fragile]{Blueprint of a function (NOT ACTUAL PYTHON CODE!)}
-\begin{codewithblock}{\pause \item \texttt{length} is the \textbf{function name} \item \texttt{l} is the only \textbf{parameter} \item Lines 2 through 6 are \textbf{fixed} \item \texttt{cnt} is the \textbf{final result}}
-length of a list l:
-  cnt = 0
-  x = l
-  while not(x.IsEmpty):
-    cnt = cnt + 1
-    x = x.Tail
-  return cnt as the final result 
+\begin{codewithblock}{\pause \item \texttt{count\_down} is the \textbf{function name} \item \texttt{number} is the only \textbf{parameter} \item Lines 2 through 4 are \textbf{fixed} \item \texttt{"Lift off!!!"} is the \textbf{final result}}
+count_down starting from a number:
+  cnt = number
+  while not(cnt == 0):
+   cnt = cnt - 1
+  return "Lift off!!!" as final result
 \end{codewithblock}
 \end{frame}
 
 \SlideSubSection{Using the function}
 \begin{slide}{
-\item Code that needs the length of a function can now simply invoke function \texttt{length}
-\item The resulting code will simply be \texttt{l\_len = length(l)}
-\item \texttt{l\_len} will be assigned with the value returned by the function
+\item Code that needs a count down function can now simply invoke function \texttt{count\_down}
+\item The resulting code will simply be \texttt{result = count\_down(5)}
+\item \texttt{result} will be assigned with the value returned by the function, i.e., "Lift off!!!"
 }\end{slide}
 
 \SlideSection{Technical details}
@@ -214,129 +212,124 @@ length of a list l:
 }\end{slide}
 
 \begin{frame}[fragile]{Runtime example}
-\begin{memorytable}
+\begin{statetable}
 {|c|}
 {PC}
-{9}
-{|c|}
-{}
-{}
-\end{memorytable} \ \\
+{6}
+\end{statetable} \ \\
 
 \begin{lstlisting}
-def length(l):
-  cnt = 0
-  x = l
-  while not(x.IsEmpty):
-    cnt = cnt + 1
-    x = x.Tail
-  return cnt  
-
-print(length(Node(10, Empty)))
+def count_down(number):
+  cnt = number
+  while not(cnt == 0):
+    cnt = cnt - 1
+  return "Lift off!!!"
+print(count_down(2))
 \end{lstlisting}
 
 \pause
 
-\begin{memorytable}
-{|c|c|c|c|}
-{PC & length & PC & l}
-{9 & nil & 2 & ref(1) }
-{|c|c|}
-{0 & 1}
-{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 10; T $\mapsto$ ref(0)]}
-\end{memorytable}
+\begin{statetable}
+	{|c|c|c|c|}
+	{PC & count\_down & PC & number}
+	{6 & nil & 2 & 2 }
+\end{statetable} \ \\
+
 \end{frame}
 
 \begin{frame}[fragile]{Runtime example}
-\begin{memorytable}
-{|c|c|c|c|}
-{PC & length & PC & l}
-{9 & nil & 2 & ref(1) }
-{|c|c|}
-{0 & 1}
-{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 10; T $\mapsto$ ref(0)]}
-\end{memorytable} \ \\
+\begin{statetable}
+	{|c|c|c|c|}
+	{PC & count\_down & PC & number}
+	{6 & nil & 2 & 2 }
+\end{statetable} \ \\
 
 \begin{lstlisting}
-def length(l):
-  cnt = 0
-  x = l
-  while not(x.IsEmpty):
-    cnt = cnt + 1
-    x = x.Tail
-  return cnt  
-
-print(length(Node(10, Empty)))
+def count_down(number):
+  cnt = number
+  while not(cnt == 0):
+    cnt = cnt - 1
+    return "Lift off!!!"
+print(count_down(2))
 \end{lstlisting}
+
 
 \pause
 
-\begin{memorytable}
-{|c|c|c|c|c|}
-{PC & length & PC & l & cnt }
-{9 & nil & \red{3} & ref(1) & \red{0}}
-{|c|c|}
-{0 & 1}
-{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 10; T $\mapsto$ ref(0)]}
-\end{memorytable}
+\begin{statetable}
+	{|c|c|c|c|c|}
+	{PC & count\_down & PC & number & cnt}
+	{6 & nil & \red{3} & 2 & \red{2}}
+\end{statetable} \ \\
 \end{frame}
 
 \begin{frame}[fragile]{Runtime example}
-\begin{memorytable}
-{|c|c|c|c|c|}
-{PC & push & PC & l & cnt }
-{9 & length & 3 & ref(1) & 0 }
-{|c|c|}
-{0 & 1}
-{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 10; T $\mapsto$ ref(0)]}
-\end{memorytable} \ \\
+\begin{statetable}
+	{|c|c|c|c|c|}
+	{PC & count\_down & PC & number & cnt}
+	{6 & nil & 3 & 2 & 2}
+\end{statetable} \ \\
 
 \begin{lstlisting}
-def length(l):
-  cnt = 0
-  x = l
-  while not(x.IsEmpty):
-    cnt = cnt + 1
-    x = x.Tail
-  return cnt  
-
-print(length(Node(10, Empty)))
+def count_down(number):
+  cnt = number
+  while not(cnt == 0):
+    cnt = cnt - 1
+  return "Lift off!!!"
+print(count_down(2))
 \end{lstlisting}
 
 \pause
 
-\begin{memorytable}
-{|c|c|c|c|c|c|}
-{PC & length & PC & l & cnt & x }
-{9 & nil & \red{4} & ref(1) & 0 & \red{ref(1)} }
-{|c|c|}
-{0 & 1}
-{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 10; T $\mapsto$ ref(0)]}
-\end{memorytable} \ \\
+\begin{statetable}
+	{|c|c|c|c|c|}
+	{PC & count\_down & PC & number & cnt}
+	{6 & nil & \red{4} & 2 & 2}
+\end{statetable} \ \\
+\end{frame}
+
+
+\begin{frame}[fragile]{Runtime example}
+	\begin{statetable}
+	{|c|c|c|c|c|}
+	{PC & count\_down & PC & number & cnt}
+	{6 & nil & 4 & 2 & 2}
+	\end{statetable} \ \\
+	
+\begin{lstlisting}
+def count_down(number):
+  cnt = number
+  while not(cnt == 0):
+    cnt = cnt - 1
+  return "Lift off!!!"
+print(count_down(2))
+\end{lstlisting}
+	
+	\pause
+	
+	\begin{statetable}
+		{|c|c|c|c|c|}
+		{PC & count\_down & PC & number & cnt}
+		{6 & nil & \red{3} & 2 & \red{1}}
+	\end{statetable} \ \\
 \end{frame}
 
 \begin{frame}[fragile]{Runtime example}
 \textit{After a few steps...} \\
 
-\begin{memorytable}
-{|c|c|c|c|c|c|}
-{PC & length & PC & l & cnt & x }
-{9 & nil & \red{7} & ref(1) & \red{1} & \red{ref(0)} }
-{|c|c|}
-{0 & 1}
-{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 10; T $\mapsto$ ref(0)]}
-\end{memorytable} \ \\
+	\begin{statetable}
+		{|c|c|c|c|c|}
+		{PC & count\_down & PC & number & cnt}
+		{6 & nil & \red{5} & 2 & \red{0}}
+	\end{statetable} \ \\
 
 \begin{lstlisting}
-def length(l):
-  cnt = 0
-  x = l
-  while not(x.IsEmpty):
-    cnt = cnt + 1
-    x = x.Tail
-  return cnt  
-
-print(length(Node(10, Empty)))
+def count_down(number):
+  cnt = number
+  while not(cnt == 0):
+    cnt = cnt - 1
+  return "Lift off!!!"
+print(count_down(2))
 \end{lstlisting}
 
 \pause
@@ -345,14 +338,11 @@ print(length(Node(10, Empty)))
 \textbf{Where do we put the result?}
 \pause
 
-\begin{memorytable}
-{|c|c|}
-{PC & length }
-{9 & \red{1} }
-{|c|c|}
-{0 & 1}
-{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 10; T $\mapsto$ ref(0)]}
-\end{memorytable} \ \\
+\begin{statetable}
+	{|c|c|}
+	{PC & count\_down }
+	{6 & "Lift off!!!" }
+\end{statetable} \ \\
 \end{frame}
 
 \SlideSubSection{Syntax and semantics}
@@ -389,7 +379,6 @@ print(length(Node(10, Empty)))
 \begin{slide}{
 \item Every call to a function generates a new value of the stack memory \texttt{S}
 \item This contains (private copy of) all local variables
-\item The heap memory \texttt{H} remains the same
 \item The original stack memory (the \textbf{global variables}) remains accessible, just read-only 
 }\end{slide}
 
@@ -415,10 +404,9 @@ print(f(10))
 \end{frame}
 
 \begin{frame}[fragile]{Locals and globals}
-\begin{memorytable}
+\begin{statetable}
 {|c|}{PC}{1}
-{|c|}{}{}
-\end{memorytable} \ \\
+\end{statetable} \ \\
 
 \begin{lstlisting}
 x = 1
@@ -433,17 +421,15 @@ print(f(10))
 
 \pause
 
-\begin{memorytable}
+\begin{statetable}
 {|c|c|}{PC & x}{\red{6} & \red{1}}
-{|c|}{}{}
-\end{memorytable} \ \\
+\end{statetable} \ \\
 \end{frame}
 
 \begin{frame}[fragile]{Locals and globals}
-\begin{memorytable}
+\begin{statetable}
 {|c|c|}{PC & x}{\red{6} & \red{1}}
-{|c|}{}{}
-\end{memorytable} \ \\
+\end{statetable} \ \\
 
 \begin{lstlisting}
 x = 1
@@ -458,17 +444,15 @@ print(f(10))
 
 \pause
 
-\begin{memorytable}
+\begin{statetable}
 {|c|c|c|c|c|}{PC & x & f & PC & z}{6 & 1 & \red{nil} & \red{4} & \red{10}}
-{|c|}{}{}
-\end{memorytable} \ \\
+\end{statetable} \ \\
 \end{frame}
 
 \begin{frame}[fragile]{Locals and globals}
-\begin{memorytable}
+\begin{statetable}
 {|c|c|c|c|c|}{PC & x & f & PC & z}{6 & 1 & nil & 4 & 10}
-{|c|}{}{}
-\end{memorytable} \ \\
+\end{statetable} \ \\
 
 \begin{lstlisting}
 x = 1
@@ -483,17 +467,15 @@ print(f(10))
 
 \pause
 
-\begin{memorytable}
+\begin{statetable}
 {|c|c|c|}{PC & x & f}{\red{7} & 1 & 10}
-{|c|}{}{}
-\end{memorytable} \ \\
+\end{statetable} \ \\
 \end{frame}
 
 \begin{frame}[fragile]{Locals and globals}
-\begin{memorytable}
+\begin{statetable}
 {|c|c|c|}{PC & x & f}{7 & 1 & 10}
-{|c|}{}{}
-\end{memorytable} \ \\
+\end{statetable} \ \\
 
 \begin{lstlisting}
 x = 1
@@ -508,17 +490,15 @@ print(f(10))
 
 \pause
 
-\begin{memorytable}
+\begin{statetable}
 {|c|c|}{PC & x}{\red{8} & \red{2}}
-{|c|}{}{}
-\end{memorytable} \ \\
+\end{statetable} \ \\
 \end{frame}
 
 \begin{frame}[fragile]{Locals and globals}
-\begin{memorytable}
+\begin{statetable}
 {|c|c|c|c|c|}{PC & x & f & PC & z}{8 & 2 & \red{nil} & \red{4} & 10}
-{|c|}{}{}
-\end{memorytable} \ \\
+\end{statetable} \ \\
 
 \begin{lstlisting}
 x = 1
@@ -533,10 +513,9 @@ print(f(10))
 
 \pause
 
-\begin{memorytable}
+\begin{statetable}
 {|c|c|c|}{PC & x & f}{\red{8} & 2 & \red{20}}
-{|c|}{}{}
-\end{memorytable} \ \\
+\end{statetable} \ \\
 \end{frame}
 
 \begin{frame}[fragile]{Locals and globals}
@@ -583,10 +562,9 @@ print(f(20))
 \end{frame}
 
 \begin{frame}[fragile]{Shadowing}
-\begin{memorytable}
+\begin{statetable}
 {|c|c|}{PC & x}{6 & 1}
-{|c|}{}{}
-\end{memorytable} \ \\
+\end{statetable} \ \\
 
 \begin{lstlisting}
 x = 1
@@ -600,17 +578,15 @@ print(f(20))
 
 \pause
 
-\begin{memorytable}
+\begin{statetable}
 {|c|c|c|c|c|}{PC & x & f & PC & x}{6 & 1 & \red{nil} & \red{4} & \red{10}}
-{|c|}{}{}
-\end{memorytable} \ \\
+\end{statetable} \ \\
 \end{frame}
 
 \begin{frame}[fragile]{Shadowing}
-\begin{memorytable}
+\begin{statetable}
 {|c|c|c|c|c|}{PC & x & f & PC & x}{6 & 1 & nil & 4 & 10}
-{|c|}{}{}
-\end{memorytable} \ \\
+\end{statetable} \ \\
 
 \begin{lstlisting}
 x = 1
@@ -624,17 +600,15 @@ print(f(20))
 
 \pause
 
-\begin{memorytable}
+\begin{statetable}
 {|c|c|c|}{PC & x & f}{7 & 1 & \red{20}}
-{|c|}{}{}
-\end{memorytable} \ \\
+\end{statetable} \ \\
 \end{frame}
 
 \begin{frame}[fragile]{Shadowing}
-\begin{memorytable}
+\begin{statetable}
 {|c|c|c|}{PC & x & f}{7 & 1 & 20}
-{|c|}{}{}
-\end{memorytable} \ \\
+\end{statetable} \ \\
 
 \begin{lstlisting}
 x = 1
@@ -648,17 +622,15 @@ print(f(20))
 
 \pause
 
-\begin{memorytable}
+\begin{statetable}
 {|c|c|c|c|c|}{PC & x & f & PC & x}{7 & 1 & \red{nil} & \red{4} & \red{20}}
-{|c|}{}{}
-\end{memorytable} \ \\
+\end{statetable} \ \\
 \end{frame}
 
 \begin{frame}[fragile]{Shadowing}
-\begin{memorytable}
+\begin{statetable}
 {|c|c|c|c|c|}{PC & x & f & PC & x}{7 & 1 & nil & 4 & 20}
-{|c|}{}{}
-\end{memorytable} \ \\
+\end{statetable} \ \\
 
 \begin{lstlisting}
 x = 1
@@ -672,10 +644,9 @@ print(f(20))
 
 \pause
 
-\begin{memorytable}
+\begin{statetable}
 {|c|c|c|}{PC & x & f}{\red{8} & 1 & \red{40}}
-{|c|}{}{}
-\end{memorytable} \ \\
+\end{statetable} \ \\
 \end{frame}
 
 \SlideSubSection{Recursion}
@@ -695,245 +666,227 @@ print(f(20))
 }\end{slide}
 
 \begin{frame}[fragile]{Recursion}
-\begin{codewithblock}{\item How many \texttt{l}'s shall we have? \pause \item As many as the nodes of the initial value}
-def length(l):
-  if l.IsEmpty:
+\begin{codewithblock}{\item How much is the distance between two numbers \texttt{n} and \texttt{m}? \pause \item As many as the units between them}
+def distance(n,m):
+  if n >= m:
     return 0
   else:
-    return length(l.Tail) + 1
+    return sum_between(n + 1, m) + 1
 \end{codewithblock}
 \end{frame}
 
 \begin{frame}[fragile]{Recursion}
-\begin{memorytable}
+\begin{statetable}
 {|c|}{PC}{7}
-{|c|}{}{}
-\end{memorytable} \ \\
+\end{statetable} \ \\
 
 \begin{lstlisting}
-def length(l):
-  if l.IsEmpty:
+def distance(n,m):
+  if n >= m:
     return 0
   else:
-    return length(l.Tail) + 1
+    return sum_between(n + 1, m) + 1
     
-print(length(Node(1,Node(2,Empty))))
+print(distance(2, 4)))
 \end{lstlisting}
 
 \pause
 
-\begin{memorytable}
-{|c|c|c|c|}{PC & length & PC & l}{7 & \red{nil} & 2 & \red{ref(2)}}
-{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
-\end{memorytable} \ \\
+\begin{statetable}
+{|c|c|c|c|c|}{PC & distance & PC & n & m}{7 & \red{nil} & 2 & \red{2} & \red{4}}
+\end{statetable} \ \\
 \end{frame}
 
 \begin{frame}[fragile]{Recursion}
-\begin{memorytable}
-{|c|c|c|c|}{PC & length & PC & l}{7 & nil & 2 & ref(2)}
-{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
-\end{memorytable} \ \\
+\begin{statetable}
+	{|c|c|c|c|c|}{PC & distance & PC & n & m}{7 & nil & 2 & 2 & 4}
+\end{statetable} \ \\
 
 \begin{lstlisting}
-def length(l):
-  if l.IsEmpty:
+def distance(n,m):
+  if n >= m:
     return 0
   else:
-    return length(l.Tail) + 1
-    
-print(length(Node(1,Node(2,Empty))))
+    return sum_between(n + 1, m) + 1
+
+print(distance(2, 4)))
 \end{lstlisting}
 
 \pause
 
-\begin{memorytable}
-{|c|c|c|c|}{PC & length & PC & l}{7 & nil & \red{5} & ref(2)}
-{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
-\end{memorytable} \ \\
+\begin{statetable}
+	{|c|c|c|c|c|}{PC & distance & PC & n & m}{7 & nil & \red{5} & 2 & 4}
+\end{statetable} \ \\
 \end{frame}
 
 \begin{frame}[fragile]{Recursion}
-\begin{memorytable}
-{|c|c|c|c|}{PC & length & PC & l}{7 & nil & 5 & ref(2)}
-{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
-\end{memorytable} \ \\
+\begin{statetable}
+	{|c|c|c|c|c|}{PC & distance & PC & n & m}{7 & nil & 5 & 2 & 4}
+\end{statetable} \ \\
 
 \begin{lstlisting}
-def length(l):
-  if l.IsEmpty:
+def distance(n,m):
+  if n >= m:
     return 0
   else:
-    return length(l.Tail) + 1
-    
-print(length(Node(1,Node(2,Empty))))
+    return sum_between(n + 1, m) + 1
+
+print(distance(2, 4)))
 \end{lstlisting}
 
 \pause
 
-\begin{memorytable}
-{|c|c|c|c|c|c|c|}{PC & length & PC & l & length & PC & l}{7 & nil & 5 & ref(2) & \red{nil} & \red{2} & \red{ref(1)}}
-{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
-\end{memorytable} \ \\
+\begin{statetable}
+	{|c|c|c|c|c|c|c|c|c|}{PC & distance & PC & n & m & distance & PC & n & m}{7 & nil & 5 & 2 & 4 & \red{nil} & \red{2} & \red{3} & \red{4}}
+\end{statetable} \ \\
 \end{frame}
 
 \begin{frame}[fragile]{Recursion}
-\begin{memorytable}
-{|c|c|c|c|c|c|c|}{PC & length & PC & l & length & PC & l}{7 & nil & 5 & ref(2) & nil & 2 & ref(1)}
-{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
-\end{memorytable} \ \\
+\begin{statetable}
+	{|c|c|c|c|c|c|c|c|c|}{PC & distance & PC & n & m & distance & PC & n & m}{7 & nil & 5 & 2 & 4 & nil & 2 & 3 & 4}
+\end{statetable} \ \\
 
 \begin{lstlisting}
-def length(l):
-  if l.IsEmpty:
+def distance(n,m):
+  if n >= m:
     return 0
   else:
-    return length(l.Tail) + 1
-    
-print(length(Node(1,Node(2,Empty))))
+    return sum_between(n + 1, m) + 1
+
+print(distance(2, 4)))
 \end{lstlisting}
 
 \pause
 
-\begin{memorytable}
-{|c|c|c|c|c|c|c|}{PC & length & PC & l & length & PC & l}{7 & nil & 5 & ref(2) & nil & \red{5} & ref(1)}
-{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
-\end{memorytable} \ \\
+\begin{statetable}
+	{|c|c|c|c|c|c|c|c|c|}{PC & distance & PC & n & m & distance & PC & n & m}{7 & nil & 5 & 2 & 4 & nil & \red{5} & 3 & 4}
+\end{statetable} \ \\
 \end{frame}
 
 \begin{frame}[fragile]{Recursion}
-\begin{memorytable}
-{|c|c|c|c|c|c|c|c|c|c|}{PC & length & PC & l & length & PC & l & length & PC & l}{7 & nil & 5 & ref(2) & nil & 5 & ref(1) & \red{nil} & \red{2} & \red{ref(0)}}
-{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
-\end{memorytable} \ \\
+\begin{statetable}
+	{|c|c|c|c|c|c|c|c|c|}{PC & distance & PC & n & m & distance & PC & n & m}{7 & nil & 5 & 2 & 4 & nil & 5 & 3 & 4}
+\end{statetable} \ \\
 
 \begin{lstlisting}
-def length(l):
-  if l.IsEmpty:
+def distance(n,m):
+  if n >= m:
     return 0
   else:
-    return length(l.Tail) + 1
-    
-print(length(Node(1,Node(2,Empty))))
+    return sum_between(n + 1, m) + 1
+
+print(distance(2, 4)))
 \end{lstlisting}
 
 \pause
 
-\begin{memorytable}
-{|c|c|c|c|c|c|c|c|c|c|}{PC & length & PC & l & length & PC & l & length & PC & l}{7 & nil & 5 & ref(2) & nil & 5 & ref(1) & nil & \red{3} & ref(0)}
-{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
-\end{memorytable} \ \\
+\begin{statetable}
+	{|c|c|c|c|c|c|c|c|c|c|c|c|c|}{PC & distance & PC & n & m & distance & PC & n & m & distance & PC & n & m}{7 & nil & 5 & 2 & 4 & nil & 5 & 3 & 4 & \red{nil} & \red{2} & \red{4} & \red{4}}
+\end{statetable} \ \\
 \end{frame}
 
 \begin{frame}[fragile]{Recursion}
-\begin{memorytable}
-{|c|c|c|c|c|c|c|c|c|c|}{PC & length & PC & l & length & PC & l & length & PC & l}{7 & nil & 5 & ref(2) & nil & 5 & ref(1) & nil & 3 & ref(0)}
-{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
-\end{memorytable} \ \\
+\begin{statetable}
+	{|c|c|c|c|c|c|c|c|c|c|c|c|c|}{PC & distance & PC & n & m & distance & PC & n & m & distance & PC & n & m}{7 & nil & 5 & 2 & 4 & nil & 5 & 3 & 4 & nil & 2 & 4 & 4}
+\end{statetable} \ \\
 
 \begin{lstlisting}
-def length(l):
-  if l.IsEmpty:
+def distance(n,m):
+  if n >= m:
     return 0
   else:
-    return length(l.Tail) + 1
-    
-print(length(Node(1,Node(2,Empty))))
+    return sum_between(n + 1, m) + 1
+
+print(distance(2, 4)))
 \end{lstlisting}
 
 \pause
 
-\begin{memorytable}
-{|c|c|c|c|c|c|c|c|}{PC & length & PC & l & length & PC & l & length}{7 & nil & 5 & ref(2) & nil & 5 & ref(1) & \red{0}}
-{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
-\end{memorytable} \ \\
+\begin{statetable}
+	{|c|c|c|c|c|c|c|c|c|c|c|c|c|}{PC & distance & PC & n & m & distance & PC & n & m & distance & PC & n & m}{7 & nil & 5 & 2 & 4 & nil & 5 & 3 & 4 & nil & \red{3} & 4 & 4}
+\end{statetable} \ \\
 \end{frame}
 
 \begin{frame}[fragile]{Recursion}
-\begin{memorytable}
-{|c|c|c|c|c|c|c|c|}{PC & length & PC & l & length & PC & l & length}{7 & nil & 5 & ref(2) & nil & 5 & ref(1) & 0}
-{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
-\end{memorytable} \ \\
-
-\begin{lstlisting}
-def length(l):
-  if l.IsEmpty:
+	\begin{statetable}
+{|c|c|c|c|c|c|c|c|c|c|c|c|c|}{PC & distance & PC & n & m & distance & PC & n & m & distance & PC & n & m}{7 & nil & 5 & 2 & 4 & nil & 5 & 3 & 4 & nil & 3 & 4 & 4}
+	\end{statetable} \ \\
+	
+	\begin{lstlisting}
+def distance(n,m):
+  if n >= m:
     return 0
   else:
-    return length(l.Tail) + 1
-    
-print(length(Node(1,Node(2,Empty))))
-\end{lstlisting}
+    return sum_between(n + 1, m) + 1
 
-\pause
-
-\begin{memorytable}
-{|c|c|c|c|c|}{PC & length & PC & l & length}{7 & nil & 5 & ref(2) & \red{0+1}}
-{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
-\end{memorytable} \ \\
+print(distance(2, 4)))
+	\end{lstlisting}
+	
+	\pause
+	
+	\begin{statetable}
+		{|c|c|c|c|c|c|c|c|c|c|}{PC & distance & PC & n & m & distance & PC & n & m & distance }{7 & nil & 5 & 2 & 4 & nil & 5 & 3 & 4 & \red{0} }
+	\end{statetable} \ \\
+\end{frame}
+\begin{frame}[fragile]{Recursion}
+	\begin{statetable}
+		{|c|c|c|c|c|c|c|c|c|c|}{PC & distance & PC & n & m & distance & PC & n & m & distance }{7 & nil & 5 & 2 & 4 & nil & 5 & 3 & 4 & 0 }
+	\end{statetable} \ \\
+	
+	\begin{lstlisting}
+def distance(n,m):
+ if n >= m:
+  return 0
+ else:
+  return sum_between(n + 1, m) + 1
+	
+print(distance(2, 4)))
+	\end{lstlisting}
+	
+	\pause
+	
+	\begin{statetable}
+		{|c|c|c|c|c|c|}{PC & distance & PC & n & m & distance }{7 & nil & 5 & 2 & 4 & \red{1} }
+	\end{statetable} \ \\
 \end{frame}
 
 \begin{frame}[fragile]{Recursion}
-\begin{memorytable}
-{|c|c|c|c|c|}{PC & length & PC & l & length}{7 & nil & 5 & ref(2) & 1}
-{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
-\end{memorytable} \ \\
-
-\begin{lstlisting}
-def length(l):
-  if l.IsEmpty:
+	\begin{statetable}
+		{|c|c|c|c|c|c|}{PC & distance & PC & n & m & distance }{7 & nil & 5 & 2 & 4 & 1 }
+	\end{statetable} \ \\
+	
+	\begin{lstlisting}
+def distance(n,m):
+  if n >= m:
     return 0
   else:
-    return length(l.Tail) + 1
-    
-print(length(Node(1,Node(2,Empty))))
-\end{lstlisting}
-
-\pause
-
-\begin{memorytable}
-{|c|c|}{PC & length}{7 & \red{2}}
-{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
-\end{memorytable} \ \\
+    return sum_between(n + 1, m) + 1
+	
+print(distance(2, 4)))
+	\end{lstlisting}
+	
+	\pause
+	
+	\begin{statetable}
+		{|c|c|}{PC & distance }{7 & \red{2} }
+	\end{statetable} \ \\
 \end{frame}
 
-\begin{frame}[fragile]{Recursion}
-\begin{memorytable}
-{|c|c|c|c|c|}{PC & length}{7 & 2}
-{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
-\end{memorytable} \ \\
-
-\begin{lstlisting}
-def length(l):
-  if l.IsEmpty:
-    return 0
-  else:
-    return length(l.Tail) + 1
-    
-print(length(Node(1,Node(2,Empty))))
-\end{lstlisting}
-
-\pause
-
-\begin{memorytable}
-{|c|}{PC}{\red{8}}
-{|c|c|c|}{0 & 1 & 2}{[I $\mapsto$ True] & [I $\mapsto$ False; V $\mapsto$ 2; T $\mapsto$ ref(0)] & [I $\mapsto$ False; V $\mapsto$ 1; T $\mapsto$ ref(1)]}
-\end{memorytable} \ \\
-\end{frame}
 
 \SlideSection{Assignments}
 \SlideSubSection{Build and test, on paper...}
 \begin{slide}{
-\item A function \texttt{add} that increments all elements of a list by a fixed value:
+\item A function \texttt{add} that increments a given number by a fixed value:
 \begin{itemize}
-\item \texttt{add(10, Node(1,Node(2,Node(3,Empty)))) -> Node(11,Node(12,Node(13,Empty)))}
+\item \texttt{add(1, 5)) -> 6}
 \end{itemize}
-\item A function \texttt{filterEven} that removes all odd elements from a list:
+\item A function \texttt{isEven} that returns \texttt{True} if a given number is even, \texttt{False} otherwise:
 \begin{itemize}
-\item \texttt{filterEven(Node(1,Node(2,Node(3,Empty)))) -> Node(2,Empty)}
+\item \texttt{isEven(6) -> True}
 \end{itemize}
-\item A function \texttt{sum} that adds all elements of a list:
+\item A function \texttt{sum\_between} that returns the sum of all integers between two given integer numbers:
 \begin{itemize}
-\item \texttt{sum(Node(1,Node(2,Node(3,Empty)))) -> 6}
+\item \texttt{sum\_between(2,5) -> 14}
 \end{itemize}
 }\end{slide}
 
