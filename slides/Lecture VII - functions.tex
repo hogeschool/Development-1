@@ -4,7 +4,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage[space]{grffile}
-
+\usepackage{comment}
 \title{Functions}
 
 
@@ -249,7 +249,7 @@ def count_down(number):
   cnt = number
   while not(cnt == 0):
     cnt = cnt - 1
-    return "Lift off!!!"
+  return "Lift off!!!"
 print(count_down(2))
 \end{lstlisting}
 
@@ -649,6 +649,9 @@ print(f(20))
 \end{statetable} \ \\
 \end{frame}
 
+
+\begin{comment}
+
 \SlideSubSection{Recursion}
 \begin{slide}{
 \item (Recursive) functions are all functions that call themselves in their bodies
@@ -872,6 +875,7 @@ print(distance(2, 4)))
 	\end{statetable} \ \\
 \end{frame}
 
+\end{comment}
 
 \SlideSection{Assignments}
 \SlideSubSection{Build and test, on paper...}
@@ -898,7 +902,6 @@ print(distance(2, 4)))
 \item Functions can encode algorithms in many way
 \begin{itemize}
 \item Simple code abstractions to avoid repetition
-\item Recursive problems
 \end{itemize}
 }\end{slide}
 
