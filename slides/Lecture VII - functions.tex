@@ -451,7 +451,9 @@ print(f(10))
 
 \begin{frame}[fragile]{Locals and globals}
 \begin{statetable}
-{|c|c|c|c|c|}{PC & x & f & PC & z}{6 & 1 & nil & 4 & 10}
+{|c|c|c|c|c|}
+{PC & x & f & PC & z}
+{6 & 1 & nil & 4 & 10}
 \end{statetable} \ \\
 
 \begin{lstlisting}
@@ -468,13 +470,17 @@ print(f(10))
 \pause
 
 \begin{statetable}
-{|c|c|c|}{PC & x & f}{\red{7} & 1 & 10}
+{|c|c|c|}
+{PC & x & f}
+{6 & 1 & \red{10}}
 \end{statetable} \ \\
 \end{frame}
 
 \begin{frame}[fragile]{Locals and globals}
 \begin{statetable}
-{|c|c|c|}{PC & x & f}{7 & 1 & 10}
+{|c|c|}
+{PC & x}
+{\red{7} & 1}
 \end{statetable} \ \\
 
 \begin{lstlisting}
@@ -497,7 +503,9 @@ print(f(10))
 
 \begin{frame}[fragile]{Locals and globals}
 \begin{statetable}
-{|c|c|c|c|c|}{PC & x & f & PC & z}{8 & 2 & \red{nil} & \red{4} & 10}
+{|c|c|c|c|c|}
+{PC & x & f & PC & z}
+{8 & 2 & \red{nil} & \red{4} & 10}
 \end{statetable} \ \\
 
 \begin{lstlisting}
