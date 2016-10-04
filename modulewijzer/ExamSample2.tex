@@ -119,7 +119,7 @@ i = "Hello" + 1
 output = ""
 for i in range(0, 4):
     for j in range(0, 4):
-        if (i == 0 or i == 3) or (j == 0 or j == 3):
+        if (i + j) % 2 == 0:
             output += "0"
         else:
             output += "="
@@ -132,10 +132,10 @@ print(output)
 \textbf{Concrete example of answer:} \textit{The screen looks like:}
 \begin{lstlisting}
 
-0000
-0==0
-0==0
-0000
+0=0=
+=0=0
+0=0=
+=0=0
 
 \end{lstlisting}
 
