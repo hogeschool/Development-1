@@ -1,0 +1,473 @@
+\documentclass{beamer}
+\usetheme[hideothersubsections]{HRTheme}
+\usepackage{beamerthemeHRTheme}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[space]{grffile}
+\usepackage{listings}
+\lstset{language=Python,
+basicstyle=\ttfamily\footnotesize,
+mathescape=true,
+frame=single,
+breaklines=true}
+\lstset{
+  literate={ï}{{\"i}}1
+           {ì}{{\`i}}1
+}
+\usepackage{color}
+
+\title{Looping with \texttt{for}}
+
+\author{The INFDEV Team @ HR}
+
+\institute{Hogeschool Rotterdam \\ 
+Rotterdam, Netherlands}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+\SlideSection{Introduction}
+\SlideSubSection{Lecture topics}
+\begin{slide}{
+\item the (lack of) limitations of \texttt{while} loops
+\item \texttt{for} statements and their semantics
+\item \texttt{for} as a \textit{limited} form of \texttt{while}
+}\end{slide}
+
+\SlideSection{\texttt{while} loops}
+\SlideSubSection{Potential issues}
+\begin{slide}{
+\item While loops specify unbounded iteration
+\item This means that the number of iterations is not necessarily easy to specify
+\item For example
+\begin{itemize}
+\item Virtual machines
+\item User-driven loops
+\item Servers
+\item Operating systems
+\item ...
+\end{itemize}
+}\end{slide}
+
+\begin{frame}[fragile]{Unbounded loop example}
+\begin{lstlisting}
+n,m = input("Let's have two numbers")
+cnt = 1
+while n > m:
+  cnt = cnt + 1
+  n = n / m
+print("Result is %d" % cnt)
+\end{lstlisting}
+
+\textbf{What does this code do?}
+
+\textbf{How many steps does it take?}
+\end{frame}
+
+\begin{frame}[fragile]{Unbounded loop example}
+\begin{lstlisting}
+quit = False
+while not quit:
+  action = raw_input("Should I quit?")
+  if (action == "Yes") | (action == "yes"):
+    quit = True
+  else:
+    print("You are not a quitter.")
+\end{lstlisting}
+
+\textbf{What does this code do?}
+
+\textbf{How many steps does it take?}
+\end{frame}
+
+\begin{frame}[fragile]{Unbounded loop example}
+\label{slide:bouncing}
+
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+y = 10.0
+vy = 0.0
+dt = 0.05
+while (abs(vy) > 0.9) | (y > 0.2):
+  new_y = y + vy * dt
+  if new_y <= 0.1:
+    vy = -vy * 0.7
+  else:
+    vy -= 9.8 * dt
+    y = new_y
+  ... draw a ball at position (10,y) ...
+\end{lstlisting}
+
+\textbf{What does this code do?}
+
+\url{https://github.com/hogeschool/INFDEV01-1/blob/master/code/bouncing%20ball%20sample/bouncing%20ball.py}
+
+\textbf{How many steps does it take?}
+\end{frame}
+
+\begin{slide}{
+\item \texttt{while} loops are very powerful
+\item with great power comes...
+\pause
+\item ...greater chance of bugs
+}\end{slide}
+
+\begin{slide}{
+\item Subtle changes might affect behaviour deeply
+\item For example, a change in value of \texttt{0.1} makes the loop non-terminating
+\item The culprit may be hidden in a lot of places
+\begin{itemize}
+\item Floating point errors
+\item Logical repetition: state always changes, within a circular trajectory
+\item ...
+\end{itemize}
+}\end{slide}
+
+\begin{frame}[fragile]{Unbounded loop example}
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+y = 10.0
+vy = 0.0
+dt = 0.05
+while (abs(vy) > 0.9) | (y > 0.1):
+  new_y = y + vy * dt
+  if new_y <= 0.1:
+    vy = -vy * 0.7
+  else:
+    vy -= 9.8 * dt
+    y = new_y
+  ... draw a ball at position (10,y) ...
+\end{lstlisting}
+
+\textbf{Does this loop terminate? (This is not the same code as in Slide \ref{slide:bouncing}!)}
+
+\pause
+
+\textbf{No.} The condition has changed to \texttt{y > 0.1}.
+\end{frame}
+
+
+\begin{frame}[fragile]{Unbounded loop example}
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+y = 10.0
+vy = 0.0
+dt = 0.1
+while (abs(vy) > 0.9) | (y > 0.2):
+  new_y = y + vy * dt
+  if new_y <= 0.1:
+    vy = -vy * 0.8
+  else:
+    vy -= 9.8 * dt
+    y = new_y
+  ... draw a ball at position (10,y) ...
+\end{lstlisting}
+
+\textbf{Does this loop terminate? (This is not the same code as in Slide \ref{slide:bouncing}!)}
+
+\pause
+
+\textbf{No.} \texttt{dt = 0.1} and \texttt{vy = -vy * 0.8}.
+\end{frame}
+
+\SlideSection{Correctly encoding intentions}
+\SlideSubSection{Why is \texttt{while} not enough}
+
+\begin{slide}{
+\item The expressive power of \texttt{while} is not always needed
+\item Sometimes we want something simpler, and less dangerous
+\item For example, consider:
+\begin{itemize}
+\item For each \textit{hostile alien}
+\item Do \textit{attack it}
+\end{itemize}
+}\end{slide}
+
+\begin{slide}{
+\item A loop such as:
+\begin{itemize}
+\item For each \textit{hostile alien}
+\item Do \textit{attack it}
+\end{itemize}
+\item Is predictable
+\item Performs a fixed number of steps (one per hostile alien)
+\item Will certainly terminate
+}\end{slide}
+
+\begin{slide}{
+\item In general, we wish to always correctly encode our intention of repeating code $N$ times
+\item The code must precisely fit our intentions, like a tailored italian suit
+\begin{itemize}
+\item Code should not be too complicated
+\item Code should not be too simple
+\end{itemize}
+}\end{slide}
+
+\SlideSubSection{Code that is too complicated?}
+\begin{slide}{
+\item A \texttt{while} loop where we need to perform \texttt{N} steps
+\item There are many subtle ways to break the code
+}\end{slide}
+
+\begin{slide}{
+\item Classes, objects, and inheritance everywhere
+\item To know which code is actually run to say \texttt{Hello world!} you need to read twelve files
+}\end{slide}
+
+\begin{slide}{
+\item Events, lambda's, higher-order combinators everywhere
+\item To know what the program does you need two doctorates (CompSci and Maths)
+\begin{itemize}
+\item Plus internal access to the sliced brain of the original programmer
+\end{itemize}
+}\end{slide}
+
+\SlideSubSection{Code that is too simple?}
+\begin{slide}{
+\item No handling of error cases
+\item Ignoring hard circumstances
+\pause
+\item Not implementing all features correctly
+\begin{itemize}
+\item Showing progress off
+\item Building impressive but pointless demo's
+\end{itemize}
+}\end{slide}
+
+\SlideSection{Iterating with \texttt{for}}
+\begin{slide}{
+\item Python, and many other modern languages, offer explicit constructs for bounded repetition
+\begin{itemize}
+\item We specify precisely the number of steps that need to be performed
+\item The language takes care of performing the right number of steps
+\item The construct is much harder to break\footnote{Running forever} than a \texttt{while}-loop
+\end{itemize}
+\item These constructs are called for-loops
+}\end{slide}
+
+\SlideSubSection{Syntax of \texttt{for}}
+\begin{slide}{
+\item Number of repetitions (a \texttt{range} iterator)
+\item That stores the index of the current repetition (a variable)
+\item Body of the loop that is repeated at every iteration (a block of code)
+}\end{slide}
+
+\begin{frame}[fragile]{Syntax of \texttt{for}}
+\begin{lstlisting}
+for VARIABLE in range(END):
+  BODY
+\end{lstlisting}
+
+\begin{itemize}
+\item \texttt{VARIABLE} is any valid variable name that becomes useable within the \texttt{BODY}; will range from \texttt{0} to \texttt{END-1}
+\item \texttt{END} is any positive number; the body will be repeated \texttt{END-1} times
+\item \texttt{BODY} is a series of statements
+\end{itemize}
+\end{frame}
+
+\SlideSubSection{Semantics of \texttt{for}}
+\begin{slide}{
+\item The general form is \texttt{for VAR in RANGE: BODY} ($f_{VRB}$)
+\item If \texttt{VAR} is still within \texttt{RANGE}, then we jump to the beginning of \texttt{BODY} and then increment the variable, otherwise we jump to the end of the whole \texttt{for}
+$$
+\tiny
+\left\{
+\begin{matrix}
+(PC,S) \overset{f_{VRB}}{\rightarrow} (firstLine(B),S) &when& S[V] \in R & \\
+(PC,S) \overset{f_{VRB}}{\rightarrow} (skipAfter(B),S) &when& S[V] \notin R & \\
+\end{matrix}
+\right.
+$$
+\item At the end of the loop assume that we have two invisible instructions
+\begin{itemize}
+\item \texttt{V = V + 1}
+\item \texttt{jump back to begin loop}
+\end{itemize}
+}\end{slide}
+
+\SlideSubSection{Index of the current repetition}
+\begin{slide}{
+\item The \texttt{BODY} of the \texttt{for} loop is always the same
+\item Depending on the current step, we may perform different processing
+\item For this, we need to know how far we have come in the loop
+\begin{itemize}
+\item The iteration \texttt{VARIABLE} tells us this
+\end{itemize}
+}\end{slide}
+
+\begin{frame}[fragile]{Index of the current repetition}
+\begin{lstlisting}
+graph = ""
+for i in range(11):
+  for j in range((i-5) * (i-5)):
+    graph += '='
+  graph += "\n"
+print(graph)
+\end{lstlisting}
+
+\textbf{What does this do?}
+
+\textbf{How do the different steps perform different actions based on the value of the iteration variable(s)?}
+\end{frame}
+
+\begin{slide}{
+\item Different processing per different steps makes the loop perform a more complex operation.
+\item Complex is not the same as complicated.
+\item To avoid needless complication, the different steps must still do related things
+}\end{slide}
+
+\begin{frame}[fragile]{Unrelated actions in a loop}
+\begin{lstlisting}
+for i in range(6):
+  if i == 0:
+    #...run a game of tic-tac-toe...
+  elif i == 1:
+    #...draw a smiley...
+  elif i == 2:
+    #...run a turtle program...
+  elif i == 3:
+    #...convert degrees to fahrenheit...
+  elif i == 4:
+    #...draw a square...
+  elif i == 5:
+    #...draw a triangle...
+\end{lstlisting}
+
+\textbf{What is the relationship between the iterations?}
+
+\textbf{Is a \texttt{for} loop really needed?}
+\end{frame}
+
+\SlideSubSection{Body of the loop}
+\begin{slide}{
+\item The code of the body is a block of code
+\item A block of code is any statement or series of statements
+\item Among these statements, we can use as many \texttt{if}'s, \texttt{for}'s, and \texttt{while}'s
+}\end{slide}
+
+\begin{slide}{
+\item There is no \textit{obfuscated code} prize available
+\item Nesting too many complex constructs might make code \textbf{needlessly complicated}
+\item Remember that a \texttt{for}-loop adds a large number of possible execution paths, just like a \texttt{while}-loop
+}\end{slide}
+
+\SlideSection{Advanced loops}
+\SlideSubSection{Ranges of iteration}
+\begin{slide}{
+\item We do not always want to iterate through values between \texttt{0} and a given number
+\item Even though we still need to perform a fixed number of steps
+\item So a \texttt{for}-loop still has advantages over a \texttt{while}-loop
+}\end{slide}
+
+\SlideSubSection{We might want to...}
+\begin{slide}{
+\item ...decrement instead of increment, that is ``go backwards''
+\item ...iterate between a range of values that does not start with zero
+\item ...take steps of more than one between iterations
+}\end{slide}
+
+\SlideSubSection{The \texttt{range} function}
+\begin{slide}{
+\item Actually takes three parameters: \texttt{range(start, end, step)}
+\item With one parameter we only specify \texttt{end}, while \texttt{start = 0} and \texttt{step = 1}
+\item With two parameters we specify \texttt{start} and \texttt{end}, while \texttt{step = 1}
+\item With all parameters we specify \texttt{start}, \texttt{end}, and \texttt{step}
+}\end{slide}
+
+\begin{frame}[fragile]{Specific starting point}
+\begin{lstlisting}
+for i in range(2, 10, 1):
+  print(i)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Multiple steps}
+\begin{lstlisting}
+for i in range(0, 20, 5):
+  print(i)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Backwards range}
+\begin{lstlisting}
+for i in range(10, 0, -1):
+  print("           \r" + str(i)),
+  sleep(0.3)
+print("\rBOOOM!!!!!")
+\end{lstlisting}
+\end{frame}
+
+\SlideSubSection{Nesting \texttt{for}-loops}
+\begin{slide}{
+\item The \texttt{BODY} of a \texttt{for}-loop contains arbitrary code
+\item This arbitrary code may also contain loops
+\item Loops within loops have a ``multiplicative'' behaviour
+\begin{itemize}
+\item A loop of \texttt{M} step within a loop of \texttt{N} steps performs \texttt{N*M} steps
+\end{itemize}
+}\end{slide}
+
+\begin{frame}[fragile]{Multiplicative behaviour}
+\begin{lstlisting}
+cnt = 0
+for i in range(10):
+  for j in range(5):
+    cnt += 1
+print(cnt)
+\end{lstlisting}
+\end{frame}
+
+\begin{slide}{
+\item Each loop adds its own iteration variable
+\item The iteration variables, together, are an N-dimensional point
+\item A single loop performs a ``linear'' computation, two loops perform a ``square''     computation, three perform a ``cubic'' computation, etc.
+}\end{slide}
+
+\begin{slide}{
+\item Multiple \texttt{for}-loops perform a predetermined number of computations
+\item This means that we can always translate multiple \texttt{for}-loops into a single one\footnote{This will usually break readability, so it is not advised: it is just a reasoning exercise.}
+}\end{slide}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+for i in range(0,10):
+  for j in range(0,5):
+    print(i,j)
+\end{lstlisting}
+
+\textbf{can be simulated with}
+
+\begin{lstlisting}
+for x in range(0,50):
+  i = x / 5
+  j = x % 5
+  print(i, j)
+\end{lstlisting}
+\end{frame}
+
+
+\SlideSection{Conclusion}
+\SlideSubSection{Conclusion}
+\begin{slide}{
+\item \texttt{while}-loops can encode any form of iteration.
+\item When the number of iterations is known beforehand, while is too powerful
+\item To use the right level of abstraction (which is less sensitive to bugs), we use \texttt{for}-loops instead
+\item This allows us to instruct the language to perform exactly the required number of steps, usually with less code
+}\end{slide}
+
+\begin{frame}{This is it!}
+\center
+\fontsize{18pt}{7.2}\selectfont
+The best of luck, and thanks for the attention!
+\end{frame}
+
+\end{document}
+
+\begin{slide}{
+\item ...
+}\end{slide}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+...
+\end{lstlisting}
+\end{frame}

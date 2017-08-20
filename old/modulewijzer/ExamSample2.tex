@@ -1,0 +1,158 @@
+\section*{Exam sample 2}
+What follows is a concrete example of the exam.
+
+
+\paragraph{Question I: formal rules} \ \\
+
+\textit{You start at point (-10,20). Take 5 steps of magnitude (5,-5). Then take steps iof magnitude (0, 10) until you are above the line (0, 10). Where do you end up?}
+
+\ \\ 
+
+\textbf{Answer:} \textit{The trajectory is:}
+
+\begin{lstlisting}
+(-10,20) +
+          \
+           \   + (15,15)
+            \  |
+             \ |
+              \|
+        (15,-5)+
+
+
+
+\end{lstlisting}
+
+\ \\ 
+
+\textbf{Points:} \textit{25\%.}
+
+\ \\ 
+\ \\ 
+
+\paragraph{Question II: program state} \ \\ 
+
+\textit{Fill-in the program state with the values that the variables assume while running the sample below.}
+
+\begin{lstlisting}
+count = 1
+for i in range(1, 5):
+    count *= i
+\end{lstlisting}
+
+\ \\ 
+
+\textbf{Answer:} \textit{The variable allocations are:}
+\begin{lstlisting}
+count: 	 1	 2	 6	 24
+i:	 1	 2	 3	 4
+\end{lstlisting}
+
+\ \\
+
+\textbf{Points:} \textit{25\%.}
+
+\ \\ 
+
+\textbf{Grading:} \textit{Full points if all values are correctly listed in the right order. Half points if at least half of values are listed in the right order. Zero points otherwise.}
+
+\ \\ 
+
+\textbf{Associated learning goals:} \texttt{CMC}.
+
+\ \\ 
+
+\paragraph{Question III: variables, expressions, and data types}
+
+\ \\ 
+
+\textit{What is the value and the type of all variables after execution of the following code?}
+\begin{lstlisting}
+h = input("Wat is je naam?")
+j = "Hello {}".format(h)
+k = 10 / 3
+l = k <= 3 or True
+i = "Hello" + 1
+\end{lstlisting}
+
+\ \\ 
+
+\textbf{Answer:} \textit{The value and type of all variables after execution is:}
+
+\begin{tabular}{| l | c | c | }
+\hline
+\textbf{Variable} & \textbf{Value} & \textbf{Type} \\
+\hline
+h & 'Youri' & string \\
+\hline
+j & 'Hello Youri' & str \\
+\hline
+k & 3.333333 & float \\
+\hline
+l & True & boolean \\
+\hline
+i & Error, omdat je geen plus kan doen met een string en een int & error \\
+\hline
+\end{tabular}
+
+\ \\ 
+
+\textbf{Points:} \textit{25\%.}
+
+\ \\ 
+
+\textbf{Grading:} \textit{All values and types are correct: full-points. At least half the values and at least half the types are correct: half points. Zero points otherwise.}
+
+\ \\ 
+
+\textbf{Associated learning goals:} \texttt{VAR}, \texttt{EXPR}.
+
+\ \\ 
+
+\paragraph{Question IV: control flow}
+
+\ \\ 
+
+\textbf{General shape of the question:} \textit{What is the value of all variables after execution of the following code?}
+
+\ \\ 
+
+\textbf{Concrete example of question:} \textit{Draw what is printed on the screen after execution of the following code?}
+
+\begin{lstlisting}
+output = ""
+for i in range(0, 4):
+    for j in range(0, 4):
+        if (i + j) % 2 == 0:
+            output += "0"
+        else:
+            output += "="
+    output += "\n"
+print(output)
+\end{lstlisting}
+
+\ \\ 
+
+\textbf{Concrete example of answer:} \textit{The screen looks like:}
+\begin{lstlisting}
+
+0=0=
+=0=0
+0=0=
+=0=0
+
+\end{lstlisting}
+
+\ \\ 
+
+\textbf{Points:} \textit{25\%.}
+
+\ \\ 
+
+\textbf{Grading:} \textit{All values are correct: full-points. At least half the values are correct: half points. Zero points otherwise.}
+
+\ \\ 
+
+\textbf{Associated learning goals:} \texttt{COND}, \texttt{LOOP}.
+
+\ \\ 

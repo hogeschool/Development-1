@@ -1,0 +1,304 @@
+\documentclass{beamer}
+
+\usetheme[hideothersubsections]{HRTheme}
+\usepackage{beamerthemeHRTheme}
+
+\usepackage{graphicx}
+\usepackage[space]{grffile}
+\usepackage{listings}
+\lstset{language=C,
+basicstyle=\ttfamily\footnotesize,
+mathescape=true,
+showspaces=false,
+breaklines=true}
+\usepackage[utf8]{inputenc}
+
+\title{The logical model of computation}
+
+\author{The INFDEV Team @ HR}
+
+\institute{Hogeschool Rotterdam \\ 
+Rotterdam, Netherlands}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+\SlideSection{Introduction}
+\SlideSubSection{Course topics}
+\begin{slide}{
+\item This course is about \textit{basic programming concepts} (DEV I)
+\item We will discuss computational concepts
+\item Computational thinking
+\item Describing computations clearly
+}\end{slide}
+
+\begin{slide}{
+\item \textit{How does a programming language work?}
+\item Memory, variables, conditionals, if-statements, and loops
+\item These are already enough to implement anything (of course not handily!)
+}\end{slide}
+
+\SlideSubSection{At the end of the course you will be able to...}
+\begin{slide}{
+\item ...describe algorithms clearly
+\item ...write basic programs in Python
+\item ...describe the semantics of a basic Python program
+}\end{slide}
+
+\SlideSection{A programming language}
+\SlideSubSection{What is programming not about?}
+\begin{slide}{
+\item computers
+\item programming languages
+\item technology
+\item programs
+\item websites
+\item smartphones
+\item ...
+}\end{slide}
+
+\SlideSubSection{What is programming about?}
+\begin{slide}{
+\item the encoding of logical thought
+\item non-ambiguity: there is only one possible mode of execution
+\item precision: there is no appeal to vagueness or intuition
+}\end{slide}
+
+\begin{slide}{
+\item especially if a machine will eventually run our program
+\item machines are \textbf{dumb as **ck}\footnote{rock}
+}\end{slide}
+
+\SlideSubSection{A programming language specifies}
+\begin{slide}{
+\item what instructions we have
+\item what do they perform
+\item in what order
+}\end{slide}
+
+\SlideSection{Let's start programming}
+\SlideSubSection{The \texttt{stdNt} programming language}
+\begin{slide}{
+\item In \texttt{stdNt} we let students perform some actions
+\item It does not require a machine, but only a white-board and alive (and complying students)
+}\end{slide}
+
+\begin{frame}[fragile]
+\textbf{Following instructions}\footnote{The teacher should ask for a volunteer}
+
+\begin{lstlisting}[frame=shadowbox]
+take 3 steps forward
+sit on the chair
+turn left
+slide 3 steps forward
+\end{lstlisting}
+\end{frame}
+
+\SlideSubSection{The features of \texttt{stdNt} so far}
+\begin{slide}{
+\item \textbf{Instructions}, in English
+\item \textbf{Order of execution} is left-to-right, top-to-bottom
+\item \textbf{State} made up of a living, breathing student
+}\end{slide}
+
+\begin{frame}[fragile]
+\textbf{Following instructions with state} \textit{(we need a ``volunteer'')}
+\center
+\texttt{
+\begin{tabular}{| c | c | c |}
+\hline
+A & B & C \\
+\hline
+your age & 2 & -3 \\
+\hline
+\end{tabular}
+}
+
+\begin{lstlisting}[frame=shadowbox]
+take A/4 steps forward
+sit on the chair
+turn left by 90 * B degrees
+slide C steps forward
+\end{lstlisting}
+\end{frame}
+
+\SlideSubSection{The features of \texttt{stdNt} so far}
+\begin{slide}{
+\item \textbf{Instructions}, in English
+\item \textbf{Order of execution} is left-to-right, top-to-bottom
+\item \textbf{State} made up of a living, breathing student plus a bunch of cards with data written on them
+}\end{slide}
+
+\begin{frame}[fragile]
+\textbf{What if the state makes no sense?} \textit{(we need a ``volunteer'')} \\
+\center
+\texttt{
+\begin{tabular}{| c | c | c |}
+\hline
+A & B & C \\
+\hline
+your age & ``nice day today'' & -3 \\
+\hline
+\end{tabular}
+}
+
+\begin{lstlisting}[frame=shadowbox]
+take A/4 steps forward
+sit on the chair
+turn left by 90 * B degrees
+slide C steps forward
+\end{lstlisting}
+\end{frame}
+
+\SlideSubSection{State comes with big preconditions}
+\begin{slide}{
+\item It only contains information that is:
+\begin{itemize}
+\item used in a way that makes sense with respect to the instructions
+\item logically expressed (numbers, strings, etc. rather than emotions or riddles)
+\item actually accessible (there is some connection from the executor to the accessed data)
+\end{itemize}
+}\end{slide}
+
+\begin{frame}[fragile]
+\textbf{The state may change} \textit{(we need a ``volunteer'')} \\
+\center
+\texttt{
+\begin{tabular}{| c | c |}
+\hline
+B & C \\
+\hline
+-1 & today's weather \\
+\hline
+\end{tabular}
+}
+
+\begin{lstlisting}[frame=shadowbox]
+make a comment on C
+write on C the index of the current day of the week
+sit on the chair
+turn left by 90 * B degrees
+slide C steps forward
+\end{lstlisting}
+\end{frame}
+
+\SlideSubSection{The features of \texttt{stdNt} so far}
+\begin{slide}{
+\item \textbf{Instructions}, in English
+\item \textbf{Order of execution} is left-to-right, top-to-bottom
+\item \textbf{\textit{Mutable} state} made up of a living, breathing student plus a bunch of cards with data written on them
+}\end{slide}
+
+\begin{frame}[fragile]
+\textbf{We can make decisions}\footnote{Teacher should ask the students to perform the action} \\
+\center
+\texttt{
+\begin{tabular}{| c | c | c | c |}
+\hline
+A & B & C & D \\
+\hline
+shirt colour & -1 & 2 & 3 \\
+\hline
+\end{tabular}
+}
+
+\begin{lstlisting}[frame=shadowbox]
+sit on the chair
+if A is ``black'' then
+  turn left by 90 * B degrees
+otherwise
+  turn left by 90 * C degrees
+clap D times
+\end{lstlisting}
+\end{frame}
+
+\SlideSubSection{The features of \texttt{stdNt} so far}
+\begin{slide}{
+\item \textbf{Instructions}, in English
+\item \textbf{Order of execution} is left-to-right, top-to-bottom
+\item \textbf{Mutable state} made up of a living, breathing student plus a bunch of cards with data written on them
+\item \textbf{Decisions} based on elements of the state 
+}\end{slide}
+
+\begin{frame}[fragile]
+\textbf{We can repeat behavior}\footnote{The teacher should ask for two teams of volunteers} \ \\
+
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+while there are green soldiers alive
+      AND
+      there are brown soldiers alive
+  TEAM 1:
+    a = pick green soldier
+    d = pick brown soldier
+    fight(a,d)
+  TEAM 2:
+    a = pick green soldier
+    d = pick brown soldier
+    fight(a,d)
+\end{lstlisting}
+
+
+
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+fight(a,d):
+  if a = BAZOOKA AND d = GRENADIER then
+    both die
+  else if a = BAZOOKA then
+    d dies
+  else if d = GRENADIER then
+    a dies
+  else if brown team still has leader then
+    a dies
+  else
+    d dies
+\end{lstlisting} 
+
+\end{frame}
+
+\SlideSubSection{The features of \texttt{stdNt} so far}
+\begin{slide}{
+\item \textbf{Instructions}, in English
+\item \textbf{Order of execution} is left-to-right, top-to-bottom
+\item \textbf{Mutable state} made up of a living, breathing student plus a bunch of cards with data written on them
+\item \textbf{Decisions} based on elements of the state 
+\item \textbf{Repetition} of code based on elements of the state 
+}\end{slide}
+
+\SlideSubSection{Assignment 1 in groups of four}
+\begin{slide}{
+\item Reprogram the game
+\item Make it so that the positioning of defending soldiers makes a difference (positive or negative)
+\item \textit{One group will be ``randomly selected'' to present}
+}\end{slide}
+
+
+\SlideSubSection{Assignment 2 in groups of four}
+\begin{slide}{
+\item Think about the actions needed for a game concept (at most 10).
+\item Write them down and put them in the box.
+\item Pick a sheet at random (if it is the one you wrote pick again).
+\item Write the implementation of a game using the actions you have.
+\item A group will be chosen to play the game.
+}\end{slide}
+
+\begin{frame}{This is it!}
+\center
+\fontsize{18pt}{7.2}\selectfont
+The best of luck, and thanks for the attention!
+\end{frame}
+
+\end{document}
+
+\begin{slide}{
+\item ...
+}\end{slide}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+...
+\end{lstlisting}
+\end{frame}
+
+
