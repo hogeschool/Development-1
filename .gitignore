@@ -157,4 +157,4 @@ $RECYCLE.BIN/
 
 *.lb
 
-.ipynb_checkpoints/*-checkpoint.ipynb
+**/.ipynb_checkpoints/*-checkpoint.ipynb
