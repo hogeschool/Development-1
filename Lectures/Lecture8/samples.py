@@ -25,6 +25,7 @@ OtherTriangle = FlipX(Triangle)
 
 # pyramid
 Pyramid = Times(Triangle, OtherTriangle)
+NaivePyramid = lambda x,y: x <= y and (n - 1 - x) <= y
 
 # circle
 Circle = lambda x,y: (x - n / 2) * (x - n / 2) + (y - n / 2) * (y - n / 2) <= n / 2 * n / 2
