@@ -93,7 +93,7 @@ s = ""
 while i <= n:
   j = 0
   while j <= n:
-    if math.sqrt((i-c) * (i-c) + (j - c) * (j - c)) < n / 2:
+    if math.sqrt((i - c) * (i - c) + (j - c) * (j - c)) < c:
       s = s + "*"
     else:
       s = s + " "
