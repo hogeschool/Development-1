@@ -5,7 +5,6 @@ y = 0
 Trans = lambda p: lambda x,y: p(y,x)
 FlipX = lambda p: lambda x,y: p(n - 1 - x,y)
 FlipY = lambda p: lambda x,y: p(x,n - 1 - y)
-Trans = lambda p: lambda x,y: p(y,x)
 Plus = lambda p,q: lambda x,y: p(x,y) or q(x,y)
 Times = lambda p,q: lambda x,y: p(x,y) and q(x,y)
 
