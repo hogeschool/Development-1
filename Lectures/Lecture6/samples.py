@@ -46,7 +46,40 @@ else:
   res = n // m
 print(f"{n}{op}{m} -> {res}")
 
-# repeated operations
+# repeating calculator
+quit = False
+while not quit:
+    op = input("insert the operation (+,-,*,/,neg,quit)\n")
+    if op == "+":
+        n = int(input("insert the first operand\n"))
+        m = int(input("insert the second operand\n"))
+        res = n + m
+        print(str(n) + op + str(m) + " -> " + str(res))
+    elif op == "-":
+        n = int(input("insert the first operand\n"))
+        m = int(input("insert the second operand\n"))
+        res = n - m
+        print(str(n) + op + str(m) + " -> " + str(res))
+    elif op == "*":
+        n = int(input("insert the first operand\n"))
+        m = int(input("insert the second operand\n"))
+        res = n * m
+        print(str(n) + op + str(m) + " -> " + str(res))
+    elif op == "/":
+        n = int(input("insert the first operand\n"))
+        m = int(input("insert the second operand\n"))
+        res = n // m
+        print(str(n) + op + str(m) + " -> " + str(res))
+    elif op == "neg":
+        n = int(input("insert the only operand\n"))
+        res = -n
+        print("neg(" + str(n) + ") -> " + str(res))
+    elif op == "quit":
+        quit = True
+        print("Quitting...")
+    else:
+        print("Operation " + str(op) + " is not recognized.")
+
 n = int(input("insert the number to divide\n"))
 b = int(input("insert the divisor\n"))
 i = 0
